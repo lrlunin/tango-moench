@@ -1,6 +1,6 @@
 # This starter workflow is for a CMake project running on a single platform. There is a different starter workflow if you need cross-platform coverage.
 # See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-multi-platform.yml
-name: CMake on a Ubuntu Linux platform
+name: Build on an Ubuntu Linux
 
 on:
   push:
@@ -28,7 +28,7 @@ jobs:
       run: echo "CPU_CORES=${{ steps.cpu-cores.outputs.count }}" >> $GITHUB_ENV
 
     - name: Install both own, tango and slsDetectorPackage dependencies
-      run: sudo apt-get install -y libzmq3-dev libtiff-dev libhdf5-dev libfmt-dev rapidjson-dev libboost-dev libmariadb-dev zlib1g-dev libomniorb4-dev libcos4-dev omniidl
+      run: sudo apt-get update && sudo apt-get install -y libzmq3-dev libtiff-dev libhdf5-dev libfmt-dev rapidjson-dev libboost-dev libmariadb-dev zlib1g-dev libomniorb4-dev libcos4-dev omniidl
 
     - name: Download and extract tango
       run: wget https://gitlab.com/api/v4/projects/24125890/packages/generic/TangoSourceDistribution/9.3.5/tango-9.3.5.tar.gz

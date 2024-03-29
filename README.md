@@ -1,5 +1,5 @@
 # tango-moench
-![build on ubuntu](https://github.com/lrlunin/tango-moench/actions/workflows/cmake-single-platform.yml/badge.svg)
+![build on ubuntu](https://github.com/lrlunin/tango-moench/actions/workflows/ubuntu-build.yml/badge.svg)
 
 Tango device servers both for control and online evaulation of the acquired images.
 
