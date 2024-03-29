@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <filesystem>
-#include <hdf5/serial/H5Cpp.h>
+#include <H5Cpp.h>
 #include <fmt/core.h>
 #include <regex>
 #include "FileWriter.hpp"

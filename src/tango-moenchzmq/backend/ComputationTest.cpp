@@ -21,7 +21,7 @@
 #include <filesystem>
 #include <fmt/core.h>
 #include <fmt/chrono.h>
-#include <hdf5/serial/H5Cpp.h>
+#include <H5Cpp.h>
 #include "HDFWriter.hpp"
 #include <regex>
 // #include <hdf5/H
