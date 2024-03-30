@@ -19,6 +19,7 @@ endif()
 if (CUDA_ENABLED)
     enable_language(CUDA)
     find_package(CUDAToolkit)
+    add_definitions(-DCUDA_ENABLED=1)
 endif()
 if (SINGLE_FRAMES_DEBUG)
     message(STATUS "Single Frames Debug enabled")
@@ -37,8 +38,9 @@ add_subdirectory(backend)
 add_subdirectory(tangods)
 if (CUDA_ENABLED)
     add_library(cuda_processing STATIC
-    CUDA_SRC_FILES
+    ${CUDA_SRC_FILES}
     )
+    set_target_properties(cuda_processing PROPERTIES CUDA_SEPARABLE_COMPILATION ON CUDA_ARCHITECTURES "75;86;89") 
 endif()
 
 add_executable(MoenchZMQ ${MOENCHZMQ_BACKEND_SRC_FILES} ${MOENCHZMQ_TANGODS_SRC_FILES} ${DEBUG_SRC_FILES})
