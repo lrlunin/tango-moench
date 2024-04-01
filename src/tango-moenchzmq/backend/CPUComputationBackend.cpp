@@ -91,10 +91,10 @@ void CPUComputationBackend::processFrame(FullFrame *ff_ptr){
     pedestal_share.lock_shared();
     CPUComputationBackend::loadPedestalAndRMS(pedestal_current, pedestal_rms_current);
     pedestal_share.unlock_shared();
-    OrderedFrame<float, consts::LENGTH> no_bkgd = ff_ptr->f - pedestal_current;
+    OrderedFrame<float, consts::LENGTH> frame_subtracted_pedestal = ff_ptr->f - pedestal_current;
     // 0 - pedestal pixel, 1 - photon pixel, 2 - max in cluster
     // better to create 3 different masks for easier assigment in sum frames...
-    OrderedFrame<char, consts::LENGTH> frame_classes = CPUComputationBackend::classifyFrame(no_bkgd, pedestal_rms_current);
+    OrderedFrame<char, consts::LENGTH> frame_classes = CPUComputationBackend::classifyFrame(frame_subtracted_pedestal, pedestal_rms_current);
     if (updatePedestal){
         pedestal_share.lock();
         updatePedestalMovingAverage(ff_ptr->f, frame_classes, isPedestal);
@@ -106,7 +106,7 @@ void CPUComputationBackend::processFrame(FullFrame *ff_ptr){
         frames_sums.lock();
         // add to analog, threshold, counting
         counting_sum.addClass(frame_classes, 2);
-        analog_sum += no_bkgd;
+        analog_sum += frame_subtracted_pedestal;
         //threshold later
         frames_sums.unlock();
     }
@@ -119,13 +119,13 @@ void CPUComputationBackend::processFrame(FullFrame *ff_ptr){
         */
         if (frameindex < individual_frame_buffer_capacity){
             float* frame_ptr = individual_analog_storage_ptr+frameindex*consts::LENGTH;
-            no_bkgd.copy_to_buffer<float*>(frame_ptr, true);
+            frame_subtracted_pedestal.copy_to_buffer<float*>(frame_ptr, true);
             #ifdef SINGLE_FRAMES_DEBUG
             std::memcpy(pedestal_storage_ptr+frameindex*consts::LENGTH, pedestal_current.arr, sizeof(OrderedFrame<float, consts::LENGTH>::arr));
             std::memcpy(pedestal_rms_storage_ptr+frameindex*consts::LENGTH, pedestal_rms_current.arr, sizeof(OrderedFrame<float, consts::LENGTH>::arr));
             std::memcpy(frame_classes_storage_ptr+frameindex*consts::LENGTH, frame_classes.arr, sizeof(OrderedFrame<char, consts::LENGTH>::arr));
             #endif
-            //std::memcpy(individual_analog_storage_ptr+frameindex*consts::LENGTH, no_bkgd.arr, sizeof(OrderedFrame<float, consts::LENGTH>::arr));
+            //std::memcpy(individual_analog_storage_ptr+frameindex*consts::LENGTH, frame_subtracted_pedestal.arr, sizeof(OrderedFrame<float, consts::LENGTH>::arr));
         }
     }
     processed_frames_amount++;

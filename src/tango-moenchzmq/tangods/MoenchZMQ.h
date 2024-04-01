@@ -91,6 +91,7 @@ public:
 	Tango::DevFloat	*attr_counting_img_read;
 	Tango::DevFloat	*attr_analog_img_pumped_read;
 	Tango::DevFloat	*attr_counting_img_pumped_read;
+	Tango::DevULong *attr_individual_frame_buffer_capacity_read;
 //	Constructors and destructors
 public:
 	/**
@@ -308,6 +309,10 @@ public:
  */
 	virtual void read_counting_img_pumped(Tango::Attribute &attr);
 	virtual bool is_counting_img_pumped_allowed(Tango::AttReqType type);
+
+	virtual void read_individual_frame_buffer_capacity(Tango::Attribute &attr);
+	virtual void write_individual_frame_buffer_capacity(Tango::WAttribute &attr);
+	virtual bool is_individual_frame_buffer_capacity_allowed(Tango::AttReqType type);
 
 	//--------------------------------------------------------
 	/**

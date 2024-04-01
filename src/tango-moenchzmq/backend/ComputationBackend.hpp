@@ -11,7 +11,6 @@
 class ComputationBackend{
 public:
     typedef boost::singleton_pool<FullFrame, sizeof(FullFrame)> memory_pool;
-    ComputationBackend(std::string save_root_path);
     ComputationBackend(FileWriter *fileWriter);
     ~ComputationBackend();
     std::string save_root_path, file_path, file_name;

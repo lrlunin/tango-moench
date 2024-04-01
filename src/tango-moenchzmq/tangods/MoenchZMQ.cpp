@@ -187,6 +187,7 @@ void MoenchZMQ::init_device()
 	attr_analog_img_pumped_read = new Tango::DevFloat[400*400];
 	attr_counting_img_read = new Tango::DevFloat[400*400];
 	attr_counting_img_pumped_read = new Tango::DevFloat[400*400];
+	attr_individual_frame_buffer_capacity_read = new Tango::DevULong[1];
 	//	No longer if mandatory property not set.
 	if (mandatoryNotDefined)
 	return;
@@ -800,7 +801,30 @@ void MoenchZMQ::read_counting_img(Tango::Attribute &attr)
 	/* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_counting_img
 }
-
+void MoenchZMQ::write_individual_frame_buffer_capacity(Tango::WAttribute &attr)
+{
+	DEBUG_STREAM << "MoenchZMQ::write_individual_frame_buffer_capacity(Tango::WAttribute &attr) entering... " << std::endl;
+	//	Retrieve write value
+	Tango::DevULong	w_val;
+	attr.get_write_value(w_val);
+	/*----- PROTECTED REGION ID(MoenchZMQ::write_individual_frame_buffer_capacity) ENABLED START -----*/
+	/* clang-format on */
+	*attr_individual_frame_buffer_capacity_read = w_val;
+	zmq_listener_ptr->comp_backend_ptr->individual_frame_buffer_capacity = w_val;
+	/* clang-format off */
+	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::write_individual_frame_buffer_capacity
+}
+void MoenchZMQ::read_individual_frame_buffer_capacity(Tango::Attribute &attr)
+{
+	DEBUG_STREAM << "MoenchZMQ::read_individual_frame_buffer_capacity(Tango::Attribute &attr) entering... " << std::endl;
+	/*----- PROTECTED REGION ID(MoenchZMQ::read_individual_frame_buffer_capacity) ENABLED START -----*/
+	/* clang-format on */
+	size_t capacity = zmq_listener_ptr->comp_backend_ptr->individual_frame_buffer_capacity;
+	*attr_individual_frame_buffer_capacity_read = static_cast<Tango::DevULong>(capacity);
+	attr.set_value(attr_individual_frame_buffer_capacity_read);
+	/* clang-format off */
+	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_individual_frame_buffer_capacity
+}
 //--------------------------------------------------------
 /**
  *	Method      : MoenchZMQ::add_dynamic_attributes()

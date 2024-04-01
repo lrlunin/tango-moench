@@ -416,7 +416,21 @@ bool MoenchZMQ::is_push_images_change_allowed(TANGO_UNUSED(const CORBA::Any &any
 	return true;
 }
 
+bool MoenchZMQ::is_individual_frame_buffer_capacity_allowed(TANGO_UNUSED(Tango::AttReqType type))
+{
+	//	Not any excluded states for individual_frame_buffer_capacity attribute in Write access.
+	/*----- PROTECTED REGION ID(MoenchZMQ::individual_frame_buffer_capacityStateAllowed_WRITE) ENABLED START -----*/
+	/* clang-format on */
+	/* clang-format off */
+	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::individual_frame_buffer_capacityStateAllowed_WRITE
 
+	//	Not any excluded states for individual_frame_buffer_capacity attribute in read access.
+	/*----- PROTECTED REGION ID(MoenchZMQ::individual_frame_buffer_capacityStateAllowed_READ) ENABLED START -----*/
+	/* clang-format on */
+	/* clang-format off */
+	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::individual_frame_buffer_capacityStateAllowed_READ
+	return true;
+}
 /*----- PROTECTED REGION ID(MoenchZMQ::MoenchZMQStateAllowed.AdditionalMethods) ENABLED START -----*/
 /* clang-format on */
 //	Additional Methods

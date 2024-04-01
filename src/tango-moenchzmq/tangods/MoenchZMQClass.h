@@ -209,6 +209,26 @@ public:
 		{return (static_cast<MoenchZMQ *>(dev))->is_acquired_frames_allowed(ty);}
 };
 
+//=========================================
+//	Define classes for attributes
+//=========================================
+//	Attribute individual_frame_buffer_capacity class definition
+class individual_frame_buffer_capacityAttrib: public Tango::Attr
+{
+public:
+	individual_frame_buffer_capacityAttrib():Attr("individual_frame_buffer_capacity",
+			Tango::DEV_ULONG, Tango::READ_WRITE) {};
+	~individual_frame_buffer_capacityAttrib() {};
+	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
+		{(static_cast<MoenchZMQ *>(dev))->read_individual_frame_buffer_capacity(att);}
+	virtual void write(Tango::DeviceImpl *dev,Tango::WAttribute &att)
+		{(static_cast<MoenchZMQ *>(dev))->write_individual_frame_buffer_capacity(att);}
+	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
+		{return (static_cast<MoenchZMQ *>(dev))->is_individual_frame_buffer_capacity_allowed(ty);}
+};
+
+
+
 //	Attribute analog_img class definition
 class analog_imgAttrib: public Tango::ImageAttr
 {

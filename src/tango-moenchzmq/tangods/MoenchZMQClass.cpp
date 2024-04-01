@@ -675,6 +675,29 @@ void MoenchZMQClass::attribute_factory(std::vector<Tango::Attr *> &att_list)
 	split_pumped->set_memorized_init(true);
 	att_list.push_back(split_pumped);
 
+	//	Attribute : individual_frame_buffer_capacity
+	individual_frame_buffer_capacityAttrib	*individual_frame_buffer_capacity = new individual_frame_buffer_capacityAttrib();
+	Tango::UserDefaultAttrProp	individual_frame_buffer_capacity_prop;
+	//	description	not set for individual_frame_buffer_capacity
+	individual_frame_buffer_capacity_prop.set_label("individual frame buffer capacity");
+	//	unit	not set for individual_frame_buffer_capacity
+	//	standard_unit	not set for individual_frame_buffer_capacity
+	//	display_unit	not set for individual_frame_buffer_capacity
+	//	format	not set for individual_frame_buffer_capacity
+	//	max_value	not set for individual_frame_buffer_capacity
+	individual_frame_buffer_capacity_prop.set_min_value("1");
+	//	max_alarm	not set for individual_frame_buffer_capacity
+	//	min_alarm	not set for individual_frame_buffer_capacity
+	//	max_warning	not set for individual_frame_buffer_capacity
+	//	min_warning	not set for individual_frame_buffer_capacity
+	//	delta_t	not set for individual_frame_buffer_capacity
+	//	delta_val	not set for individual_frame_buffer_capacity
+	individual_frame_buffer_capacity->set_default_properties(individual_frame_buffer_capacity_prop);
+	//	Not Polled
+	individual_frame_buffer_capacity->set_disp_level(Tango::OPERATOR);
+	//	Not Memorized
+	att_list.push_back(individual_frame_buffer_capacity);
+
 	//	Attribute : acquired_frames
 	acquired_framesAttrib	*acquired_frames = new acquired_framesAttrib();
 	Tango::UserDefaultAttrProp	acquired_frames_prop;
