@@ -160,6 +160,7 @@ public:
 	Tango::DevLong64	*attr_rx_tcp_port_read;
 	detector_statusEnum	*attr_detector_status_read;
 	Tango::DevBoolean	*attr_rx_zmq_data_stream_read;
+	Tango::DevLong64	*attr_triggers_left_read;
 
 //	Constructors and destructors
 public:
@@ -232,7 +233,7 @@ public:
 	//--------------------------------------------------------
 	virtual void write_attr_hardware(std::vector<long> &attr_list);
 
-	virtual bool is_detector_read_write_allowed();
+virtual bool is_detector_read_write_allowed();
 
 /**
  *	Attribute exposure related methods
@@ -383,6 +384,15 @@ public:
 	virtual void read_rx_zmq_data_stream(Tango::Attribute &attr);
 	virtual void write_rx_zmq_data_stream(Tango::WAttribute &attr);
 	virtual bool is_rx_zmq_data_stream_allowed(Tango::AttReqType type);
+/**
+ *	Attribute triggers_left related methods
+ *
+ *
+ *	Data type:  Tango::DevLong64
+ *	Attr type:	Scalar
+ */
+	virtual void read_triggers_left(Tango::Attribute &attr);
+	virtual bool is_triggers_left_allowed(Tango::AttReqType type);
 
 
 	//--------------------------------------------------------
@@ -413,7 +423,7 @@ public:
 	virtual void stop_acquire();
 	virtual bool is_stop_acquire_allowed(const CORBA::Any &any);
 
-	virtual void check_stop_in_backgroud();
+virtual void check_stop_in_backgroud();
 
 
 	//--------------------------------------------------------

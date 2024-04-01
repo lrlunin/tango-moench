@@ -287,6 +287,19 @@ public:
 		{return (static_cast<MoenchControl *>(dev))->is_rx_zmq_data_stream_allowed(ty);}
 };
 
+//	Attribute triggers_left class definition
+class triggers_leftAttrib: public Tango::Attr
+{
+public:
+	triggers_leftAttrib():Attr("triggers_left",
+			Tango::DEV_LONG64, Tango::READ) {};
+	~triggers_leftAttrib() {};
+	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
+		{(static_cast<MoenchControl *>(dev))->read_triggers_left(att);}
+	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
+		{return (static_cast<MoenchControl *>(dev))->is_triggers_left_allowed(ty);}
+};
+
 
 //=========================================
 //	Define classes for commands

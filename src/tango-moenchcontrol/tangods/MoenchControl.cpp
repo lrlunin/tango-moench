@@ -78,6 +78,7 @@
 //  rx_tcp_port         |  Tango::DevLong64	Scalar
 //  detector_status     |  Tango::DevEnum	Scalar
 //  rx_zmq_data_stream  |  Tango::DevBoolean	Scalar
+//  triggers_left       |  Tango::DevLong64	Scalar
 //================================================================
 
 namespace MoenchControl_ns
@@ -158,6 +159,7 @@ void MoenchControl::delete_device()
 	delete[] attr_rx_tcp_port_read;
 	delete[] attr_detector_status_read;
 	delete[] attr_rx_zmq_data_stream_read;
+	delete[] attr_triggers_left_read;
 }
 
 //--------------------------------------------------------
@@ -194,6 +196,7 @@ void MoenchControl::init_device()
 	attr_rx_tcp_port_read = new Tango::DevLong64[1];
 	attr_detector_status_read = new detector_statusEnum[1];
 	attr_rx_zmq_data_stream_read = new Tango::DevBoolean[1];
+	attr_triggers_left_read = new Tango::DevLong64[1];
 	//	No longer if mandatory property not set.
 	if (mandatoryNotDefined)
 		return;
@@ -1026,6 +1029,25 @@ void MoenchControl::write_rx_zmq_data_stream(Tango::WAttribute &attr)
 	detector_ptr->setRxZmqDataStream(w_val);
 	/* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_rx_zmq_data_stream
+}
+//--------------------------------------------------------
+/**
+ *	Read attribute triggers_left related method
+ *
+ *
+ *	Data type:	Tango::DevLong64
+ *	Attr type:	Scalar
+ */
+//--------------------------------------------------------
+void MoenchControl::read_triggers_left(Tango::Attribute &attr)
+{
+	DEBUG_STREAM << "MoenchControl::read_triggers_left(Tango::Attribute &attr) entering... " << std::endl;
+	/*----- PROTECTED REGION ID(MoenchControl::read_triggers_left) ENABLED START -----*/
+	/* clang-format on */
+	*attr_triggers_left_read = detector_ptr->getNumberOfTriggersLeft().front();
+	attr.set_value(attr_triggers_left_read);
+	/* clang-format off */
+	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_triggers_left
 }
 
 //--------------------------------------------------------

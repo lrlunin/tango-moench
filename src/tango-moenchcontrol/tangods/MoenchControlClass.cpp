@@ -850,6 +850,29 @@ void MoenchControlClass::attribute_factory(std::vector<Tango::Attr *> &att_list)
 	rx_zmq_data_stream->set_memorized_init(true);
 	att_list.push_back(rx_zmq_data_stream);
 
+	//	Attribute : triggers_left
+	triggers_leftAttrib	*triggers_left = new triggers_leftAttrib();
+	Tango::UserDefaultAttrProp	triggers_left_prop;
+	//	description	not set for triggers_left
+	triggers_left_prop.set_label("triggers left");
+	//	unit	not set for triggers_left
+	//	standard_unit	not set for triggers_left
+	//	display_unit	not set for triggers_left
+	//	format	not set for triggers_left
+	//	max_value	not set for triggers_left
+	//	min_value	not set for triggers_left
+	//	max_alarm	not set for triggers_left
+	//	min_alarm	not set for triggers_left
+	//	max_warning	not set for triggers_left
+	//	min_warning	not set for triggers_left
+	//	delta_t	not set for triggers_left
+	//	delta_val	not set for triggers_left
+	triggers_left->set_default_properties(triggers_left_prop);
+	//	Not Polled
+	triggers_left->set_disp_level(Tango::EXPERT);
+	//	Not Memorized
+	att_list.push_back(triggers_left);
+
 
 	//	Create a list of static attributes
 	create_static_attribute_list(get_class_attr()->get_attr_list());
