@@ -535,13 +535,11 @@ void MoenchZMQClass::attribute_factory(std::vector<Tango::Attr *> &att_list)
 	att_list.push_back(normalize);
 
 	//	Attribute : normalize
-	updatePedestalAttrib	*updatePedestal = new updatePedestalAttrib();
-	Tango::UserDefaultAttrProp	updatePedestal_prop;
-	//	description	not set for normalize
-	//	label	not set for normalize
-	//	unit	not set for normalize
-	//	standard_unit	not set for normalize
-	//	display_unit	not set for normalize
+	updatePedestalPeriodAttrib	*updatePedestalPeriod = new updatePedestalPeriodAttrib();
+	Tango::UserDefaultAttrProp	updatePedestalPeriod_prop;
+	updatePedestalPeriod_prop.set_description("if 0 - not updated, otherwise updated every N frames");
+	updatePedestalPeriod_prop.set_label("update pedestal period");
+	updatePedestalPeriod_prop.set_unit("frames");
 	//	format	not set for normalize
 	//	max_value	not set for normalize
 	//	min_value	not set for normalize
@@ -551,11 +549,11 @@ void MoenchZMQClass::attribute_factory(std::vector<Tango::Attr *> &att_list)
 	//	min_warning	not set for normalize
 	//	delta_t	not set for normalize
 	//	delta_val	not set for normalize
-	updatePedestal->set_default_properties(updatePedestal_prop);
+	updatePedestalPeriod->set_default_properties(updatePedestalPeriod_prop);
 	//	Not Polled
-	updatePedestal->set_disp_level(Tango::OPERATOR);
+	updatePedestalPeriod->set_disp_level(Tango::OPERATOR);
 	//	Not Memorized
-	att_list.push_back(updatePedestal);
+	att_list.push_back(updatePedestalPeriod);
 
 	//	Attribute : threshold
 	thresholdAttrib	*threshold = new thresholdAttrib();

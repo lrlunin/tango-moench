@@ -80,7 +80,7 @@ public:
 	Tango::DevString	*attr_file_name_read;
 	Tango::DevString	*attr_session_directory_read;
 	Tango::DevBoolean	*attr_normalize_read;
-	Tango::DevBoolean    *attr_update_pedestal_read;
+	Tango::DevLong    *attr_update_pedestal_period_read;
 	Tango::DevDouble	*attr_threshold_read;
 	Tango::DevFloat	*attr_counting_sigma_read;
 	Tango::DevLong	*attr_live_period_read;
@@ -211,8 +211,8 @@ public:
  *	Data type:  Tango::DevBoolean
  *	Attr type:	Scalar
  */
-	virtual void read_update_pedestal(Tango::Attribute &attr);
-	virtual void write_update_pedestal(Tango::WAttribute &attr);
+	virtual void read_update_pedestal_period(Tango::Attribute &attr);
+	virtual void write_update_pedestal_period(Tango::WAttribute &attr);
 	virtual bool is_update_pedestal_allowed(Tango::AttReqType type);
 /**
  *	Attribute threshold related methods

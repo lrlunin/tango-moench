@@ -95,7 +95,7 @@ void CPUComputationBackend::processFrame(FullFrame *ff_ptr){
     // 0 - pedestal pixel, 1 - photon pixel, 2 - max in cluster
     // better to create 3 different masks for easier assigment in sum frames...
     OrderedFrame<char, consts::LENGTH> frame_classes = CPUComputationBackend::classifyFrame(frame_subtracted_pedestal, pedestal_rms_current);
-    if (updatePedestal){
+    if (updatePedestalPeriod && (processed_frames_amount % updatePedestalPeriod == 0)){
         pedestal_share.lock();
         updatePedestalMovingAverage(ff_ptr->f, frame_classes, isPedestal);
         pedestal_share.unlock();

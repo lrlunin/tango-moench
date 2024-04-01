@@ -135,7 +135,7 @@ void MoenchZMQ::delete_device()
 	delete[] attr_file_name_read;
 	delete[] attr_session_directory_read;
 	delete[] attr_normalize_read;
-	delete[] attr_update_pedestal_read;
+	delete[] attr_update_pedestal_period_read;
 	delete[] attr_threshold_read;
 	delete[] attr_counting_sigma_read;
 	delete[] attr_live_period_read;
@@ -177,7 +177,7 @@ void MoenchZMQ::init_device()
 	attr_session_directory_read = new Tango::DevString[1];
 	attr_acquired_frames_read = new Tango::DevLong[1];
 	attr_normalize_read = new Tango::DevBoolean[1];
-	attr_update_pedestal_read = new Tango::DevBoolean[1];
+	attr_update_pedestal_period_read = new Tango::DevLong[1];
 	attr_threshold_read = new Tango::DevDouble[1];
 	attr_counting_sigma_read = new Tango::DevFloat[1];
 	attr_live_period_read = new Tango::DevLong[1];
@@ -495,26 +495,26 @@ void MoenchZMQ::write_normalize(Tango::WAttribute &attr)
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::write_normalize
 }
 
-void MoenchZMQ::read_update_pedestal(Tango::Attribute &attr)
+void MoenchZMQ::read_update_pedestal_period(Tango::Attribute &attr)
 {
 	DEBUG_STREAM << "MoenchZMQ::read_update_pedestal(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_normalize) ENABLED START -----*/
 	/* clang-format on */
 	//	Set the attribute value
-	*attr_update_pedestal_read = zmq_listener_ptr->comp_backend_ptr->updatePedestal.load();
-	attr.set_value(attr_update_pedestal_read);
+	*attr_update_pedestal_period_read = zmq_listener_ptr->comp_backend_ptr->updatePedestalPeriod;
+	attr.set_value(attr_update_pedestal_period_read);
 }
 
-void MoenchZMQ::write_update_pedestal(Tango::WAttribute &attr)
+void MoenchZMQ::write_update_pedestal_period(Tango::WAttribute &attr)
 {
 	DEBUG_STREAM << "MoenchZMQ::write_update_pedestal(Tango::WAttribute &attr) entering... " << std::endl;
 	//	Retrieve write value
-	Tango::DevBoolean	w_val;
+	Tango::DevLong	w_val;
 	attr.get_write_value(w_val);
 	/*----- PROTECTED REGION ID(MoenchZMQ::write_update_pedestal) ENABLED START -----*/
 	/* clang-format on */
-	*attr_update_pedestal_read = w_val;
-	zmq_listener_ptr->comp_backend_ptr->updatePedestal = w_val;
+	*attr_update_pedestal_period_read = w_val;
+	zmq_listener_ptr->comp_backend_ptr->updatePedestalPeriod = w_val;
 	/* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::write_update_pedestal
 }

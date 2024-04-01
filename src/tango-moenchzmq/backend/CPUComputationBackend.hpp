@@ -56,7 +56,7 @@ public:
     OrderedFrame<int, consts::LENGTH> counting_sum_pumped;
     std::atomic_bool isSplitPumped = false;
     std::atomic_bool isPedestal = true;
-    std::atomic_bool updatePedestal = true;
+    std::atomic<long> updatePedestalPeriod = 1;
     std::atomic_bool threads_sleep = true;
     std::atomic_bool saveIndividualFrames = true;
     float* individual_analog_storage_ptr = nullptr;
