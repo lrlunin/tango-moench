@@ -232,6 +232,8 @@ public:
 	//--------------------------------------------------------
 	virtual void write_attr_hardware(std::vector<long> &attr_list);
 
+	virtual bool is_detector_read_write_allowed();
+
 /**
  *	Attribute exposure related methods
  *

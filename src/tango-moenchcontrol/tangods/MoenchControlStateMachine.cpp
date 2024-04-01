@@ -31,6 +31,7 @@
 //=============================================================================
 
 #include "MoenchControl.h"
+#include "sls/sls_detector_defs.h"
 
 /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchControl::MoenchControlStateMachine.cpp
@@ -45,7 +46,13 @@ namespace MoenchControl_ns
 //=================================================
 //		Attributes Allowed Methods
 //=================================================
-
+bool MoenchControl::is_detector_read_write_allowed(){
+	auto detector_status = detector_ptr->getDetectorStatus().front();
+	return (detector_status == slsDetectorDefs::runStatus::IDLE ||
+	        detector_status == slsDetectorDefs::runStatus::RUN_FINISHED ||
+			detector_status == slsDetectorDefs::runStatus::STOPPED
+		);
+}
 //--------------------------------------------------------
 /**
  *	Method      : MoenchControl::is_exposure_allowed()
@@ -65,7 +72,7 @@ bool MoenchControl::is_exposure_allowed(TANGO_UNUSED(Tango::AttReqType type))
 	/* clang-format on */
 	/* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::exposureStateAllowed_READ
-	return true;
+	return is_detector_read_write_allowed();
 }
 
 //--------------------------------------------------------
@@ -87,7 +94,7 @@ bool MoenchControl::is_delay_allowed(TANGO_UNUSED(Tango::AttReqType type))
 	/* clang-format on */
 	/* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::delayStateAllowed_READ
-	return true;
+	return is_detector_read_write_allowed();
 }
 
 //--------------------------------------------------------
@@ -109,7 +116,7 @@ bool MoenchControl::is_timing_mode_allowed(TANGO_UNUSED(Tango::AttReqType type))
 	/* clang-format on */
 	/* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::timing_modeStateAllowed_READ
-	return true;
+	return is_detector_read_write_allowed();
 }
 
 //--------------------------------------------------------
@@ -131,7 +138,7 @@ bool MoenchControl::is_triggers_allowed(TANGO_UNUSED(Tango::AttReqType type))
 	/* clang-format on */
 	/* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::triggersStateAllowed_READ
-	return true;
+	return is_detector_read_write_allowed();
 }
 
 //--------------------------------------------------------
@@ -153,7 +160,7 @@ bool MoenchControl::is_frames_allowed(TANGO_UNUSED(Tango::AttReqType type))
 	/* clang-format on */
 	/* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::framesStateAllowed_READ
-	return true;
+	return is_detector_read_write_allowed();
 }
 
 //--------------------------------------------------------
@@ -175,7 +182,7 @@ bool MoenchControl::is_high_voltage_allowed(TANGO_UNUSED(Tango::AttReqType type)
 	/* clang-format on */
 	/* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::high_voltageStateAllowed_READ
-	return true;
+	return is_detector_read_write_allowed();
 }
 
 //--------------------------------------------------------
@@ -197,7 +204,7 @@ bool MoenchControl::is_gain_mode_allowed(TANGO_UNUSED(Tango::AttReqType type))
 	/* clang-format on */
 	/* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::gain_modeStateAllowed_READ
-	return true;
+	return is_detector_read_write_allowed();
 }
 
 //--------------------------------------------------------
@@ -219,7 +226,7 @@ bool MoenchControl::is_period_allowed(TANGO_UNUSED(Tango::AttReqType type))
 	/* clang-format on */
 	/* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::periodStateAllowed_READ
-	return true;
+	return is_detector_read_write_allowed();
 }
 
 //--------------------------------------------------------
@@ -241,7 +248,7 @@ bool MoenchControl::is_zmq_rx_ip_allowed(TANGO_UNUSED(Tango::AttReqType type))
 	/* clang-format on */
 	/* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::zmq_rx_ipStateAllowed_READ
-	return true;
+	return is_detector_read_write_allowed();
 }
 
 //--------------------------------------------------------
@@ -263,7 +270,7 @@ bool MoenchControl::is_zmq_rx_port_allowed(TANGO_UNUSED(Tango::AttReqType type))
 	/* clang-format on */
 	/* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::zmq_rx_portStateAllowed_READ
-	return true;
+	return is_detector_read_write_allowed();
 }
 
 //--------------------------------------------------------
@@ -285,7 +292,7 @@ bool MoenchControl::is_rx_discard_policy_allowed(TANGO_UNUSED(Tango::AttReqType 
 	/* clang-format on */
 	/* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::rx_discard_policyStateAllowed_READ
-	return true;
+	return is_detector_read_write_allowed();
 }
 
 //--------------------------------------------------------
@@ -307,7 +314,7 @@ bool MoenchControl::is_rx_hostname_allowed(TANGO_UNUSED(Tango::AttReqType type))
 	/* clang-format on */
 	/* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::rx_hostnameStateAllowed_READ
-	return true;
+	return is_detector_read_write_allowed();
 }
 
 //--------------------------------------------------------
@@ -329,7 +336,7 @@ bool MoenchControl::is_rx_tcp_port_allowed(TANGO_UNUSED(Tango::AttReqType type))
 	/* clang-format on */
 	/* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::rx_tcp_portStateAllowed_READ
-	return true;
+	return is_detector_read_write_allowed();
 }
 
 //--------------------------------------------------------
@@ -368,7 +375,7 @@ bool MoenchControl::is_rx_zmq_data_stream_allowed(TANGO_UNUSED(Tango::AttReqType
 	/* clang-format on */
 	/* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::rx_zmq_data_streamStateAllowed_READ
-	return true;
+	return is_detector_read_write_allowed();
 }
 
 
