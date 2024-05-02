@@ -69,7 +69,6 @@
 //  triggers            |  Tango::DevLong64	Scalar
 //  frames              |  Tango::DevLong64	Scalar
 //  high_voltage        |  Tango::DevLong64	Scalar
-//  gain_mode           |  Tango::DevEnum	Scalar
 //  period              |  Tango::DevFloat	Scalar
 //  zmq_rx_ip           |  Tango::DevString	Scalar
 //  zmq_rx_port         |  Tango::DevUShort	Scalar
@@ -150,7 +149,6 @@ void MoenchControl::delete_device()
 	delete[] attr_triggers_read;
 	delete[] attr_frames_read;
 	delete[] attr_high_voltage_read;
-	delete[] attr_gain_mode_read;
 	delete[] attr_period_read;
 	delete[] attr_zmq_rx_ip_read;
 	delete[] attr_zmq_rx_port_read;
@@ -187,7 +185,6 @@ void MoenchControl::init_device()
 	attr_triggers_read = new Tango::DevLong64[1];
 	attr_frames_read = new Tango::DevLong64[1];
 	attr_high_voltage_read = new Tango::DevLong64[1];
-	attr_gain_mode_read = new gain_modeEnum[1];
 	attr_period_read = new Tango::DevFloat[1];
 	attr_zmq_rx_ip_read = new Tango::DevString[1];
 	attr_zmq_rx_port_read = new Tango::DevUShort[1];
@@ -684,47 +681,7 @@ void MoenchControl::write_high_voltage(Tango::WAttribute &attr)
 	/* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_high_voltage
 }
-//--------------------------------------------------------
-/**
- *	Read attribute gain_mode related method
- *
- *
- *	Data type:	Tango::DevEnum (gain_modeEnum)
- *	Attr type:	Scalar
- */
-//--------------------------------------------------------
-void MoenchControl::read_gain_mode(Tango::Attribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::read_gain_mode(Tango::Attribute &attr) entering... " << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::read_gain_mode) ENABLED START -----*/
-	/* clang-format on */
-	*attr_gain_mode_read = detector_ptr->getGainMode().front();
-	attr.set_value(attr_gain_mode_read);
-	/* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_gain_mode
-}
-//--------------------------------------------------------
-/**
- *	Write attribute gain_mode related method
- *
- *
- *	Data type:	Tango::DevEnum (gain_modeEnum)
- *	Attr type:	Scalar
- */
-//--------------------------------------------------------
-void MoenchControl::write_gain_mode(Tango::WAttribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::write_gain_mode(Tango::WAttribute &attr) entering... " << std::endl;
-	//	Retrieve write value
-	gain_modeEnum	w_val;
-	attr.get_write_value(w_val);
-	/*----- PROTECTED REGION ID(MoenchControl::write_gain_mode) ENABLED START -----*/
-	/* clang-format on */
-	*attr_gain_mode_read = w_val;
-	detector_ptr->setGainMode(w_val);
-	/* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_gain_mode
-}
+
 //--------------------------------------------------------
 /**
  *	Read attribute period related method

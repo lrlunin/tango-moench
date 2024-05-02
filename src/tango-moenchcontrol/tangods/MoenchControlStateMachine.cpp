@@ -187,28 +187,6 @@ bool MoenchControl::is_high_voltage_allowed(TANGO_UNUSED(Tango::AttReqType type)
 
 //--------------------------------------------------------
 /**
- *	Method      : MoenchControl::is_gain_mode_allowed()
- * Description:  Execution allowed for gain_mode attribute
- */
-//--------------------------------------------------------
-bool MoenchControl::is_gain_mode_allowed(TANGO_UNUSED(Tango::AttReqType type))
-{
-	//	Not any excluded states for gain_mode attribute in Write access.
-	/*----- PROTECTED REGION ID(MoenchControl::gain_modeStateAllowed_WRITE) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::gain_modeStateAllowed_WRITE
-
-	//	Not any excluded states for gain_mode attribute in read access.
-	/*----- PROTECTED REGION ID(MoenchControl::gain_modeStateAllowed_READ) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::gain_modeStateAllowed_READ
-	return is_detector_read_write_allowed();
-}
-
-//--------------------------------------------------------
-/**
  *	Method      : MoenchControl::is_period_allowed()
  * Description:  Execution allowed for period attribute
  */

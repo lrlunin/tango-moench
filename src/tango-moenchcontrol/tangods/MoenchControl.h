@@ -67,17 +67,6 @@ enum class _timing_modeEnum : short {
 using floatsec = std::chrono::duration<float>; 
 typedef slsDetectorDefs::timingMode timing_modeEnum;
 
-enum class _gain_modeEnum : short {
-	_G1_HIGHGAIN,
-	_G1_LOWGAIN,
-	_G2_HIGHCAP_HIGHGAIN,
-	_G2_HIGHCAP_LOWGAIN,
-	_G2_LOWCAP_HIGHGAIN,
-	_G2_LOWCAP_LOWGAIN,
-	_G4_HIGHGAIN,
-	_G4_LOWGAIN,
-} ;
-typedef slsDetectorDefs::gainMode gain_modeEnum;
 
 enum class _rx_discard_policyEnum : short {
 	_NO_DISCARD,
@@ -151,7 +140,6 @@ public:
 	Tango::DevLong64	*attr_triggers_read;
 	Tango::DevLong64	*attr_frames_read;
 	Tango::DevLong64	*attr_high_voltage_read;
-	gain_modeEnum	*attr_gain_mode_read;
 	Tango::DevFloat	*attr_period_read;
 	Tango::DevString	*attr_zmq_rx_ip_read;
 	Tango::DevUShort	*attr_zmq_rx_port_read;
@@ -295,16 +283,7 @@ virtual bool is_detector_read_write_allowed();
 	virtual void read_high_voltage(Tango::Attribute &attr);
 	virtual void write_high_voltage(Tango::WAttribute &attr);
 	virtual bool is_high_voltage_allowed(Tango::AttReqType type);
-/**
- *	Attribute gain_mode related methods
- *
- *
- *	Data type:  Tango::DevEnum
- *	Attr type:	Scalar
- */
-	virtual void read_gain_mode(Tango::Attribute &attr);
-	virtual void write_gain_mode(Tango::WAttribute &attr);
-	virtual bool is_gain_mode_allowed(Tango::AttReqType type);
+
 /**
  *	Attribute period related methods
  *

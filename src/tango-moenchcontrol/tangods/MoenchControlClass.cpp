@@ -605,42 +605,6 @@ void MoenchControlClass::attribute_factory(std::vector<Tango::Attr *> &att_list)
 	high_voltage->set_memorized_init(true);
 	att_list.push_back(high_voltage);
 
-	//	Attribute : gain_mode
-	gain_modeAttrib	*gain_mode = new gain_modeAttrib();
-	Tango::UserDefaultAttrProp	gain_mode_prop;
-	//	description	not set for gain_mode
-	gain_mode_prop.set_label("gain mode");
-	//	unit	not set for gain_mode
-	//	standard_unit	not set for gain_mode
-	//	display_unit	not set for gain_mode
-	//	format	not set for gain_mode
-	//	max_value	not set for gain_mode
-	//	min_value	not set for gain_mode
-	//	max_alarm	not set for gain_mode
-	//	min_alarm	not set for gain_mode
-	//	max_warning	not set for gain_mode
-	//	min_warning	not set for gain_mode
-	//	delta_t	not set for gain_mode
-	//	delta_val	not set for gain_mode
-	{
-		std::vector<std::string> labels;
-		labels.push_back("G1_HIGHGAIN");
-		labels.push_back("G1_LOWGAIN");
-		labels.push_back("G2_HIGHCAP_HIGHGAIN");
-		labels.push_back("G2_HIGHCAP_LOWGAIN");
-		labels.push_back("G2_LOWCAP_HIGHGAIN");
-		labels.push_back("G2_LOWCAP_LOWGAIN");
-		labels.push_back("G4_HIGHGAIN");
-		labels.push_back("G4_LOWGAIN");
-		gain_mode_prop.set_enum_labels(labels);
-	}
-	gain_mode->set_default_properties(gain_mode_prop);
-	//	Not Polled
-	gain_mode->set_disp_level(Tango::EXPERT);
-	gain_mode->set_memorized();
-	gain_mode->set_memorized_init(true);
-	att_list.push_back(gain_mode);
-
 	//	Attribute : period
 	periodAttrib	*period = new periodAttrib();
 	Tango::UserDefaultAttrProp	period_prop;

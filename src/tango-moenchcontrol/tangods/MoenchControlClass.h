@@ -148,23 +148,6 @@ public:
 		{return (static_cast<MoenchControl *>(dev))->is_high_voltage_allowed(ty);}
 };
 
-//	Attribute gain_mode class definition
-class gain_modeAttrib: public Tango::Attr
-{
-public:
-	gain_modeAttrib():Attr("gain_mode",
-			Tango::DEV_ENUM, Tango::READ_WRITE) {};
-	~gain_modeAttrib() {};
-	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
-		{(static_cast<MoenchControl *>(dev))->read_gain_mode(att);}
-	virtual void write(Tango::DeviceImpl *dev,Tango::WAttribute &att)
-		{(static_cast<MoenchControl *>(dev))->write_gain_mode(att);}
-	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
-		{return (static_cast<MoenchControl *>(dev))->is_gain_mode_allowed(ty);}
-	virtual bool same_type(const std::type_info &in_type) {return typeid(gain_modeEnum) == in_type;}
-	virtual std::string get_enum_type() {return std::string("gain_modeEnum");}
-};
-
 //	Attribute period class definition
 class periodAttrib: public Tango::Attr
 {
