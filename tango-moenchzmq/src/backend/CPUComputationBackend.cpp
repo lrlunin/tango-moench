@@ -31,7 +31,7 @@ CPUComputationBackend::~CPUComputationBackend(){
 };
 
 void CPUComputationBackend::initThreads(){
-    for (int x = 0; x < THREAD_AMOIUNT; ++x){
+    for (int x = 0; x < THREAD_AMOUNT; ++x){
            threads.push_back(thread(&CPUComputationBackend::threadTask, this));
     }
 }

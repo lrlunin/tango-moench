@@ -26,7 +26,7 @@ public:
     std::atomic<long> live_period;
 
 
-    int THREAD_AMOIUNT = 10;
+    int THREAD_AMOUNT = 10;
     void initThreads();
     void pause();
     void resume();
