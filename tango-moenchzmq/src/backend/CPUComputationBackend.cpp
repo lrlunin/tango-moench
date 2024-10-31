@@ -22,17 +22,28 @@ CPUComputationBackend::CPUComputationBackend(FileWriter* fileWriter):frame_ptr_q
 };
 
 CPUComputationBackend::~CPUComputationBackend(){
-    delete[] individual_analog_storage_ptr;
+    destroyThreads();
     #ifdef SINGLE_FRAMES_DEBUG
     delete[] pedestal_storage_ptr;
     delete[] pedestal_rms_storage_ptr;
     delete[] frame_classes_storage_ptr;
     #endif
+    delete[] individual_analog_storage_ptr;
 };
 
 void CPUComputationBackend::initThreads(){
+    // creation of kind of thread pool, maybe can be done better with async and futures
     for (int x = 0; x < THREAD_AMOUNT; ++x){
-           threads.push_back(thread(&CPUComputationBackend::threadTask, this));
+           auto t = thread(&CPUComputationBackend::threadTask, this);
+           threads.push_back(move(t));
+    }
+}
+void CPUComputationBackend::destroyThreads(){
+    // send signal to threads to stop in threadTask loop
+    destroy_threads = true;
+    // before this object is destroyed, we need to join all threads
+    for (auto &thread : threads){
+        thread.join();
     }
 }
 void CPUComputationBackend::pause(){
@@ -211,7 +222,8 @@ void CPUComputationBackend::threadTask(){
             while (!threads_sleep && frame_ptr_queue.pop(ff_ptr)){
                 CPUComputationBackend::processFrame(ff_ptr);
             }
-            //printf("either queue is empty or set to sleep\n");
             this_thread::sleep_for(0.03s);
+            // if the threads should be destroyed, we should break the loop
+            if (destroy_threads) break;
         }
 }

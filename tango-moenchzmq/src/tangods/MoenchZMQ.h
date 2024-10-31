@@ -74,8 +74,12 @@ public:
 
 //	Attribute data members
 public:
-	std::unique_ptr<ZMQListener> zmq_listener_ptr;
+	/*
+	Order of the attributes affects the order of their destruction.
+	Since the FileWriter is used in the ZMQListener, it must be destroyed after the ZMQListener.
+	*/
 	std::unique_ptr<FileWriter> file_writer_ptr;
+	std::unique_ptr<ZMQListener> zmq_listener_ptr;
 	Tango::DevULong	*attr_file_index_read;
 	Tango::DevString	*attr_file_name_read;
 	Tango::DevString	*attr_session_directory_read;

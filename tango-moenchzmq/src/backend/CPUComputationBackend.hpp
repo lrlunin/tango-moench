@@ -11,23 +11,30 @@
 class CPUComputationBackend {
 public:
     typedef boost::singleton_pool<FullFrame, sizeof(FullFrame)> memory_pool;
-    CPUComputationBackend(std::string save_root_path);
-    CPUComputationBackend(FileWriter *fileWriter);
-    ~CPUComputationBackend();
+    boost::lockfree::queue<FullFrame*> frame_ptr_queue;
+    FileWriter* fileWriter;
+    int THREAD_AMOUNT = 10;
+    std::atomic_bool threads_sleep = true;
+    std::atomic_bool destroy_threads = false;
+    std::vector<std::thread> threads;
     std::string save_root_path, file_path, file_name;
     std::atomic<float> counting_sigma = 4;
     std::atomic<long> file_index;
     size_t individual_frame_buffer_capacity = 300;
-    boost::lockfree::queue<FullFrame*> frame_ptr_queue;
-    std::vector<std::thread> threads;
+    
+    
     std::shared_mutex pedestal_share;
     std::mutex frames_sums;
     std::atomic<long> processed_frames_amount;
     std::atomic<long> live_period;
 
 
-    int THREAD_AMOUNT = 10;
+    
+    CPUComputationBackend(std::string save_root_path);
+    CPUComputationBackend(FileWriter *fileWriter);
+    ~CPUComputationBackend();
     void initThreads();
+    void destroyThreads();
     void pause();
     void resume();
     void allocateIndividualStorage();
@@ -57,7 +64,6 @@ public:
     std::atomic_bool isSplitPumped = false;
     std::atomic_bool isPedestal = true;
     std::atomic<long> updatePedestalPeriod = 1;
-    std::atomic_bool threads_sleep = true;
     std::atomic_bool saveIndividualFrames = true;
     float* individual_analog_storage_ptr = nullptr;
     #ifdef SINGLE_FRAMES_DEBUG
@@ -65,5 +71,4 @@ public:
     float* pedestal_rms_storage_ptr = nullptr;
     char* frame_classes_storage_ptr = nullptr;
     #endif
-    std::unique_ptr<FileWriter> fileWriter;
 };

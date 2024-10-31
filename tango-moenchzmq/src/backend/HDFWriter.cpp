@@ -6,9 +6,7 @@
 #include <chrono>
 #include <fmt/chrono.h>
 
-
-HDFWriter::HDFWriter(std::filesystem::path root_path):HDFWriter(-1, root_path){};
-HDFWriter::HDFWriter(int file_index, std::filesystem::path root_path):FileWriter(file_index, root_path){
+HDFWriter::HDFWriter(std::filesystem::path root_path, int file_index):FileWriter(root_path, file_index){
     const auto now = std::chrono::system_clock::now();
     file_name = fmt::format("{:%Y%m%d}_run", now);
     session_directory = fmt::format("{:%Y%m%d}_run", now);
@@ -28,6 +26,8 @@ HDFWriter::HDFWriter(int file_index, std::filesystem::path root_path):FileWriter
     init_file_index++;
     this->file_index = init_file_index;
 };
+HDFWriter::HDFWriter(std::filesystem::path root_path):HDFWriter(root_path, -1){};
+HDFWriter::~HDFWriter(){};
 std::filesystem::path HDFWriter::buildFullDirectoryPath() {
     std::filesystem::path full_directory_path = root_path;
     full_directory_path /= session_directory;

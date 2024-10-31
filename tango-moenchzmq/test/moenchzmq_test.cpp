@@ -7,6 +7,6 @@
 TEST(MoenchZMQTest, TypeAssertions) {
   std::unique_ptr<FileWriter> file_writer_ptr = std::make_unique<HDFWriter>("/tmp");
   
-  std::unique_ptr<CPUComputationBackend> cmb_ptr = std::make_unique<CPUComputationBackend>(file_writer_ptr.get());
-  EXPECT_GT(5, 1);//cmb_ptr->THREAD_AMOUNT, 0);
+  std::unique_ptr<CPUComputationBackend> computation_backend_ptr = std::make_unique<CPUComputationBackend>(file_writer_ptr.get());
+  EXPECT_GT(computation_backend_ptr->THREAD_AMOUNT, 0);
 }
