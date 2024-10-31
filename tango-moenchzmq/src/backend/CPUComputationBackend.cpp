@@ -91,11 +91,13 @@ void CPUComputationBackend::dumpAccumulators(){
     if (saveIndividualFrames){
         // no need to check if max_frame_index < individual_frame_buffer_capacity since it was check in the processFrame()
         int max_frame_index = *std::max_element(frameindex_storage_ptr, frameindex_storage_ptr+individual_frame_buffer_capacity);
-        fileWriter->writeFrameStack("individual_frames", "analog", individual_analog_storage_ptr, max_frame_index);
+        // for the frameindex of 0...max_frame_index there are max_frame_index+1 frames
+        int max_stack_length = max_frame_index + 1;
+        fileWriter->writeFrameStack("individual_frames", "analog", individual_analog_storage_ptr, max_stack_length);
         #ifdef SINGLE_FRAMES_DEBUG
-        fileWriter->writeFrameStack("individual_frames", "pedestal", pedestal_storage_ptr, max_frame_index);
-        fileWriter->writeFrameStack("individual_frames", "pedestal_rms", pedestal_rms_storage_ptr, max_frame_index);
-        fileWriter->writeFrameStack("individual_frames", "frame_classes", frame_classes_storage_ptr, max_frame_index);
+        fileWriter->writeFrameStack("individual_frames", "pedestal", pedestal_storage_ptr, max_stack_length);
+        fileWriter->writeFrameStack("individual_frames", "pedestal_rms", pedestal_rms_storage_ptr, max_stack_length);
+        fileWriter->writeFrameStack("individual_frames", "frame_classes", frame_classes_storage_ptr, max_stack_length);
         #endif
     }
     fileWriter->closeFile();
