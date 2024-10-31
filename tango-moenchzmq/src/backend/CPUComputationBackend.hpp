@@ -18,6 +18,7 @@ public:
     std::atomic_bool destroy_threads = false;
     std::vector<std::thread> threads;
     std::string save_root_path, file_path, file_name;
+    int max_frame_index = 0;
     std::atomic<float> counting_sigma = 4;
     std::atomic<long> file_index;
     size_t individual_frame_buffer_capacity = 300;
@@ -65,6 +66,7 @@ public:
     std::atomic_bool isPedestal = true;
     std::atomic<long> updatePedestalPeriod = 1;
     std::atomic_bool saveIndividualFrames = true;
+    int* frameindex_storage_ptr = nullptr;
     float* individual_analog_storage_ptr = nullptr;
     #ifdef SINGLE_FRAMES_DEBUG
     float* pedestal_storage_ptr = nullptr;

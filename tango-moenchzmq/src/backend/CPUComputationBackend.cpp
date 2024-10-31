@@ -29,6 +29,7 @@ CPUComputationBackend::~CPUComputationBackend(){
     delete[] frame_classes_storage_ptr;
     #endif
     delete[] individual_analog_storage_ptr;
+    delete frameindex_storage_ptr;
 };
 
 void CPUComputationBackend::initThreads(){
@@ -55,6 +56,10 @@ void CPUComputationBackend::resume(){
 }
 
 void CPUComputationBackend::allocateIndividualStorage(){
+    delete[] frameindex_storage_ptr;
+    frameindex_storage_ptr = new int[individual_frame_buffer_capacity];
+    // fill with zeros, because we will take the max value later
+    std::fill(frameindex_storage_ptr, frameindex_storage_ptr + individual_frame_buffer_capacity, 0);
     delete[] individual_analog_storage_ptr;
     individual_analog_storage_ptr = new float[individual_frame_buffer_capacity*consts::LENGTH];
     #ifdef SINGLE_FRAMES_DEBUG
@@ -84,11 +89,13 @@ void CPUComputationBackend::dumpAccumulators(){
     fileWriter->writeFrame("images_sum", "analog_sum", analog_sum);
     fileWriter->writeFrame("images_sum", "counting_sum", counting_sum);
     if (saveIndividualFrames){
-        fileWriter->writeFrameStack("individual_frames", "analog", individual_analog_storage_ptr, individual_frame_buffer_capacity);
+        // no need to check if max_frame_index < individual_frame_buffer_capacity since it was check in the processFrame()
+        int max_frame_index = *std::max_element(frameindex_storage_ptr, frameindex_storage_ptr+individual_frame_buffer_capacity);
+        fileWriter->writeFrameStack("individual_frames", "analog", individual_analog_storage_ptr, max_frame_index);
         #ifdef SINGLE_FRAMES_DEBUG
-        fileWriter->writeFrameStack("individual_frames", "pedestal", pedestal_storage_ptr, individual_frame_buffer_capacity);
-        fileWriter->writeFrameStack("individual_frames", "pedestal_rms", pedestal_rms_storage_ptr, individual_frame_buffer_capacity);
-        fileWriter->writeFrameStack("individual_frames", "frame_classes", frame_classes_storage_ptr, individual_frame_buffer_capacity);
+        fileWriter->writeFrameStack("individual_frames", "pedestal", pedestal_storage_ptr, max_frame_index);
+        fileWriter->writeFrameStack("individual_frames", "pedestal_rms", pedestal_rms_storage_ptr, max_frame_index);
+        fileWriter->writeFrameStack("individual_frames", "frame_classes", frame_classes_storage_ptr, max_frame_index);
         #endif
     }
     fileWriter->closeFile();
@@ -137,6 +144,22 @@ void CPUComputationBackend::processFrame(FullFrame *ff_ptr){
             std::memcpy(frame_classes_storage_ptr+frameindex*consts::LENGTH, frame_classes.arr, sizeof(OrderedFrame<char, consts::LENGTH>::arr));
             #endif
             //std::memcpy(individual_analog_storage_ptr+frameindex*consts::LENGTH, frame_subtracted_pedestal.arr, sizeof(OrderedFrame<float, consts::LENGTH>::arr));
+            /*
+            You might be thinking why we just not save the max frame index and this is correct
+            unfortunately there is no safe way to async save the max frame index.
+
+            If you would do something like this:
+            max_frame_index = std::max(max_frame_index, frameindex);
+
+            There is a chance that after max_frame_index read and before max_frame_index write
+            the max_frame_index will be changed by another thread and the value will be lost.
+            
+            Therefore we save all frameindexes and after the processing we took the max value.
+
+            The std::atomic<T>::fetch_max is not available till C++26, while not all features
+            of C++20 are available in the current version of GCC.
+            */
+            frameindex_storage_ptr[frameindex] = frameindex;
         }
     }
     processed_frames_amount++;
