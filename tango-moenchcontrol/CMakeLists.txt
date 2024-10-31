@@ -18,6 +18,15 @@ URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4b
 )
 FetchContent_MakeAvailable(googletest)
 
-enable_testing()
+# for code coverage
+# include(CodeCoverage)
+# APPEND_COVERAGE_COMPILER_FLAGS()
+# setup_target_for_coverage_lcov(
+#     NAME coverage
+#     EXECUTABLE ctest -j
+#     EXCLUDE "/usr/*"
+#     DEPENDENCIES
+#         moenchcontrol_test)
 
+enable_testing()
 add_subdirectory(test)

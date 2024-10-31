@@ -4,4 +4,4 @@ set(MOENCHCONTROL_TANGODS_SRC_FILES ${SRC_FILES}
     ${CMAKE_CURRENT_SOURCE_DIR}/MoenchControl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MoenchControlClass.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MoenchControlStateMachine.cpp
-    CACHE INTERNAL "")
+    PARENT_SCOPE)
