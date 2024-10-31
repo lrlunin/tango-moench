@@ -6,7 +6,6 @@ find_package(ZeroMQ REQUIRED)
 find_package(Boost REQUIRED)
 find_package(slsDetectorPackage 8.0 REQUIRED)
 
-
 add_subdirectory(tangods)
 
 add_executable(MoenchControl ${MOENCHCONTROL_TANGODS_SRC_FILES})
