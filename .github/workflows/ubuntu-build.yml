@@ -10,7 +10,7 @@ on:
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
-  BUILD_TYPE: Release
+  BUILD_TYPE: Debug
 
 jobs:
   build:
@@ -26,6 +26,9 @@ jobs:
 
     - name: Set core counter
       run: echo "CPU_CORES=${{ steps.cpu-cores.outputs.count }}" >> $GITHUB_ENV
+
+    - name: Install lcov for code coverage generation
+      run: sudo apt-get update && sudo apt-get install lcov
 
     - name: Install both own, tango and slsDetectorPackage dependencies
       run: sudo apt-get update && sudo apt-get install -y libzmq3-dev libtiff-dev libhdf5-dev libfmt-dev rapidjson-dev libboost-dev libmariadb-dev zlib1g-dev libomniorb4-dev libcos4-dev omniidl
@@ -66,4 +69,13 @@ jobs:
     - name: Build our repository
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build -j$CPU_CORES --config ${{env.BUILD_TYPE}}
- 
+
+    - name: Run tests and generate coverage report
+      working-directory: build
+      run: make coverage
+    
+    - name: Upload coverage report
+      uses: codecov/codecov-action@v2
+        with:
+          files: ./build/coverage.info
+          fail_ci_if_error: true

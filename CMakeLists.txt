@@ -8,6 +8,17 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 set(CMAKE_CXX_FLAGS_DEBUG "-g -fprofile-arcs -ftest-coverage")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
-enable_testing()
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    enable_testing()
+        # for code coverage
+    include(CodeCoverage)
+    setup_target_for_coverage_lcov(
+        NAME coverage
+        EXECUTABLE ctest -j
+        EXCLUDE "/usr/*" "build/_deps/*" "*/test/*" "*/tangods/*"
+        DEPENDENCIES
+            hdfwriter_test
+            moenchzmq_test)
+endif()
 add_subdirectory(tango-moenchzmq)
 add_subdirectory(tango-moenchcontrol)

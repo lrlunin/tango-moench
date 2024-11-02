@@ -32,8 +32,10 @@ CPUComputationBackend::~CPUComputationBackend() {
 };
 
 void CPUComputationBackend::initThreads() {
-  // creation of kind of thread pool, maybe can be done better with async and
-  // futures
+  /*
+   * Creation of kind of thread pool instead of spawning threads.
+   * Maybe can be done better with async and futures.
+   */
   for (int x = 0; x < THREAD_AMOUNT; ++x) {
     auto t = thread(&CPUComputationBackend::threadTask, this);
     threads.push_back(move(t));
