@@ -56,8 +56,11 @@ struct OrderedFrame{
             arr[i] += (classes.arr[i] == class_nr);
         }
     }
+    void fill(T value){
+        std::fill(arr, arr + V, value);
+    }
     void zero(){
-        std::fill(arr, arr + V, 0);
+        fill(0.0);
     }
 };
 struct Metadata{
