@@ -14,7 +14,7 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     include(CodeCoverage)
     setup_target_for_coverage_lcov(
         NAME coverage
-        EXECUTABLE ctest -j
+        EXECUTABLE ctest --output-on-failure
         EXCLUDE "/usr/*" "build/_deps/*" "*/test/*" "*/tangods/*"
         DEPENDENCIES
             hdfwriter_test
