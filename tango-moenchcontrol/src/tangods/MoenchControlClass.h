@@ -34,12 +34,11 @@
 //        (Program Obviously used to Generate tango Object)
 //=============================================================================
 
-
 #ifndef MoenchControlClass_H
 #define MoenchControlClass_H
 
-#include <tango/tango.h>
 #include "MoenchControl.h"
+#include <tango/tango.h>
 
 /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchControlClass.h
@@ -345,9 +344,9 @@ class MoenchControlClass : public Tango::DeviceClass
 #endif
 {
 	/*----- PROTECTED REGION ID(MoenchControlClass::Additional DServer data members) ENABLED START -----*/
-	/* clang-format on */
-	//	Add your own code
-	/* clang-format off */
+  /* clang-format on */
+  //	Add your own code
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::Additional DServer data members
 
 	public:

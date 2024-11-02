@@ -63,14 +63,14 @@ bool MoenchControl::is_exposure_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
 	//	Not any excluded states for exposure attribute in Write access.
 	/*----- PROTECTED REGION ID(MoenchControl::exposureStateAllowed_WRITE) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::exposureStateAllowed_WRITE
 
 	//	Not any excluded states for exposure attribute in read access.
 	/*----- PROTECTED REGION ID(MoenchControl::exposureStateAllowed_READ) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::exposureStateAllowed_READ
 	return is_detector_read_write_allowed();
 }
@@ -85,14 +85,14 @@ bool MoenchControl::is_delay_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
 	//	Not any excluded states for delay attribute in Write access.
 	/*----- PROTECTED REGION ID(MoenchControl::delayStateAllowed_WRITE) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::delayStateAllowed_WRITE
 
 	//	Not any excluded states for delay attribute in read access.
 	/*----- PROTECTED REGION ID(MoenchControl::delayStateAllowed_READ) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::delayStateAllowed_READ
 	return is_detector_read_write_allowed();
 }
@@ -107,14 +107,14 @@ bool MoenchControl::is_timing_mode_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
 	//	Not any excluded states for timing_mode attribute in Write access.
 	/*----- PROTECTED REGION ID(MoenchControl::timing_modeStateAllowed_WRITE) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::timing_modeStateAllowed_WRITE
 
 	//	Not any excluded states for timing_mode attribute in read access.
 	/*----- PROTECTED REGION ID(MoenchControl::timing_modeStateAllowed_READ) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::timing_modeStateAllowed_READ
 	return is_detector_read_write_allowed();
 }
@@ -129,14 +129,14 @@ bool MoenchControl::is_triggers_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
 	//	Not any excluded states for triggers attribute in Write access.
 	/*----- PROTECTED REGION ID(MoenchControl::triggersStateAllowed_WRITE) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::triggersStateAllowed_WRITE
 
 	//	Not any excluded states for triggers attribute in read access.
 	/*----- PROTECTED REGION ID(MoenchControl::triggersStateAllowed_READ) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::triggersStateAllowed_READ
 	return is_detector_read_write_allowed();
 }
@@ -151,14 +151,14 @@ bool MoenchControl::is_frames_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
 	//	Not any excluded states for frames attribute in Write access.
 	/*----- PROTECTED REGION ID(MoenchControl::framesStateAllowed_WRITE) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::framesStateAllowed_WRITE
 
 	//	Not any excluded states for frames attribute in read access.
 	/*----- PROTECTED REGION ID(MoenchControl::framesStateAllowed_READ) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::framesStateAllowed_READ
 	return is_detector_read_write_allowed();
 }
@@ -173,14 +173,14 @@ bool MoenchControl::is_high_voltage_allowed(TANGO_UNUSED(Tango::AttReqType type)
 {
 	//	Not any excluded states for high_voltage attribute in Write access.
 	/*----- PROTECTED REGION ID(MoenchControl::high_voltageStateAllowed_WRITE) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::high_voltageStateAllowed_WRITE
 
 	//	Not any excluded states for high_voltage attribute in read access.
 	/*----- PROTECTED REGION ID(MoenchControl::high_voltageStateAllowed_READ) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::high_voltageStateAllowed_READ
 	return is_detector_read_write_allowed();
 }
@@ -195,14 +195,14 @@ bool MoenchControl::is_period_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
 	//	Not any excluded states for period attribute in Write access.
 	/*----- PROTECTED REGION ID(MoenchControl::periodStateAllowed_WRITE) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::periodStateAllowed_WRITE
 
 	//	Not any excluded states for period attribute in read access.
 	/*----- PROTECTED REGION ID(MoenchControl::periodStateAllowed_READ) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::periodStateAllowed_READ
 	return is_detector_read_write_allowed();
 }
@@ -217,14 +217,14 @@ bool MoenchControl::is_zmq_rx_ip_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
 	//	Not any excluded states for zmq_rx_ip attribute in Write access.
 	/*----- PROTECTED REGION ID(MoenchControl::zmq_rx_ipStateAllowed_WRITE) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::zmq_rx_ipStateAllowed_WRITE
 
 	//	Not any excluded states for zmq_rx_ip attribute in read access.
 	/*----- PROTECTED REGION ID(MoenchControl::zmq_rx_ipStateAllowed_READ) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::zmq_rx_ipStateAllowed_READ
 	return is_detector_read_write_allowed();
 }
@@ -239,14 +239,14 @@ bool MoenchControl::is_zmq_rx_port_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
 	//	Not any excluded states for zmq_rx_port attribute in Write access.
 	/*----- PROTECTED REGION ID(MoenchControl::zmq_rx_portStateAllowed_WRITE) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::zmq_rx_portStateAllowed_WRITE
 
 	//	Not any excluded states for zmq_rx_port attribute in read access.
 	/*----- PROTECTED REGION ID(MoenchControl::zmq_rx_portStateAllowed_READ) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::zmq_rx_portStateAllowed_READ
 	return is_detector_read_write_allowed();
 }
@@ -261,14 +261,14 @@ bool MoenchControl::is_rx_discard_policy_allowed(TANGO_UNUSED(Tango::AttReqType 
 {
 	//	Not any excluded states for rx_discard_policy attribute in Write access.
 	/*----- PROTECTED REGION ID(MoenchControl::rx_discard_policyStateAllowed_WRITE) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::rx_discard_policyStateAllowed_WRITE
 
 	//	Not any excluded states for rx_discard_policy attribute in read access.
 	/*----- PROTECTED REGION ID(MoenchControl::rx_discard_policyStateAllowed_READ) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::rx_discard_policyStateAllowed_READ
 	return is_detector_read_write_allowed();
 }
@@ -283,14 +283,14 @@ bool MoenchControl::is_rx_hostname_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
 	//	Not any excluded states for rx_hostname attribute in Write access.
 	/*----- PROTECTED REGION ID(MoenchControl::rx_hostnameStateAllowed_WRITE) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::rx_hostnameStateAllowed_WRITE
 
 	//	Not any excluded states for rx_hostname attribute in read access.
 	/*----- PROTECTED REGION ID(MoenchControl::rx_hostnameStateAllowed_READ) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::rx_hostnameStateAllowed_READ
 	return is_detector_read_write_allowed();
 }
@@ -305,14 +305,14 @@ bool MoenchControl::is_rx_tcp_port_allowed(TANGO_UNUSED(Tango::AttReqType type))
 {
 	//	Not any excluded states for rx_tcp_port attribute in Write access.
 	/*----- PROTECTED REGION ID(MoenchControl::rx_tcp_portStateAllowed_WRITE) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::rx_tcp_portStateAllowed_WRITE
 
 	//	Not any excluded states for rx_tcp_port attribute in read access.
 	/*----- PROTECTED REGION ID(MoenchControl::rx_tcp_portStateAllowed_READ) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::rx_tcp_portStateAllowed_READ
 	return is_detector_read_write_allowed();
 }
@@ -328,8 +328,8 @@ bool MoenchControl::is_detector_status_allowed(TANGO_UNUSED(Tango::AttReqType ty
 
 	//	Not any excluded states for detector_status attribute in read access.
 	/*----- PROTECTED REGION ID(MoenchControl::detector_statusStateAllowed_READ) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::detector_statusStateAllowed_READ
 	return true;
 }
@@ -344,14 +344,14 @@ bool MoenchControl::is_rx_zmq_data_stream_allowed(TANGO_UNUSED(Tango::AttReqType
 {
 	//	Not any excluded states for rx_zmq_data_stream attribute in Write access.
 	/*----- PROTECTED REGION ID(MoenchControl::rx_zmq_data_streamStateAllowed_WRITE) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::rx_zmq_data_streamStateAllowed_WRITE
 
 	//	Not any excluded states for rx_zmq_data_stream attribute in read access.
 	/*----- PROTECTED REGION ID(MoenchControl::rx_zmq_data_streamStateAllowed_READ) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::rx_zmq_data_streamStateAllowed_READ
 	return is_detector_read_write_allowed();
 }
@@ -371,8 +371,8 @@ bool MoenchControl::is_start_acquire_allowed(TANGO_UNUSED(const CORBA::Any &any)
 {
 	//	Not any excluded states for start_acquire command.
 	/*----- PROTECTED REGION ID(MoenchControl::start_acquireStateAllowed) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::start_acquireStateAllowed
 	return true;
 }
@@ -387,8 +387,8 @@ bool MoenchControl::is_stop_acquire_allowed(TANGO_UNUSED(const CORBA::Any &any))
 {
 	//	Not any excluded states for stop_acquire command.
 	/*----- PROTECTED REGION ID(MoenchControl::stop_acquireStateAllowed) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::stop_acquireStateAllowed
 	return true;
 }
@@ -396,9 +396,9 @@ bool MoenchControl::is_stop_acquire_allowed(TANGO_UNUSED(const CORBA::Any &any))
 
 /*----- PROTECTED REGION ID(MoenchControl::MoenchControlStateAllowed.AdditionalMethods) ENABLED START -----*/
 /* clang-format on */
-bool MoenchControl::is_triggers_left_allowed(TANGO_UNUSED(const Tango::AttReqType type))
-{
-	return true;
+bool MoenchControl::is_triggers_left_allowed(
+    TANGO_UNUSED(const Tango::AttReqType type)) {
+  return true;
 }
 /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchControl::MoenchControlStateAllowed.AdditionalMethods

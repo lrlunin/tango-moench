@@ -34,7 +34,6 @@
 //        (Program Obviously used to Generate tango Object)
 //=============================================================================
 
-
 #include "MoenchControlClass.h"
 /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchControlClass.cpp
@@ -82,8 +81,8 @@ MoenchControlClass::MoenchControlClass(std::string &s):Tango::DeviceClass(s)
 	write_class_property();
 
 	/*----- PROTECTED REGION ID(MoenchControlClass::constructor) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::constructor
 
 	TANGO_LOG_INFO << "Leaving MoenchControlClass constructor" << std::endl;
@@ -98,8 +97,8 @@ MoenchControlClass::MoenchControlClass(std::string &s):Tango::DeviceClass(s)
 MoenchControlClass::~MoenchControlClass()
 {
 	/*----- PROTECTED REGION ID(MoenchControlClass::destructor) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::destructor
 
 	_instance = NULL;
@@ -406,9 +405,9 @@ get_db_class()->put_property(data);
 void MoenchControlClass::device_factory(const Tango::DevVarStringArray *devlist_ptr)
 {
 /*----- PROTECTED REGION ID(MoenchControlClass::device_factory_before) ENABLED START -----*/
-/* clang-format on */
-//	Add your own code
-/* clang-format off */
+  /* clang-format on */
+  //	Add your own code
+  /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchControlClass::device_factory_before
 
 //	Create devices and add it into the device list
@@ -436,9 +435,9 @@ for (unsigned long i=1 ; i<=devlist_ptr->length() ; i++)
 }
 
 /*----- PROTECTED REGION ID(MoenchControlClass::device_factory_after) ENABLED START -----*/
-/* clang-format on */
-//	Add your own code
-/* clang-format off */
+  /* clang-format on */
+  //	Add your own code
+  /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchControlClass::device_factory_after
 }
 //--------------------------------------------------------
@@ -451,9 +450,9 @@ for (unsigned long i=1 ; i<=devlist_ptr->length() ; i++)
 void MoenchControlClass::attribute_factory(std::vector<Tango::Attr *> &att_list)
 {
 	/*----- PROTECTED REGION ID(MoenchControlClass::attribute_factory_before) ENABLED START -----*/
-	/* clang-format on */
-	//	Add your own code
-	/* clang-format off */
+  /* clang-format on */
+  //	Add your own code
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::attribute_factory_before
 	//	Attribute : exposure
 	exposureAttrib	*exposure = new exposureAttrib();
@@ -841,9 +840,9 @@ void MoenchControlClass::attribute_factory(std::vector<Tango::Attr *> &att_list)
 	//	Create a list of static attributes
 	create_static_attribute_list(get_class_attr()->get_attr_list());
 	/*----- PROTECTED REGION ID(MoenchControlClass::attribute_factory_after) ENABLED START -----*/
-	/* clang-format on */
-	//	Add your own code
-	/* clang-format off */
+  /* clang-format on */
+  //	Add your own code
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::attribute_factory_after
 }
 //--------------------------------------------------------
@@ -856,14 +855,14 @@ void MoenchControlClass::attribute_factory(std::vector<Tango::Attr *> &att_list)
 void MoenchControlClass::pipe_factory()
 {
 	/*----- PROTECTED REGION ID(MoenchControlClass::pipe_factory_before) ENABLED START -----*/
-	/* clang-format on */
-	//	Add your own code
-	/* clang-format off */
+  /* clang-format on */
+  //	Add your own code
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::pipe_factory_before
 	/*----- PROTECTED REGION ID(MoenchControlClass::pipe_factory_after) ENABLED START -----*/
-	/* clang-format on */
-	//	Add your own code
-	/* clang-format off */
+  /* clang-format on */
+  //	Add your own code
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::pipe_factory_after
 }
 //--------------------------------------------------------
@@ -876,9 +875,9 @@ void MoenchControlClass::pipe_factory()
 void MoenchControlClass::command_factory()
 {
 	/*----- PROTECTED REGION ID(MoenchControlClass::command_factory_before) ENABLED START -----*/
-	/* clang-format on */
-	//	Add your own code
-	/* clang-format off */
+  /* clang-format on */
+  //	Add your own code
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::command_factory_before
 
 
@@ -901,9 +900,9 @@ void MoenchControlClass::command_factory()
 	command_list.push_back(pstop_acquireCmd);
 
 	/*----- PROTECTED REGION ID(MoenchControlClass::command_factory_after) ENABLED START -----*/
-	/* clang-format on */
-	//	Add your own code
-	/* clang-format off */
+  /* clang-format on */
+  //	Add your own code
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::command_factory_after
 }
 
@@ -931,8 +930,8 @@ void MoenchControlClass::create_static_attribute_list(std::vector<Tango::Attr *>
 	TANGO_LOG_INFO << defaultAttList.size() << " attributes in default list" << std::endl;
 
 	/*----- PROTECTED REGION ID(MoenchControlClass::create_static_att_list) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::create_static_att_list
 }
 
@@ -973,8 +972,8 @@ void MoenchControlClass::erase_dynamic_attributes(const Tango::DevVarStringArray
 		}
 	}
 	/*----- PROTECTED REGION ID(MoenchControlClass::erase_dynamic_attributes) ENABLED START -----*/
-	/* clang-format on */
-	/* clang-format off */
+  /* clang-format on */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::erase_dynamic_attributes
 }
 

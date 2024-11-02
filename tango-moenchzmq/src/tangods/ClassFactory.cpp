@@ -23,20 +23,18 @@
 //        (Program Obviously used to Generate tango Object)
 //=============================================================================
 
-#include <tango/tango.h>
 #include "MoenchZMQClass.h"
+#include <tango/tango.h>
 
 //	Add class header files if needed
-
 
 /**
  *	Create MoenchZMQ Class singleton and store it in DServer object.
  */
 
-void Tango::DServer::class_factory()
-{
-	//	Add method class init if needed
-	add_class(MoenchZMQ_ns::MoenchZMQClass::init("MoenchZMQ"));
+void Tango::DServer::class_factory() {
+  //	Add method class init if needed
+  add_class(MoenchZMQ_ns::MoenchZMQClass::init("MoenchZMQ"));
 }
 /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchZMQ::ClassFactory.cpp

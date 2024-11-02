@@ -24,12 +24,11 @@
 //        (Program Obviously used to Generate tango Object)
 //=============================================================================
 
-
 #include "MoenchZMQ.h"
-#include "MoenchZMQClass.h"
-#include "data.hpp"
 #include "../backend/FileWriter.hpp"
 #include "../backend/HDFWriter.hpp"
+#include "MoenchZMQClass.h"
+#include "data.hpp"
 /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchZMQ.cpp
 
@@ -86,9 +85,9 @@ MoenchZMQ::MoenchZMQ(Tango::DeviceClass *cl, std::string &s)
  : TANGO_BASE_CLASS(cl, s.c_str())
 {
 	/*----- PROTECTED REGION ID(MoenchZMQ::constructor_1) ENABLED START -----*/
-	/* clang-format on */
-	init_device();
-	/* clang-format off */
+  /* clang-format on */
+  init_device();
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::constructor_1
 }
 //--------------------------------------------------------
@@ -96,9 +95,9 @@ MoenchZMQ::MoenchZMQ(Tango::DeviceClass *cl, const char *s)
  : TANGO_BASE_CLASS(cl, s)
 {
 	/*----- PROTECTED REGION ID(MoenchZMQ::constructor_2) ENABLED START -----*/
-	/* clang-format on */
-	init_device();
-	/* clang-format off */
+  /* clang-format on */
+  init_device();
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::constructor_2
 }
 //--------------------------------------------------------
@@ -106,9 +105,9 @@ MoenchZMQ::MoenchZMQ(Tango::DeviceClass *cl, const char *s, const char *d)
  : TANGO_BASE_CLASS(cl, s, d)
 {
 	/*----- PROTECTED REGION ID(MoenchZMQ::constructor_3) ENABLED START -----*/
-	/* clang-format on */
-	init_device();
-	/* clang-format off */
+  /* clang-format on */
+  init_device();
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::constructor_3
 }
 //--------------------------------------------------------
@@ -127,9 +126,9 @@ void MoenchZMQ::delete_device()
 {
 	DEBUG_STREAM << "MoenchZMQ::delete_device() " << device_name << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::delete_device) ENABLED START -----*/
-	/* clang-format on */
-	//	Delete device allocated objects
-	/* clang-format off */
+  /* clang-format on */
+  //	Delete device allocated objects
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::delete_device
 	delete[] attr_file_index_read;
 	delete[] attr_file_name_read;
@@ -157,9 +156,9 @@ void MoenchZMQ::init_device()
 {
 	DEBUG_STREAM << "MoenchZMQ::init_device() create device " << device_name << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::init_device_before) ENABLED START -----*/
-	/* clang-format on */
-	//	Initialization before get_device_property() call
-	/* clang-format off */
+  /* clang-format on */
+  //	Initialization before get_device_property() call
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::init_device_before
 
 
@@ -198,9 +197,9 @@ void MoenchZMQ::init_device()
 	
 	set_state(Tango::ON);
 	/*----- PROTECTED REGION ID(MoenchZMQ::init_device) ENABLED START -----*/
-	/* clang-format on */
-	//	Initialize device
-	/* clang-format off */
+  /* clang-format on */
+  //	Initialize device
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::init_device
 }
 
@@ -213,9 +212,9 @@ void MoenchZMQ::init_device()
 void MoenchZMQ::get_device_property()
 {
 	/*----- PROTECTED REGION ID(MoenchZMQ::get_device_property_before) ENABLED START -----*/
-	/* clang-format on */
-	//	Initialize property data members
-	/* clang-format off */
+  /* clang-format on */
+  //	Initialize property data members
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::get_device_property_before
 
 	mandatoryNotDefined = false;
@@ -235,9 +234,9 @@ void MoenchZMQ::get_device_property()
 	dev_prop[2] >> SAVE_ROOT_PATH;
 
 	/*----- PROTECTED REGION ID(MoenchZMQ::get_device_property_after) ENABLED START -----*/
-	/* clang-format on */
-	//	Check device property data members init
-	/* clang-format off */
+  /* clang-format on */
+  //	Check device property data members init
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::get_device_property_after
 }
 void MoenchZMQ::load_images_previews(){
@@ -266,9 +265,9 @@ void MoenchZMQ::check_mandatory_property(Tango::DbDatum &class_prop, Tango::DbDa
 		append_status(tms.str());
 		mandatoryNotDefined = true;
 		/*----- PROTECTED REGION ID(MoenchZMQ::check_mandatory_property) ENABLED START -----*/
-		/* clang-format on */
-		std::cerr << tms.str() << " for " << device_name << std::endl;
-		/* clang-format off */
+    /* clang-format on */
+    std::cerr << tms.str() << " for " << device_name << std::endl;
+    /* clang-format off */
 		/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::check_mandatory_property
 	}
 }
@@ -291,9 +290,9 @@ void MoenchZMQ::always_executed_hook()
 					(const char *)"MoenchZMQ::always_executed_hook()");
 	}
 	/*----- PROTECTED REGION ID(MoenchZMQ::always_executed_hook) ENABLED START -----*/
-	/* clang-format on */
-	//	code always executed before all requests
-	/* clang-format off */
+  /* clang-format on */
+  //	code always executed before all requests
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::always_executed_hook
 }
 
@@ -307,9 +306,9 @@ void MoenchZMQ::read_attr_hardware(TANGO_UNUSED(std::vector<long> &attr_list))
 {
 	DEBUG_STREAM << "MoenchZMQ::read_attr_hardware(std::vector<long> &attr_list) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_attr_hardware) ENABLED START -----*/
-	/* clang-format on */
-	//	Add your own code
-	/* clang-format off */
+  /* clang-format on */
+  //	Add your own code
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_attr_hardware
 }
 //--------------------------------------------------------
@@ -322,9 +321,9 @@ void MoenchZMQ::write_attr_hardware(TANGO_UNUSED(std::vector<long> &attr_list))
 {
 	DEBUG_STREAM << "MoenchZMQ::write_attr_hardware(std::vector<long> &attr_list) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::write_attr_hardware) ENABLED START -----*/
-	/* clang-format on */
-	//	Add your own code
-	/* clang-format off */
+  /* clang-format on */
+  //	Add your own code
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::write_attr_hardware
 }
 
@@ -341,11 +340,11 @@ void MoenchZMQ::read_file_index(Tango::Attribute &attr)
 {
 	DEBUG_STREAM << "MoenchZMQ::read_file_index(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_file_index) ENABLED START -----*/
-	/* clang-format on */
-	//	Set the attribute value
-	*attr_file_index_read = file_writer_ptr->file_index;
-	attr.set_value(attr_file_index_read);
-	/* clang-format off */
+  /* clang-format on */
+  //	Set the attribute value
+  *attr_file_index_read = file_writer_ptr->file_index;
+  attr.set_value(attr_file_index_read);
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_file_index
 }
 //--------------------------------------------------------
@@ -364,10 +363,10 @@ void MoenchZMQ::write_file_index(Tango::WAttribute &attr)
 	Tango::DevULong	w_val;
 	attr.get_write_value(w_val);
 	/*----- PROTECTED REGION ID(MoenchZMQ::write_file_index) ENABLED START -----*/
-	/* clang-format on */
-	*attr_file_index_read = w_val;
-	file_writer_ptr->file_index = w_val;
-	/* clang-format off */
+  /* clang-format on */
+  *attr_file_index_read = w_val;
+  file_writer_ptr->file_index = w_val;
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::write_file_index
 }
 //--------------------------------------------------------
@@ -383,11 +382,11 @@ void MoenchZMQ::read_file_name(Tango::Attribute &attr)
 {
 	DEBUG_STREAM << "MoenchZMQ::read_filename(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_filename) ENABLED START -----*/
-	/* clang-format on */
-	//	Set the attribute value
-	*attr_file_name_read = Tango::string_dup(file_writer_ptr->file_name);
-	attr.set_value(attr_file_name_read);
-	/* clang-format off */
+  /* clang-format on */
+  //	Set the attribute value
+  *attr_file_name_read = Tango::string_dup(file_writer_ptr->file_name);
+  attr.set_value(attr_file_name_read);
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_filename
 }
 //--------------------------------------------------------
@@ -406,10 +405,10 @@ void MoenchZMQ::write_file_name(Tango::WAttribute &attr)
 	Tango::DevString	w_val;
 	attr.get_write_value(w_val);
 	/*----- PROTECTED REGION ID(MoenchZMQ::write_filename) ENABLED START -----*/
-	/* clang-format on */
-	*attr_file_name_read = w_val;
-	file_writer_ptr->file_name = w_val;
-	/* clang-format off */
+  /* clang-format on */
+  *attr_file_name_read = w_val;
+  file_writer_ptr->file_name = w_val;
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::write_filename
 }
 //--------------------------------------------------------
@@ -425,11 +424,12 @@ void MoenchZMQ::read_session_directory(Tango::Attribute &attr)
 {
 	DEBUG_STREAM << "MoenchZMQ::read_session_directory(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_session_directory) ENABLED START -----*/
-	/* clang-format on */
-	//	Set the attribute value
-	*attr_session_directory_read = Tango::string_dup(file_writer_ptr->session_directory);
-	attr.set_value(attr_session_directory_read);
-	/* clang-format off */
+  /* clang-format on */
+  //	Set the attribute value
+  *attr_session_directory_read =
+      Tango::string_dup(file_writer_ptr->session_directory);
+  attr.set_value(attr_session_directory_read);
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_file_root_path
 }
 //--------------------------------------------------------
@@ -448,10 +448,10 @@ void MoenchZMQ::write_session_directory(Tango::WAttribute &attr)
 	Tango::DevString	w_val;
 	attr.get_write_value(w_val);
 	/*----- PROTECTED REGION ID(MoenchZMQ::write_session_directory) ENABLED START -----*/
-	/* clang-format on */
-	*attr_session_directory_read = w_val;
-	file_writer_ptr->session_directory = w_val;
-	/* clang-format off */
+  /* clang-format on */
+  *attr_session_directory_read = w_val;
+  file_writer_ptr->session_directory = w_val;
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::write_session_directory
 }
 //--------------------------------------------------------
@@ -467,10 +467,10 @@ void MoenchZMQ::read_normalize(Tango::Attribute &attr)
 {
 	DEBUG_STREAM << "MoenchZMQ::read_normalize(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_normalize) ENABLED START -----*/
-	/* clang-format on */
-	//	Set the attribute value
-	attr.set_value(attr_normalize_read);
-	/* clang-format off */
+  /* clang-format on */
+  //	Set the attribute value
+  attr.set_value(attr_normalize_read);
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_normalize
 }
 //--------------------------------------------------------
@@ -489,9 +489,9 @@ void MoenchZMQ::write_normalize(Tango::WAttribute &attr)
 	Tango::DevBoolean	w_val;
 	attr.get_write_value(w_val);
 	/*----- PROTECTED REGION ID(MoenchZMQ::write_normalize) ENABLED START -----*/
-	/* clang-format on */
-	//	Add your own code
-	/* clang-format off */
+  /* clang-format on */
+  //	Add your own code
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::write_normalize
 }
 
@@ -499,23 +499,26 @@ void MoenchZMQ::read_update_pedestal_period(Tango::Attribute &attr)
 {
 	DEBUG_STREAM << "MoenchZMQ::read_update_pedestal(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_normalize) ENABLED START -----*/
-	/* clang-format on */
-	//	Set the attribute value
-	*attr_update_pedestal_period_read = zmq_listener_ptr->comp_backend_ptr->updatePedestalPeriod;
-	attr.set_value(attr_update_pedestal_period_read);
+  /* clang-format on */
+  //	Set the attribute value
+  *attr_update_pedestal_period_read =
+      zmq_listener_ptr->comp_backend_ptr->updatePedestalPeriod;
+  attr.set_value(attr_update_pedestal_period_read);
 }
 
-void MoenchZMQ::write_update_pedestal_period(Tango::WAttribute &attr)
-{
-	DEBUG_STREAM << "MoenchZMQ::write_update_pedestal(Tango::WAttribute &attr) entering... " << std::endl;
-	//	Retrieve write value
-	Tango::DevLong	w_val;
-	attr.get_write_value(w_val);
-	/*----- PROTECTED REGION ID(MoenchZMQ::write_update_pedestal) ENABLED START -----*/
-	/* clang-format on */
-	*attr_update_pedestal_period_read = w_val;
-	zmq_listener_ptr->comp_backend_ptr->updatePedestalPeriod = w_val;
-	/* clang-format off */
+void MoenchZMQ::write_update_pedestal_period(Tango::WAttribute &attr) {
+  DEBUG_STREAM << "MoenchZMQ::write_update_pedestal(Tango::WAttribute &attr) "
+                  "entering... "
+               << std::endl;
+  //	Retrieve write value
+  Tango::DevLong w_val;
+  attr.get_write_value(w_val);
+  /*----- PROTECTED REGION ID(MoenchZMQ::write_update_pedestal) ENABLED START
+   * -----*/
+  /* clang-format on */
+  *attr_update_pedestal_period_read = w_val;
+  zmq_listener_ptr->comp_backend_ptr->updatePedestalPeriod = w_val;
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::write_update_pedestal
 }
 
@@ -526,9 +529,9 @@ void MoenchZMQ::write_threshold(Tango::WAttribute &attr)
 	Tango::DevDouble	w_val;
 	attr.get_write_value(w_val);
 	/*----- PROTECTED REGION ID(MoenchZMQ::write_threshold) ENABLED START -----*/
-	/* clang-format on */
-	*attr_threshold_read = w_val;
-	/* clang-format off */
+  /* clang-format on */
+  *attr_threshold_read = w_val;
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::write_threshold
 }
 //--------------------------------------------------------
@@ -544,10 +547,10 @@ void MoenchZMQ::read_threshold(Tango::Attribute &attr)
 {
 	DEBUG_STREAM << "MoenchZMQ::read_threshold(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_threshold) ENABLED START -----*/
-	/* clang-format on */
-	//	Set the attribute value
-	attr.set_value(attr_threshold_read);
-	/* clang-format off */
+  /* clang-format on */
+  //	Set the attribute value
+  attr.set_value(attr_threshold_read);
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_threshold
 }
 //--------------------------------------------------------
@@ -563,11 +566,12 @@ void MoenchZMQ::read_counting_sigma(Tango::Attribute &attr)
 {
 	DEBUG_STREAM << "MoenchZMQ::read_counting_sigma(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_counting_sigma) ENABLED START -----*/
-	/* clang-format on */
-	//	Set the attribute value
-	*attr_counting_sigma_read = zmq_listener_ptr->comp_backend_ptr->counting_sigma.load();
-	attr.set_value(attr_counting_sigma_read);
-	/* clang-format off */
+  /* clang-format on */
+  //	Set the attribute value
+  *attr_counting_sigma_read =
+      zmq_listener_ptr->comp_backend_ptr->counting_sigma.load();
+  attr.set_value(attr_counting_sigma_read);
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_counting_sigma
 }
 //--------------------------------------------------------
@@ -583,10 +587,12 @@ void MoenchZMQ::read_analog_img_pumped(Tango::Attribute &attr)
 {
 	DEBUG_STREAM << "MoenchZMQ::read_analog_img_pumped(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_analog_img_pumped) ENABLED START -----*/
-	/* clang-format on */
-	//	Set the attribute value
-	attr.set_value(attr_analog_img_pumped_read, analog_img_pumpedAttrib::X_DATA_SIZE, analog_img_pumpedAttrib::Y_DATA_SIZE);
-	/* clang-format off */
+  /* clang-format on */
+  //	Set the attribute value
+  attr.set_value(attr_analog_img_pumped_read,
+                 analog_img_pumpedAttrib::X_DATA_SIZE,
+                 analog_img_pumpedAttrib::Y_DATA_SIZE);
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_analog_img_pumped
 }
 //--------------------------------------------------------
@@ -602,10 +608,12 @@ void MoenchZMQ::read_counting_img_pumped(Tango::Attribute &attr)
 {
 	DEBUG_STREAM << "MoenchZMQ::read_counting_img_pumped(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_counting_img_pumped) ENABLED START -----*/
-	/* clang-format on */
-	//	Set the attribute value
-	attr.set_value(attr_counting_img_pumped_read, counting_img_pumpedAttrib::X_DATA_SIZE, counting_img_pumpedAttrib::Y_DATA_SIZE);
-	/* clang-format off */
+  /* clang-format on */
+  //	Set the attribute value
+  attr.set_value(attr_counting_img_pumped_read,
+                 counting_img_pumpedAttrib::X_DATA_SIZE,
+                 counting_img_pumpedAttrib::Y_DATA_SIZE);
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_counting_img_pumped
 }
 //--------------------------------------------------------
@@ -624,10 +632,10 @@ void MoenchZMQ::write_counting_sigma(Tango::WAttribute &attr)
 	Tango::DevFloat	w_val;
 	attr.get_write_value(w_val);
 	/*----- PROTECTED REGION ID(MoenchZMQ::write_counting_sigma) ENABLED START -----*/
-	/* clang-format on */
-	*attr_counting_sigma_read = w_val;
-	zmq_listener_ptr->comp_backend_ptr->counting_sigma = w_val;
-	/* clang-format off */
+  /* clang-format on */
+  *attr_counting_sigma_read = w_val;
+  zmq_listener_ptr->comp_backend_ptr->counting_sigma = w_val;
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::write_counting_sigma
 }
 //--------------------------------------------------------
@@ -643,10 +651,10 @@ void MoenchZMQ::read_live_period(Tango::Attribute &attr)
 {
 	DEBUG_STREAM << "MoenchZMQ::read_live_period(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_live_period) ENABLED START -----*/
-	/* clang-format on */
-	//	Set the attribute value
-	attr.set_value(attr_live_period_read);
-	/* clang-format off */
+  /* clang-format on */
+  //	Set the attribute value
+  attr.set_value(attr_live_period_read);
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_live_period
 }
 //--------------------------------------------------------
@@ -665,10 +673,10 @@ void MoenchZMQ::write_live_period(Tango::WAttribute &attr)
 	Tango::DevLong	w_val;
 	attr.get_write_value(w_val);
 	/*----- PROTECTED REGION ID(MoenchZMQ::write_live_period) ENABLED START -----*/
-	/* clang-format on */
-	*attr_live_period_read = w_val;
-	zmq_listener_ptr->comp_backend_ptr->live_period = w_val;
-	/* clang-format off */
+  /* clang-format on */
+  *attr_live_period_read = w_val;
+  zmq_listener_ptr->comp_backend_ptr->live_period = w_val;
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::write_live_period
 }
 //--------------------------------------------------------
@@ -684,11 +692,11 @@ void MoenchZMQ::read_process_pedestal(Tango::Attribute &attr)
 {
 	DEBUG_STREAM << "MoenchZMQ::read_process_pedestal(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_process_pedestal) ENABLED START -----*/
-	/* clang-format on */
-	//	Set the attribute value
-	*attr_process_pedestal_read = zmq_listener_ptr->comp_backend_ptr->isPedestal;
-	attr.set_value(attr_process_pedestal_read);
-	/* clang-format off */
+  /* clang-format on */
+  //	Set the attribute value
+  *attr_process_pedestal_read = zmq_listener_ptr->comp_backend_ptr->isPedestal;
+  attr.set_value(attr_process_pedestal_read);
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_process_pedestal
 }
 //--------------------------------------------------------
@@ -704,11 +712,11 @@ void MoenchZMQ::read_split_pumped(Tango::Attribute &attr)
 {
 	DEBUG_STREAM << "MoenchZMQ::read_split_pumped(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_split_pumped) ENABLED START -----*/
-	/* clang-format on */
-	//	Set the attribute value
-	*attr_split_pumped_read = zmq_listener_ptr->comp_backend_ptr->isSplitPumped;
-	attr.set_value(attr_split_pumped_read);
-	/* clang-format off */
+  /* clang-format on */
+  //	Set the attribute value
+  *attr_split_pumped_read = zmq_listener_ptr->comp_backend_ptr->isSplitPumped;
+  attr.set_value(attr_split_pumped_read);
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_split_pumped
 }
 //--------------------------------------------------------
@@ -724,11 +732,11 @@ void MoenchZMQ::read_acquired_frames(Tango::Attribute &attr)
 {
 	DEBUG_STREAM << "MoenchZMQ::read_acquired_frames(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_acquired_frames) ENABLED START -----*/
-	/* clang-format on */
-	//	Set the attribute value
-	*attr_acquired_frames_read = zmq_listener_ptr->received_frames_amount.load();
-	attr.set_value(attr_acquired_frames_read);
-	/* clang-format off */
+  /* clang-format on */
+  //	Set the attribute value
+  *attr_acquired_frames_read = zmq_listener_ptr->received_frames_amount.load();
+  attr.set_value(attr_acquired_frames_read);
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_acquired_frames
 }
 //--------------------------------------------------------
@@ -748,10 +756,10 @@ void MoenchZMQ::write_split_pumped(Tango::WAttribute &attr)
 	Tango::DevBoolean	w_val;
 	attr.get_write_value(w_val);
 	/*----- PROTECTED REGION ID(MoenchZMQ::write_split_pumped) ENABLED START -----*/
-	/* clang-format on */
-	*attr_split_pumped_read = w_val;
-	zmq_listener_ptr->comp_backend_ptr->isSplitPumped = w_val;
-	/* clang-format off */
+  /* clang-format on */
+  *attr_split_pumped_read = w_val;
+  zmq_listener_ptr->comp_backend_ptr->isSplitPumped = w_val;
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::write_split_pumped
 }
 void MoenchZMQ::write_process_pedestal(Tango::WAttribute &attr)
@@ -775,11 +783,12 @@ void MoenchZMQ::read_analog_img(Tango::Attribute &attr)
 {
 	DEBUG_STREAM << "MoenchZMQ::read_analog_img(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_analog_img) ENABLED START -----*/
-	/* clang-format on */
-	//	Set the attribute value
-	attr.set_value(attr_analog_img_read, analog_imgAttrib::X_DATA_SIZE, analog_imgAttrib::Y_DATA_SIZE);
-	//push_change_event("analog_img");
-	/* clang-format off */
+  /* clang-format on */
+  //	Set the attribute value
+  attr.set_value(attr_analog_img_read, analog_imgAttrib::X_DATA_SIZE,
+                 analog_imgAttrib::Y_DATA_SIZE);
+  // push_change_event("analog_img");
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_analog_img
 }
 //----------------------------------------------------	----
@@ -795,10 +804,11 @@ void MoenchZMQ::read_counting_img(Tango::Attribute &attr)
 {
 	DEBUG_STREAM << "MoenchZMQ::read_counting_img(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_counting_img) ENABLED START -----*/
-	/* clang-format on */
-	//	Set the attribute value
-	attr.set_value(attr_counting_img_read, counting_imgAttrib::X_DATA_SIZE, counting_imgAttrib::Y_DATA_SIZE);
-	/* clang-format off */
+  /* clang-format on */
+  //	Set the attribute value
+  attr.set_value(attr_counting_img_read, counting_imgAttrib::X_DATA_SIZE,
+                 counting_imgAttrib::Y_DATA_SIZE);
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_counting_img
 }
 void MoenchZMQ::write_individual_frame_buffer_capacity(Tango::WAttribute &attr)
@@ -808,21 +818,23 @@ void MoenchZMQ::write_individual_frame_buffer_capacity(Tango::WAttribute &attr)
 	Tango::DevULong	w_val;
 	attr.get_write_value(w_val);
 	/*----- PROTECTED REGION ID(MoenchZMQ::write_individual_frame_buffer_capacity) ENABLED START -----*/
-	/* clang-format on */
-	*attr_individual_frame_buffer_capacity_read = w_val;
-	zmq_listener_ptr->comp_backend_ptr->individual_frame_buffer_capacity = w_val;
-	/* clang-format off */
+  /* clang-format on */
+  *attr_individual_frame_buffer_capacity_read = w_val;
+  zmq_listener_ptr->comp_backend_ptr->individual_frame_buffer_capacity = w_val;
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::write_individual_frame_buffer_capacity
 }
 void MoenchZMQ::read_individual_frame_buffer_capacity(Tango::Attribute &attr)
 {
 	DEBUG_STREAM << "MoenchZMQ::read_individual_frame_buffer_capacity(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_individual_frame_buffer_capacity) ENABLED START -----*/
-	/* clang-format on */
-	size_t capacity = zmq_listener_ptr->comp_backend_ptr->individual_frame_buffer_capacity;
-	*attr_individual_frame_buffer_capacity_read = static_cast<Tango::DevULong>(capacity);
-	attr.set_value(attr_individual_frame_buffer_capacity_read);
-	/* clang-format off */
+  /* clang-format on */
+  size_t capacity =
+      zmq_listener_ptr->comp_backend_ptr->individual_frame_buffer_capacity;
+  *attr_individual_frame_buffer_capacity_read =
+      static_cast<Tango::DevULong>(capacity);
+  attr.set_value(attr_individual_frame_buffer_capacity_read);
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_individual_frame_buffer_capacity
 }
 //--------------------------------------------------------
@@ -835,9 +847,9 @@ void MoenchZMQ::read_individual_frame_buffer_capacity(Tango::Attribute &attr)
 void MoenchZMQ::add_dynamic_attributes()
 {
 	/*----- PROTECTED REGION ID(MoenchZMQ::add_dynamic_attributes) ENABLED START -----*/
-	/* clang-format on */
-	//	Add your own code to create and add dynamic attributes if any
-	/* clang-format off */
+  /* clang-format on */
+  //	Add your own code to create and add dynamic attributes if any
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::add_dynamic_attributes
 }
 
@@ -852,12 +864,12 @@ void MoenchZMQ::start_receiver()
 {
 	DEBUG_STREAM << "MoenchZMQ::start_receiver()  - " << device_name << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::start_receiver) ENABLED START -----*/
-	/* clang-format on */
+  /* clang-format on */
 
-	//	Add your own code
-	zmq_listener_ptr->start_receive();
-	set_state(Tango::RUNNING);
-	/* clang-format off */
+  //	Add your own code
+  zmq_listener_ptr->start_receive();
+  set_state(Tango::RUNNING);
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::start_receiver
 }
 //--------------------------------------------------------
@@ -871,17 +883,17 @@ void MoenchZMQ::stop_receiver()
 {
 	DEBUG_STREAM << "MoenchZMQ::stop_receiver()  - " << device_name << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::stop_receiver) ENABLED START -----*/
-	/* clang-format on */
+  /* clang-format on */
 
-	// wrap blocking function into lambda and then run a separate thread for it
-	std::thread([&]{zmq_listener_ptr->stop_receive();
-					copy_image_buffers();
-					push_images_change();
-					set_state(Tango::ON);
-					}
-				).detach();
-	
-	/* clang-format off */
+  // wrap blocking function into lambda and then run a separate thread for it
+  std::thread([&] {
+    zmq_listener_ptr->stop_receive();
+    copy_image_buffers();
+    push_images_change();
+    set_state(Tango::ON);
+  }).detach();
+
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::stop_receiver
 }
 //--------------------------------------------------------
@@ -895,11 +907,11 @@ void MoenchZMQ::abort_receiver()
 {
 	DEBUG_STREAM << "MoenchZMQ::abort_receiver()  - " << device_name << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::abort_receiver) ENABLED START -----*/
-	/* clang-format on */
+  /* clang-format on */
 
-	//	Add your own code
+  //	Add your own code
 
-	/* clang-format off */
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::abort_receiver
 }
 //--------------------------------------------------------
@@ -913,9 +925,9 @@ void MoenchZMQ::reset_pedestal()
 {
 	DEBUG_STREAM << "MoenchZMQ::reset_pedestal()  - " << device_name << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::reset_pedestal) ENABLED START -----*/
-	/* clang-format on */
-	zmq_listener_ptr->comp_backend_ptr->resetPedestalAndRMS();
-	/* clang-format off */
+  /* clang-format on */
+  zmq_listener_ptr->comp_backend_ptr->resetPedestalAndRMS();
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::reset_pedestal
 }
 //--------------------------------------------------------
@@ -929,12 +941,20 @@ void MoenchZMQ::push_images_change()
 {
 	DEBUG_STREAM << "MoenchZMQ::push_images_change()  - " << device_name << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::push_images_change) ENABLED START -----*/
-	/* clang-format on */
-	push_change_event("analog_img", attr_analog_img_read, analog_imgAttrib::X_DATA_SIZE, analog_imgAttrib::Y_DATA_SIZE);
-	push_change_event("counting_img", attr_counting_img_read, counting_imgAttrib::X_DATA_SIZE, counting_imgAttrib::Y_DATA_SIZE);
-	push_change_event("analog_img_pumped", attr_analog_img_pumped_read, analog_img_pumpedAttrib::X_DATA_SIZE, analog_img_pumpedAttrib::Y_DATA_SIZE);
-	push_change_event("counting_img_pumped", attr_counting_img_pumped_read, counting_img_pumpedAttrib::X_DATA_SIZE, counting_img_pumpedAttrib::Y_DATA_SIZE);
-	/* clang-format off */
+  /* clang-format on */
+  push_change_event("analog_img", attr_analog_img_read,
+                    analog_imgAttrib::X_DATA_SIZE,
+                    analog_imgAttrib::Y_DATA_SIZE);
+  push_change_event("counting_img", attr_counting_img_read,
+                    counting_imgAttrib::X_DATA_SIZE,
+                    counting_imgAttrib::Y_DATA_SIZE);
+  push_change_event("analog_img_pumped", attr_analog_img_pumped_read,
+                    analog_img_pumpedAttrib::X_DATA_SIZE,
+                    analog_img_pumpedAttrib::Y_DATA_SIZE);
+  push_change_event("counting_img_pumped", attr_counting_img_pumped_read,
+                    counting_img_pumpedAttrib::X_DATA_SIZE,
+                    counting_img_pumpedAttrib::Y_DATA_SIZE);
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::push_images_change
 }
 void MoenchZMQ::copy_image_buffers(){
@@ -953,9 +973,9 @@ void MoenchZMQ::copy_image_buffers(){
 void MoenchZMQ::add_dynamic_commands()
 {
 	/*----- PROTECTED REGION ID(MoenchZMQ::add_dynamic_commands) ENABLED START -----*/
-	/* clang-format on */
-	//	Add your own code to create and add dynamic commands if any
-	/* clang-format off */
+  /* clang-format on */
+  //	Add your own code to create and add dynamic commands if any
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::add_dynamic_commands
 }
 

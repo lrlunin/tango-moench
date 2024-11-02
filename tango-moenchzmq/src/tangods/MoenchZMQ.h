@@ -20,13 +20,12 @@
 //        (Program Obviously used to Generate tango Object)
 //=============================================================================
 
-
 #ifndef MoenchZMQ_H
 #define MoenchZMQ_H
 
-#include <tango/tango.h>
-#include "../backend/ZMQListener.hpp"
 #include "../backend/FileWriter.hpp"
+#include "../backend/ZMQListener.hpp"
+#include <tango/tango.h>
 /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchZMQ.h
 
@@ -58,9 +57,9 @@ class MoenchZMQ : public TANGO_BASE_CLASS
 {
 
 /*----- PROTECTED REGION ID(MoenchZMQ::Data Members) ENABLED START -----*/
-/* clang-format on */
-//	Add your own data members
-/* clang-format off */
+  /* clang-format on */
+  //	Add your own data members
+  /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchZMQ::Data Members
 
 //	Device property data members
@@ -377,9 +376,9 @@ public:
 	void add_dynamic_commands();
 
 /*----- PROTECTED REGION ID(MoenchZMQ::Additional Method prototypes) ENABLED START -----*/
-/* clang-format on */
-//	Additional Method prototypes
-/* clang-format off */
+  /* clang-format on */
+  //	Additional Method prototypes
+  /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchZMQ::Additional Method prototypes
 };
 

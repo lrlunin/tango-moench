@@ -24,12 +24,11 @@
 //        (Program Obviously used to Generate tango Object)
 //=============================================================================
 
-
 #ifndef MoenchZMQClass_H
 #define MoenchZMQClass_H
 
-#include <tango/tango.h>
 #include "MoenchZMQ.h"
+#include <tango/tango.h>
 
 /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchZMQClass.h
@@ -425,9 +424,9 @@ class MoenchZMQClass : public Tango::DeviceClass
 #endif
 {
 	/*----- PROTECTED REGION ID(MoenchZMQClass::Additional DServer data members) ENABLED START -----*/
-	/* clang-format on */
-	//	Add your own code
-	/* clang-format off */
+  /* clang-format on */
+  //	Add your own code
+  /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQClass::Additional DServer data members
 
 	public:

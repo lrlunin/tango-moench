@@ -1,34 +1,38 @@
 #pragma once
-#include <zmq.hpp>
-#include <string>
-#include <queue>
-#include <sls/ZmqSocket.h>
 #include <rapidjson/document.h>
 #include <rapidjson/stringbuffer.h>
+#include <sls/ZmqSocket.h>
+
 #include <algorithm>
-#include <vector>
-#include <thread>
-#include <tuple>
-#include <shared_mutex>
-#include <syncstream>
-#include <condition_variable>
 #include <boost/lockfree/queue.hpp>
 #include <boost/pool/singleton_pool.hpp>
+#include <condition_variable>
+#include <queue>
+#include <shared_mutex>
+#include <string>
+#include <syncstream>
+#include <thread>
+#include <tuple>
+#include <vector>
+#include <zmq.hpp>
+
 #include "CPUComputationBackend.hpp"
 
-class ZMQListener {
+class ZMQListener
+{
 private:
-    zmq::context_t context;
-    zmq::socket_t socket;
-    std::thread zmq_listener_thread;
-    std::atomic_bool receive_data;
-    std::atomic_bool abort_wait;
+  zmq::context_t context;
+  zmq::socket_t socket;
+  std::thread zmq_listener_thread;
+  std::atomic_bool receive_data;
+  std::atomic_bool abort_wait;
+
 public:
-    CPUComputationBackend* comp_backend_ptr;
-    std::atomic<long> received_frames_amount;
-    ZMQListener(std::string socket_addr, std::string socket_port);
-    void listen_socket();
-    void start_receive();
-    void stop_receive();
-    void abort_receive();
+  CPUComputationBackend *comp_backend_ptr;
+  std::atomic<long> received_frames_amount;
+  ZMQListener (std::string socket_addr, std::string socket_port);
+  void listen_socket ();
+  void start_receive ();
+  void stop_receive ();
+  void abort_receive ();
 };

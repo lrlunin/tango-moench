@@ -30,7 +30,6 @@
 //        (Program Obviously used to Generate tango Object)
 //=============================================================================
 
-
 #ifndef MoenchControl_H
 #define MoenchControl_H
 
@@ -96,11 +95,11 @@ class MoenchControl : public TANGO_BASE_CLASS
 {
 
 /*----- PROTECTED REGION ID(MoenchControl::Data Members) ENABLED START -----*/
-/* clang-format on */
+  /* clang-format on */
 private:
-	std::unique_ptr<sls::Receiver> receiver_ptr;
-	std::unique_ptr<sls::Detector> detector_ptr;
-/* clang-format off */
+  std::unique_ptr<sls::Receiver> receiver_ptr;
+  std::unique_ptr<sls::Detector> detector_ptr;
+  /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchControl::Data Members
 
 //	Device property data members
@@ -414,9 +413,9 @@ virtual void check_stop_in_backgroud();
 	void add_dynamic_commands();
 
 /*----- PROTECTED REGION ID(MoenchControl::Additional Method prototypes) ENABLED START -----*/
-/* clang-format on */
-//	Additional Method prototypes
-/* clang-format off */
+  /* clang-format on */
+  //	Additional Method prototypes
+  /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchControl::Additional Method prototypes
 };
 
