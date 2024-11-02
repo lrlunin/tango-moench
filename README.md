@@ -1,5 +1,6 @@
 # tango-moench
 ![build on ubuntu](https://github.com/lrlunin/tango-moench/actions/workflows/ubuntu-build.yml/badge.svg)
+[![codecov](https://codecov.io/gh/lrlunin/tango-moench/graph/badge.svg?token=LL0LMRQDJP)](https://codecov.io/gh/lrlunin/tango-moench)
 
 Tango device servers both for control and online evaulation of the acquired images.
 
