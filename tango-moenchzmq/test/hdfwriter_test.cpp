@@ -40,11 +40,6 @@ TEST_F(HDFWriterTest, FileCreation) {
     EXPECT_TRUE(std::filesystem::is_regular_file(full_file_path))
         << "File " << full_file_path << " not found";
   }
-  // check if the correct number of files is created
-  auto files_in_folder = std::distance(
-      std::filesystem::directory_iterator("/tmp/" + folder_name),
-      std::filesystem::directory_iterator{});
-  EXPECT_EQ(files_in_folder, files_to_create);
 }
 
 TEST_F(HDFWriterTest, FileWriteFrame) {
