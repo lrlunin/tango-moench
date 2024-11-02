@@ -20,7 +20,7 @@ middle="
 $proc_type
 $pump_type
 "
-output_file_h="$script_path/../src/tango-moenchzmq/tangods/data.hpp"
+output_file_h="$script_path/../tango-moenchzmq/src/tangods/data.hpp"
 > "$output_file_h"
 for proc_type in "ANALOG" "THRESHOLD" "COUNTING" 
 do

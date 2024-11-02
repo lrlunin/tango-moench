@@ -10,3 +10,10 @@ repos:
         entry: scripts/generate_previews.sh
         language: script
         pass_filenames: false
+  - repo: local
+    hooks:
+      - id: format
+        name: Format .cpp & .hpp with clang-format
+        entry: scripts/clang_format.sh
+        language: script
+        pass_filenames: false

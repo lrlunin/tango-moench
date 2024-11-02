@@ -63,6 +63,16 @@ Any additional information according to slsDetector, its python API or pytango r
 
 * [slsDetectorGroup wiki](https://slsdetectorgroup.github.io/devdoc/pydetector.html)
 * [Tango Controls C++ reference](https://tango-controls.readthedocs.io/en/latest/getting-started/development/cpp/index.html)
+
+# Contributor's guide
+
+Feel free to fork and enhance this software. Send pull requests if you want. 
+
+1. Install `clang-format` for united source files formatting.
+2. Install `pre-commit` for automated formatting and preview generation.
+3. Run once `pre-commit install` to activate.
+4. Run tests by `cd build && ctest` command.
+
 # Authors
 
 Contributors names and contact info
