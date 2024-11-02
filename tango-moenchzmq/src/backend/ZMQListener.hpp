@@ -18,8 +18,7 @@
 
 #include "CPUComputationBackend.hpp"
 
-class ZMQListener
-{
+class ZMQListener {
 private:
   zmq::context_t context;
   zmq::socket_t socket;
@@ -30,9 +29,9 @@ private:
 public:
   CPUComputationBackend *comp_backend_ptr;
   std::atomic<long> received_frames_amount;
-  ZMQListener (std::string socket_addr, std::string socket_port);
-  void listen_socket ();
-  void start_receive ();
-  void stop_receive ();
-  void abort_receive ();
+  ZMQListener(std::string socket_addr, std::string socket_port);
+  void listen_socket();
+  void start_receive();
+  void stop_receive();
+  void abort_receive();
 };

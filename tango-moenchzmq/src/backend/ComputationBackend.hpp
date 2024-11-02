@@ -9,12 +9,11 @@
 #include "FileWriter.hpp"
 #include "Frames.hpp"
 
-class ComputationBackend
-{
+class ComputationBackend {
 public:
-  typedef boost::singleton_pool<FullFrame, sizeof (FullFrame)> memory_pool;
-  ComputationBackend (FileWriter *fileWriter);
-  ~ComputationBackend ();
+  typedef boost::singleton_pool<FullFrame, sizeof(FullFrame)> memory_pool;
+  ComputationBackend(FileWriter *fileWriter);
+  ~ComputationBackend();
   std::string save_root_path, file_path, file_name;
   std::atomic<long> file_index;
   boost::lockfree::queue<FullFrame *> frame_ptr_queue;
@@ -25,25 +24,25 @@ public:
   std::atomic<long> live_period;
 
   int THREAD_AMOUNT = 10;
-  void initThreads ();
-  void pause ();
-  void resume ();
-  void resetAccumulators ();
-  void resetPedestalAndRMS ();
-  void dumpAccumulators ();
-  void loadPedestalAndRMS (OrderedFrame<float, consts::LENGTH> &pedestal,
-                           OrderedFrame<float, consts::LENGTH> &pedestal_rms);
+  void initThreads();
+  void pause();
+  void resume();
+  void resetAccumulators();
+  void resetPedestalAndRMS();
+  void dumpAccumulators();
+  void loadPedestalAndRMS(OrderedFrame<float, consts::LENGTH> &pedestal,
+                          OrderedFrame<float, consts::LENGTH> &pedestal_rms);
   OrderedFrame<char, consts::LENGTH>
-  classifyFrame (OrderedFrame<float, consts::LENGTH> &input,
-                 OrderedFrame<float, consts::LENGTH> &pedestal_rms);
+  classifyFrame(OrderedFrame<float, consts::LENGTH> &input,
+                OrderedFrame<float, consts::LENGTH> &pedestal_rms);
   OrderedFrame<float, consts::LENGTH>
-  subtractPedestal (OrderedFrame<unsigned short, consts::LENGTH> &raw_frame,
-                    OrderedFrame<float, consts::LENGTH> &pedestal);
-  void updatePedestalMovingAverage (
+  subtractPedestal(OrderedFrame<unsigned short, consts::LENGTH> &raw_frame,
+                   OrderedFrame<float, consts::LENGTH> &pedestal);
+  void updatePedestalMovingAverage(
       OrderedFrame<unsigned short, consts::LENGTH> &raw_frame,
       OrderedFrame<char, consts::LENGTH> &frame_classes, bool isPedestal);
-  void threadTask ();
-  void processFrame (FullFrame *ptr);
+  void threadTask();
+  void processFrame(FullFrame *ptr);
 
   OrderedFrame<float, consts::LENGTH> pedestal_counter_counting;
   OrderedFrame<float, consts::LENGTH> pedestal_sum_counting;

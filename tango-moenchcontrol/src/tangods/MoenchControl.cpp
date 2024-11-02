@@ -39,6 +39,7 @@
 
 #include <chrono>
 #include <thread>
+
 /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchControl.cpp
 
@@ -83,6 +84,7 @@ namespace MoenchControl_ns
 {
 /*----- PROTECTED REGION ID(MoenchControl::namespace_starting) ENABLED START -----*/
 /* clang-format on */
+
 //	static initializations
 /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchControl::namespace_starting
@@ -444,12 +446,12 @@ void MoenchControl::read_exposure(Tango::Attribute &attr)
 	/*----- PROTECTED REGION ID(MoenchControl::read_exposure) ENABLED START -----*/
   /* clang-format on */
   //	Set the attribute value
-  sls::Result<std::chrono::nanoseconds> exptime_result =
-      detector_ptr->getExptime();
-  *attr_exposure_read =
-      std::chrono::duration<float, std::chrono::seconds::period>(
-          exptime_result.front())
-          .count();
+  sls::Result<std::chrono::nanoseconds> exptime_result
+      = detector_ptr->getExptime();
+  *attr_exposure_read
+      = std::chrono::duration<float, std::chrono::seconds::period>(
+            exptime_result.front())
+            .count();
   attr.set_value(attr_exposure_read);
   /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_exposure
@@ -473,7 +475,7 @@ void MoenchControl::write_exposure(Tango::WAttribute &attr)
   /* clang-format on */
   *attr_exposure_read = w_val;
   detector_ptr->setExptime(
-      std::chrono::round<std::chrono::nanoseconds>(floatsec{w_val}));
+      std::chrono::round<std::chrono::nanoseconds>(floatsec{ w_val }));
   /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_exposure
 }
@@ -491,11 +493,12 @@ void MoenchControl::read_delay(Tango::Attribute &attr)
 	DEBUG_STREAM << "MoenchControl::read_delay(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchControl::read_delay) ENABLED START -----*/
   /* clang-format on */
-  sls::Result<std::chrono::nanoseconds> delay_result =
-      detector_ptr->getDelayAfterTrigger();
-  *attr_delay_read = std::chrono::duration<float, std::chrono::seconds::period>(
-                         delay_result.front())
-                         .count();
+  sls::Result<std::chrono::nanoseconds> delay_result
+      = detector_ptr->getDelayAfterTrigger();
+  *attr_delay_read
+      = std::chrono::duration<float, std::chrono::seconds::period>(
+            delay_result.front())
+            .count();
   attr.set_value(attr_delay_read);
   /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_delay
@@ -519,7 +522,7 @@ void MoenchControl::write_delay(Tango::WAttribute &attr)
   /* clang-format on */
   *attr_delay_read = w_val;
   detector_ptr->setDelayAfterTrigger(
-      std::chrono::round<std::chrono::nanoseconds>(floatsec{w_val}));
+      std::chrono::round<std::chrono::nanoseconds>(floatsec{ w_val }));
   /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_delay
 }
@@ -703,12 +706,12 @@ void MoenchControl::read_period(Tango::Attribute &attr)
 	DEBUG_STREAM << "MoenchControl::read_period(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchControl::read_period) ENABLED START -----*/
   /* clang-format on */
-  sls::Result<std::chrono::nanoseconds> period_result =
-      detector_ptr->getPeriod();
-  *attr_period_read =
-      std::chrono::duration<float, std::chrono::seconds::period>(
-          period_result.front())
-          .count();
+  sls::Result<std::chrono::nanoseconds> period_result
+      = detector_ptr->getPeriod();
+  *attr_period_read
+      = std::chrono::duration<float, std::chrono::seconds::period>(
+            period_result.front())
+            .count();
   attr.set_value(attr_period_read);
   /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_period
@@ -731,7 +734,7 @@ void MoenchControl::write_period(Tango::WAttribute &attr)
 	/*----- PROTECTED REGION ID(MoenchControl::write_period) ENABLED START -----*/
   /* clang-format on */
   detector_ptr->setPeriod(
-      std::chrono::round<std::chrono::nanoseconds>(floatsec{w_val}));
+      std::chrono::round<std::chrono::nanoseconds>(floatsec{ w_val }));
   /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_period
 }
@@ -749,8 +752,8 @@ void MoenchControl::read_zmq_rx_ip(Tango::Attribute &attr)
 	DEBUG_STREAM << "MoenchControl::read_zmq_rx_ip(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchControl::read_zmq_rx_ip) ENABLED START -----*/
   /* clang-format on */
-  *attr_zmq_rx_ip_read =
-      Tango::string_dup(detector_ptr->getRxZmqIP().front().str());
+  *attr_zmq_rx_ip_read
+      = Tango::string_dup(detector_ptr->getRxZmqIP().front().str());
   attr.set_value(attr_zmq_rx_ip_read);
   /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_zmq_rx_ip
@@ -831,8 +834,8 @@ void MoenchControl::read_rx_discard_policy(Tango::Attribute &attr)
 	DEBUG_STREAM << "MoenchControl::read_rx_discard_policy(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchControl::read_rx_discard_policy) ENABLED START -----*/
   /* clang-format on */
-  *attr_rx_discard_policy_read =
-      detector_ptr->getRxFrameDiscardPolicy().front();
+  *attr_rx_discard_policy_read
+      = detector_ptr->getRxFrameDiscardPolicy().front();
   attr.set_value(attr_rx_discard_policy_read);
   /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_rx_discard_policy
@@ -873,8 +876,8 @@ void MoenchControl::read_rx_hostname(Tango::Attribute &attr)
 	DEBUG_STREAM << "MoenchControl::read_rx_hostname(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchControl::read_rx_hostname) ENABLED START -----*/
   /* clang-format on */
-  *attr_rx_hostname_read =
-      Tango::string_dup(detector_ptr->getRxHostname().front());
+  *attr_rx_hostname_read
+      = Tango::string_dup(detector_ptr->getRxHostname().front());
   attr.set_value(attr_rx_hostname_read);
   /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_rx_hostname

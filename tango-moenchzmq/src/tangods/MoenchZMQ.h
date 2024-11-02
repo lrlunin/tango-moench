@@ -49,6 +49,7 @@ namespace MoenchZMQ_ns
 {
 /*----- PROTECTED REGION ID(MoenchZMQ::Additional Class Declarations) ENABLED START -----*/
 /* clang-format on */
+
 //	Additional Class Declarations
 /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchZMQ::Additional Class Declarations

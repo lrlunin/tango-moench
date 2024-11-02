@@ -47,5 +47,6 @@ void Tango::DServer::class_factory() {
   //	Add method class init if needed
   add_class(MoenchControl_ns::MoenchControlClass::init("MoenchControl"));
 }
+
 /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchControl::ClassFactory.cpp

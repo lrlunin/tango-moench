@@ -87,6 +87,7 @@ typedef slsDetectorDefs::runStatus detector_statusEnum;
 
 /*----- PROTECTED REGION ID(MoenchControl::Additional Class Declarations) ENABLED START -----*/
 /* clang-format on */
+
 //	Additional Class Declarations
 /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchControl::Additional Class Declarations

@@ -29,6 +29,7 @@
 #include "../backend/HDFWriter.hpp"
 #include "MoenchZMQClass.h"
 #include "data.hpp"
+
 /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchZMQ.cpp
 
@@ -70,6 +71,7 @@ namespace MoenchZMQ_ns
 {
 /*----- PROTECTED REGION ID(MoenchZMQ::namespace_starting) ENABLED START -----*/
 /* clang-format on */
+
 //	static initializations
 /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchZMQ::namespace_starting
@@ -426,8 +428,8 @@ void MoenchZMQ::read_session_directory(Tango::Attribute &attr)
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_session_directory) ENABLED START -----*/
   /* clang-format on */
   //	Set the attribute value
-  *attr_session_directory_read =
-      Tango::string_dup(file_writer_ptr->session_directory);
+  *attr_session_directory_read
+      = Tango::string_dup(file_writer_ptr->session_directory);
   attr.set_value(attr_session_directory_read);
   /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_file_root_path
@@ -501,8 +503,8 @@ void MoenchZMQ::read_update_pedestal_period(Tango::Attribute &attr)
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_normalize) ENABLED START -----*/
   /* clang-format on */
   //	Set the attribute value
-  *attr_update_pedestal_period_read =
-      zmq_listener_ptr->comp_backend_ptr->updatePedestalPeriod;
+  *attr_update_pedestal_period_read
+      = zmq_listener_ptr->comp_backend_ptr->updatePedestalPeriod;
   attr.set_value(attr_update_pedestal_period_read);
 }
 
@@ -568,8 +570,8 @@ void MoenchZMQ::read_counting_sigma(Tango::Attribute &attr)
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_counting_sigma) ENABLED START -----*/
   /* clang-format on */
   //	Set the attribute value
-  *attr_counting_sigma_read =
-      zmq_listener_ptr->comp_backend_ptr->counting_sigma.load();
+  *attr_counting_sigma_read
+      = zmq_listener_ptr->comp_backend_ptr->counting_sigma.load();
   attr.set_value(attr_counting_sigma_read);
   /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_counting_sigma
@@ -829,10 +831,10 @@ void MoenchZMQ::read_individual_frame_buffer_capacity(Tango::Attribute &attr)
 	DEBUG_STREAM << "MoenchZMQ::read_individual_frame_buffer_capacity(Tango::Attribute &attr) entering... " << std::endl;
 	/*----- PROTECTED REGION ID(MoenchZMQ::read_individual_frame_buffer_capacity) ENABLED START -----*/
   /* clang-format on */
-  size_t capacity =
-      zmq_listener_ptr->comp_backend_ptr->individual_frame_buffer_capacity;
-  *attr_individual_frame_buffer_capacity_read =
-      static_cast<Tango::DevULong>(capacity);
+  size_t capacity
+      = zmq_listener_ptr->comp_backend_ptr->individual_frame_buffer_capacity;
+  *attr_individual_frame_buffer_capacity_read
+      = static_cast<Tango::DevULong>(capacity);
   attr.set_value(attr_individual_frame_buffer_capacity_read);
   /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::read_individual_frame_buffer_capacity

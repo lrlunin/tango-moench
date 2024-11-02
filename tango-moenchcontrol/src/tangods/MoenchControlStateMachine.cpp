@@ -1,4 +1,5 @@
-/*----- PROTECTED REGION ID(MoenchControlStateMachine.cpp) ENABLED START -----*/
+/*----- PROTECTED REGION ID(MoenchControlStateMachine.cpp) ENABLED START
+ * -----*/
 /* clang-format on */
 //=============================================================================
 //
@@ -396,10 +397,12 @@ bool MoenchControl::is_stop_acquire_allowed(TANGO_UNUSED(const CORBA::Any &any))
 
 /*----- PROTECTED REGION ID(MoenchControl::MoenchControlStateAllowed.AdditionalMethods) ENABLED START -----*/
 /* clang-format on */
+
 bool MoenchControl::is_triggers_left_allowed(
     TANGO_UNUSED(const Tango::AttReqType type)) {
   return true;
 }
+
 /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchControl::MoenchControlStateAllowed.AdditionalMethods
 

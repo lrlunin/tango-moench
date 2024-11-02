@@ -36,5 +36,6 @@ void Tango::DServer::class_factory() {
   //	Add method class init if needed
   add_class(MoenchZMQ_ns::MoenchZMQClass::init("MoenchZMQ"));
 }
+
 /* clang-format off */
 /*----- PROTECTED REGION END -----*/	//	MoenchZMQ::ClassFactory.cpp

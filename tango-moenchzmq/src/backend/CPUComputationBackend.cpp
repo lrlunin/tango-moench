@@ -39,6 +39,7 @@ void CPUComputationBackend::initThreads() {
     threads.push_back(move(t));
   }
 }
+
 void CPUComputationBackend::destroyThreads() {
   // send signal to threads to stop in threadTask loop
   destroy_threads = true;
@@ -47,7 +48,9 @@ void CPUComputationBackend::destroyThreads() {
     thread.join();
   }
 }
+
 void CPUComputationBackend::pause() { threads_sleep = true; }
+
 void CPUComputationBackend::resume() {
   allocateIndividualStorage();
   threads_sleep = false;
@@ -60,18 +63,18 @@ void CPUComputationBackend::allocateIndividualStorage() {
   std::fill(frameindex_storage_ptr,
             frameindex_storage_ptr + individual_frame_buffer_capacity, 0);
   delete[] individual_analog_storage_ptr;
-  individual_analog_storage_ptr =
-      new float[individual_frame_buffer_capacity * consts::LENGTH];
+  individual_analog_storage_ptr
+      = new float[individual_frame_buffer_capacity * consts::LENGTH];
 #ifdef SINGLE_FRAMES_DEBUG
   delete[] pedestal_storage_ptr;
-  pedestal_storage_ptr =
-      new float[individual_frame_buffer_capacity * consts::LENGTH];
+  pedestal_storage_ptr
+      = new float[individual_frame_buffer_capacity * consts::LENGTH];
   delete[] pedestal_rms_storage_ptr;
-  pedestal_rms_storage_ptr =
-      new float[individual_frame_buffer_capacity * consts::LENGTH];
+  pedestal_rms_storage_ptr
+      = new float[individual_frame_buffer_capacity * consts::LENGTH];
   delete[] frame_classes_storage_ptr;
-  frame_classes_storage_ptr =
-      new char[individual_frame_buffer_capacity * consts::LENGTH];
+  frame_classes_storage_ptr
+      = new char[individual_frame_buffer_capacity * consts::LENGTH];
 #endif
 }
 
@@ -82,11 +85,13 @@ void CPUComputationBackend::resetAccumulators() {
   counting_sum.zero();
   processed_frames_amount = 0;
 }
+
 void CPUComputationBackend::resetPedestalAndRMS() {
   pedestal_counter_counting.zero();
   pedestal_sum_counting.zero();
   pedestal_squared_sum_counting.zero();
 }
+
 void CPUComputationBackend::dumpAccumulators() {
   fileWriter->openFile();
   fileWriter->writeFrame("images_sum", "analog_sum", analog_sum);
@@ -114,6 +119,7 @@ void CPUComputationBackend::dumpAccumulators() {
   }
   fileWriter->closeFile();
 };
+
 void CPUComputationBackend::processFrame(FullFrame *ff_ptr) {
   OrderedFrame<float, consts::LENGTH> pedestal_current;
   OrderedFrame<float, consts::LENGTH> pedestal_rms_current;
@@ -121,15 +127,15 @@ void CPUComputationBackend::processFrame(FullFrame *ff_ptr) {
   CPUComputationBackend::loadPedestalAndRMS(pedestal_current,
                                             pedestal_rms_current);
   pedestal_share.unlock_shared();
-  OrderedFrame<float, consts::LENGTH> frame_subtracted_pedestal =
-      ff_ptr->f - pedestal_current;
+  OrderedFrame<float, consts::LENGTH> frame_subtracted_pedestal
+      = ff_ptr->f - pedestal_current;
   // 0 - pedestal pixel, 1 - photon pixel, 2 - max in cluster
   // better to create 3 different masks for easier assigment in sum frames...
-  OrderedFrame<char, consts::LENGTH> frame_classes =
-      CPUComputationBackend::classifyFrame(frame_subtracted_pedestal,
-                                           pedestal_rms_current);
-  if (updatePedestalPeriod &&
-      (processed_frames_amount % updatePedestalPeriod == 0)) {
+  OrderedFrame<char, consts::LENGTH> frame_classes
+      = CPUComputationBackend::classifyFrame(frame_subtracted_pedestal,
+                                             pedestal_rms_current);
+  if (updatePedestalPeriod
+      && (processed_frames_amount % updatePedestalPeriod == 0)) {
     pedestal_share.lock();
     updatePedestalMovingAverage(ff_ptr->f, frame_classes, isPedestal);
     pedestal_share.unlock();
@@ -152,8 +158,8 @@ void CPUComputationBackend::processFrame(FullFrame *ff_ptr) {
     but we assume that frameindex is never negative
     */
     if (frameindex < individual_frame_buffer_capacity) {
-      float *frame_ptr =
-          individual_analog_storage_ptr + frameindex * consts::LENGTH;
+      float *frame_ptr
+          = individual_analog_storage_ptr + frameindex * consts::LENGTH;
       frame_subtracted_pedestal.copy_to_buffer<float *>(frame_ptr, true);
 #ifdef SINGLE_FRAMES_DEBUG
       std::memcpy(pedestal_storage_ptr + frameindex * consts::LENGTH,
@@ -170,8 +176,8 @@ void CPUComputationBackend::processFrame(FullFrame *ff_ptr) {
       // frame_subtracted_pedestal.arr, sizeof(OrderedFrame<float,
       // consts::LENGTH>::arr));
       /*
-      You might be thinking why we just not save the max frame index and this is
-      correct unfortunately there is no safe way to async save the max frame
+      You might be thinking why we just not save the max frame index and this
+      is correct unfortunately there is no safe way to async save the max frame
       index.
 
       If you would do something like this:
@@ -212,8 +218,8 @@ OrderedFrame<char, consts::LENGTH> CPUComputationBackend::classifyFrame(
         for (int ic = -cluster_size / 2; ic < cluster_size / 2 + 1; ic++) {
           const int y_sub = iy + ir;
           const int x_sub = ix + ic;
-          if (y_sub >= 0 && y_sub < consts::FRAME_HEIGHT && x_sub >= 0 &&
-              x_sub < consts::FRAME_WIDTH) {
+          if (y_sub >= 0 && y_sub < consts::FRAME_HEIGHT && x_sub >= 0
+              && x_sub < consts::FRAME_WIDTH) {
             const float value = input(y_sub, x_sub);
             tot += value;
             if (ir <= 0 && ic <= 0)
@@ -232,9 +238,9 @@ OrderedFrame<char, consts::LENGTH> CPUComputationBackend::classifyFrame(
       }
       if (main_pixel_value < -counting_sigma * rms) {
         class_mask(iy, ix) = 3;
-      } else if (max_value > counting_sigma * rms ||
-                 std::max({bl, br, tl, tr}) > c2 * counting_sigma * rms ||
-                 tot > c3 * counting_sigma * rms) {
+      } else if (max_value > counting_sigma * rms
+                 || std::max({ bl, br, tl, tr }) > c2 * counting_sigma * rms
+                 || tot > c3 * counting_sigma * rms) {
         class_mask(iy, ix) = 1;
         if (main_pixel_value == max_value) {
           class_mask(iy, ix) = 2;
@@ -255,9 +261,9 @@ void CPUComputationBackend::loadPedestalAndRMS(
     counter = pedestal_counter_counting.arr[i];
     if (counter != 0) {
       pedestal.arr[i] = pedestal_sum_counting.arr[i] / counter;
-      pedestal_rms.arr[i] =
-          sqrt(pedestal_squared_sum_counting.arr[i] / counter -
-               pow((pedestal_sum_counting.arr[i] / counter), 2));
+      pedestal_rms.arr[i]
+          = sqrt(pedestal_squared_sum_counting.arr[i] / counter
+                 - pow((pedestal_sum_counting.arr[i] / counter), 2));
     }
   }
 };
@@ -271,17 +277,18 @@ void CPUComputationBackend::updatePedestalMovingAverage(
       continue;
     if (pedestal_counter_counting.arr[i] < consts::PEDESTAL_BUFFER_SIZE) {
       pedestal_counter_counting.arr[i]++;
-      pedestal_sum_counting.arr[i] =
-          pedestal_sum_counting.arr[i] + raw_frame.arr[i];
-      pedestal_squared_sum_counting.arr[i] =
-          pedestal_squared_sum_counting.arr[i] + pow(raw_frame.arr[i], 2);
+      pedestal_sum_counting.arr[i]
+          = pedestal_sum_counting.arr[i] + raw_frame.arr[i];
+      pedestal_squared_sum_counting.arr[i]
+          = pedestal_squared_sum_counting.arr[i] + pow(raw_frame.arr[i], 2);
     } else {
-      pedestal_sum_counting.arr[i] =
-          pedestal_sum_counting.arr[i] + raw_frame.arr[i] -
-          pedestal_sum_counting.arr[i] / consts::PEDESTAL_BUFFER_SIZE;
-      pedestal_squared_sum_counting.arr[i] =
-          pedestal_squared_sum_counting.arr[i] + pow(raw_frame.arr[i], 2) -
-          pedestal_squared_sum_counting.arr[i] / consts::PEDESTAL_BUFFER_SIZE;
+      pedestal_sum_counting.arr[i]
+          = pedestal_sum_counting.arr[i] + raw_frame.arr[i]
+            - pedestal_sum_counting.arr[i] / consts::PEDESTAL_BUFFER_SIZE;
+      pedestal_squared_sum_counting.arr[i]
+          = pedestal_squared_sum_counting.arr[i] + pow(raw_frame.arr[i], 2)
+            - pedestal_squared_sum_counting.arr[i]
+                  / consts::PEDESTAL_BUFFER_SIZE;
     }
   }
 };

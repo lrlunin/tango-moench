@@ -19,12 +19,14 @@ ZMQListener::ZMQListener(std::string socket_addr, std::string socket_port) {
   abort_wait = false;
   zmq_listener_thread = std::thread(&ZMQListener::listen_socket, this);
 }
+
 void ZMQListener::listen_socket() {
   zmq::message_t json_zmq_msg, data_zmq_msg;
   rapidjson::GenericDocument<rapidjson::UTF8<>, rapidjson::CrtAllocator> d;
   while (true) {
     if (socket.recv(json_zmq_msg)) {
-      if (d.Parse(static_cast<char *>(json_zmq_msg.data()), json_zmq_msg.size())
+      if (d.Parse(static_cast<char *>(json_zmq_msg.data()),
+                  json_zmq_msg.size())
               .HasParseError()) {
         continue;
       };
@@ -47,6 +49,7 @@ void ZMQListener::listen_socket() {
     };
   }
 }
+
 void ZMQListener::start_receive() {
   if (!receive_data) {
     received_frames_amount = 0;
@@ -56,11 +59,12 @@ void ZMQListener::start_receive() {
     receive_data = true;
   }
 }
+
 void ZMQListener::stop_receive() {
   if (receive_data) {
     receive_data = false;
-    while (comp_backend_ptr->processed_frames_amount < received_frames_amount &&
-           !abort_wait) {
+    while (comp_backend_ptr->processed_frames_amount < received_frames_amount
+           && !abort_wait) {
       this_thread::sleep_for(0.25s);
     }
     abort_wait = false;
@@ -70,4 +74,5 @@ void ZMQListener::stop_receive() {
     comp_backend_ptr->fileWriter->file_index++;
   }
 }
+
 void ZMQListener::abort_receive() { abort_wait = true; }
