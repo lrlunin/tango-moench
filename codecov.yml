@@ -1,3 +1,5 @@
 ignore:
-  - "**/test*"
-  - "**/tangods*"
+  - "tango-moenchcontrol/src/tangods/*"
+  - "tango-moenchcontrol/test/*"
+  - "tango-moenchzmq/src/tangods/*"
+  - "tango-moenchzmq/test/*"
