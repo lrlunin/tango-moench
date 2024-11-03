@@ -79,4 +79,5 @@ jobs:
       with:
         files: ./build/coverage.info
         fail_ci_if_error: false
+        codecov_yml_path: 'codecov.yml'
         token: ${{ secrets.CODECOV_TOKEN }}
