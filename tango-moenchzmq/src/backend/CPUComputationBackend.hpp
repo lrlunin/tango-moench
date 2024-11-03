@@ -14,7 +14,8 @@ public:
   typedef boost::singleton_pool<FullFrame, sizeof(FullFrame)> memory_pool;
   boost::lockfree::queue<FullFrame *> frame_ptr_queue;
   FileWriter *fileWriter;
-  int THREAD_AMOUNT = 10;
+  const float PEDESTAL_BUFFER_LENGTH;
+  const unsigned int THREAD_AMOUNT;
   std::atomic_bool threads_sleep = true;
   std::atomic_bool destroy_threads = false;
   std::vector<std::thread> threads;
@@ -29,7 +30,8 @@ public:
   std::atomic<long> processed_frames_amount;
   std::atomic<long> live_period;
 
-  CPUComputationBackend(std::string save_root_path);
+  CPUComputationBackend(FileWriter *fileWriter, float PEDESTAL_BUFFER_LENGTH,
+                        unsigned int THREAD_AMOUNT);
   CPUComputationBackend(FileWriter *fileWriter);
   ~CPUComputationBackend();
   void initThreads();

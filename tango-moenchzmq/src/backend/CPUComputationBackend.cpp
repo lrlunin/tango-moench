@@ -14,11 +14,18 @@
 
 using namespace std;
 
-CPUComputationBackend::CPUComputationBackend(FileWriter *fileWriter)
-    : frame_ptr_queue(5000), fileWriter(fileWriter) {
+CPUComputationBackend::CPUComputationBackend(FileWriter *fileWriter,
+                                             float PEDESTAL_BUFFER_LENGTH,
+                                             unsigned int THREAD_AMOUNT)
+    : frame_ptr_queue(5000), fileWriter(fileWriter),
+      PEDESTAL_BUFFER_LENGTH(PEDESTAL_BUFFER_LENGTH),
+      THREAD_AMOUNT(THREAD_AMOUNT) {
   initThreads();
   resetAccumulators();
 };
+
+CPUComputationBackend::CPUComputationBackend(FileWriter *fileWriter)
+    : CPUComputationBackend(fileWriter, 5000, 10) {};
 
 CPUComputationBackend::~CPUComputationBackend() {
   destroyThreads();
@@ -36,7 +43,7 @@ void CPUComputationBackend::initThreads() {
    * Creation of kind of thread pool instead of spawning threads.
    * Maybe can be done better with async and futures.
    */
-  for (int x = 0; x < THREAD_AMOUNT; ++x) {
+  for (unsigned int x = 0; x < THREAD_AMOUNT; x++) {
     auto t = thread(&CPUComputationBackend::threadTask, this);
     threads.push_back(move(t));
   }
@@ -155,10 +162,10 @@ void CPUComputationBackend::processFrame(FullFrame *ff_ptr) {
   if (saveIndividualFrames) {
     int frameindex = ff_ptr->m.frameIndex;
     /*
-    safe comparasion of signed int and unsigned size_t would be
-    std::cmp_less(frameindex, individual_frame_buffer_capacity)
-    but we assume that frameindex is never negative
-    */
+     * safe comparasion of signed int and unsigned size_t would be
+     * std::cmp_less(frameindex, individual_frame_buffer_capacity)
+     * but we assume that frameindex is never negative
+     */
     if (frameindex < individual_frame_buffer_capacity) {
       float *frame_ptr
           = individual_analog_storage_ptr + frameindex * consts::LENGTH;
@@ -178,22 +185,24 @@ void CPUComputationBackend::processFrame(FullFrame *ff_ptr) {
       // frame_subtracted_pedestal.arr, sizeof(OrderedFrame<float,
       // consts::LENGTH>::arr));
       /*
-      You might be thinking why we just not save the max frame index and this
-      is correct unfortunately there is no safe way to async save the max frame
-      index.
+      * You might be thinking why we just not save the max frame index and this
+      * is correct unfortunately there is no safe way to async save the max
+      frame
+      * index.
 
-      If you would do something like this:
-      max_frame_index = std::max(max_frame_index, frameindex);
+      * If you would do something like this:
+      * max_frame_index = std::max(max_frame_index, frameindex);
 
-      There is a chance that after max_frame_index read and before
-      max_frame_index write the max_frame_index will be changed by another
-      thread and the value will be lost.
+      * There is a chance that after max_frame_index read and before
+      * max_frame_index write the max_frame_index will be changed by another
+      * thread and the value will be lost.
 
-      Therefore we save all frameindexes and after the processing we took the
-      max value.
+      * Therefore we save all frameindexes and after the processing we took the
+      * max value.
 
-      The std::atomic<T>::fetch_max is not available till C++26, while not all
-      features of C++20 are available in the current version of GCC.
+      * The std::atomic<T>::fetch_max is not available till C++26, while not
+      all
+      * features of C++20 are available in the current version of GCC.
       */
       frameindex_storage_ptr[frameindex] = frameindex;
     }
@@ -277,7 +286,7 @@ void CPUComputationBackend::updatePedestalMovingAverage(
   for (unsigned int i = 0; i < consts::LENGTH; i++) {
     if (!isPedestal && frame_classes.arr[i] != 0)
       continue;
-    if (pedestal_counter_counting.arr[i] < consts::PEDESTAL_BUFFER_SIZE) {
+    if (pedestal_counter_counting.arr[i] < PEDESTAL_BUFFER_LENGTH) {
       pedestal_counter_counting.arr[i]++;
       pedestal_sum_counting.arr[i]
           = pedestal_sum_counting.arr[i] + raw_frame.arr[i];
@@ -286,11 +295,10 @@ void CPUComputationBackend::updatePedestalMovingAverage(
     } else {
       pedestal_sum_counting.arr[i]
           = pedestal_sum_counting.arr[i] + raw_frame.arr[i]
-            - pedestal_sum_counting.arr[i] / consts::PEDESTAL_BUFFER_SIZE;
+            - pedestal_sum_counting.arr[i] / PEDESTAL_BUFFER_LENGTH;
       pedestal_squared_sum_counting.arr[i]
           = pedestal_squared_sum_counting.arr[i] + pow(raw_frame.arr[i], 2)
-            - pedestal_squared_sum_counting.arr[i]
-                  / consts::PEDESTAL_BUFFER_SIZE;
+            - pedestal_squared_sum_counting.arr[i] / PEDESTAL_BUFFER_LENGTH;
     }
   }
 };
