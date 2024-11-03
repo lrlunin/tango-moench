@@ -87,7 +87,6 @@ public:
 	Tango::DevLong    *attr_update_pedestal_period_read;
 	Tango::DevDouble	*attr_threshold_read;
 	Tango::DevFloat	*attr_counting_sigma_read;
-	Tango::DevLong	*attr_live_period_read;
 	Tango::DevBoolean	*attr_process_pedestal_read;
 	Tango::DevBoolean	*attr_split_pumped_read;
 	Tango::DevLong	*attr_acquired_frames_read;
@@ -238,16 +237,6 @@ public:
 	virtual void read_counting_sigma(Tango::Attribute &attr);
 	virtual void write_counting_sigma(Tango::WAttribute &attr);
 	virtual bool is_counting_sigma_allowed(Tango::AttReqType type);
-/**
- *	Attribute live_period related methods
- *
- *
- *	Data type:  Tango::DevLong
- *	Attr type:	Scalar
- */
-	virtual void read_live_period(Tango::Attribute &attr);
-	virtual void write_live_period(Tango::WAttribute &attr);
-	virtual bool is_live_period_allowed(Tango::AttReqType type);
 /**
  *	Attribute process_pedestal related methods
  *

@@ -150,21 +150,6 @@ public:
 		{return (static_cast<MoenchZMQ *>(dev))->is_counting_sigma_allowed(ty);}
 };
 
-//	Attribute live_period class definition
-class live_periodAttrib: public Tango::Attr
-{
-public:
-	live_periodAttrib():Attr("live_period",
-			Tango::DEV_LONG, Tango::READ_WRITE) {};
-	~live_periodAttrib() {};
-	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
-		{(static_cast<MoenchZMQ *>(dev))->read_live_period(att);}
-	virtual void write(Tango::DeviceImpl *dev,Tango::WAttribute &att)
-		{(static_cast<MoenchZMQ *>(dev))->write_live_period(att);}
-	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
-		{return (static_cast<MoenchZMQ *>(dev))->is_live_period_allowed(ty);}
-};
-
 //	Attribute process_pedestal class definition
 class process_pedestalAttrib: public Tango::Attr
 {

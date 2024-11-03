@@ -28,7 +28,6 @@ public:
   std::shared_mutex pedestal_share;
   std::mutex frames_sums;
   std::atomic<long> processed_frames_amount;
-  std::atomic<long> live_period;
 
   CPUComputationBackend(FileWriter *fileWriter, float PEDESTAL_BUFFER_LENGTH,
                         unsigned int THREAD_AMOUNT);

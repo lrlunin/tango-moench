@@ -1,5 +1,4 @@
 #include "HDFWriter.hpp"
-#include "ComputationBackend.hpp"
 #include <H5Cpp.h>
 #include <chrono>
 #include <fmt/chrono.h>

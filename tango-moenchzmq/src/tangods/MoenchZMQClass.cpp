@@ -602,29 +602,6 @@ void MoenchZMQClass::attribute_factory(std::vector<Tango::Attr *> &att_list)
 	counting_sigma->set_memorized_init(true);
 	att_list.push_back(counting_sigma);
 
-	//	Attribute : live_period
-	live_periodAttrib	*live_period = new live_periodAttrib();
-	Tango::UserDefaultAttrProp	live_period_prop;
-	//	description	not set for live_period
-	live_period_prop.set_label("live period");
-	live_period_prop.set_unit("frames");
-	//	standard_unit	not set for live_period
-	//	display_unit	not set for live_period
-	//	format	not set for live_period
-	//	max_value	not set for live_period
-	//	min_value	not set for live_period
-	//	max_alarm	not set for live_period
-	//	min_alarm	not set for live_period
-	//	max_warning	not set for live_period
-	//	min_warning	not set for live_period
-	//	delta_t	not set for live_period
-	//	delta_val	not set for live_period
-	live_period->set_default_properties(live_period_prop);
-	//	Not Polled
-	live_period->set_disp_level(Tango::OPERATOR);
-	//	Not Memorized
-	att_list.push_back(live_period);
-
 	//	Attribute : process_pedestal
 	process_pedestalAttrib	*process_pedestal = new process_pedestalAttrib();
 	Tango::UserDefaultAttrProp	process_pedestal_prop;

@@ -188,28 +188,6 @@ bool MoenchZMQ::is_counting_sigma_allowed(TANGO_UNUSED(Tango::AttReqType type))
 
 //--------------------------------------------------------
 /**
- *	Method      : MoenchZMQ::is_live_period_allowed()
- * Description:  Execution allowed for live_period attribute
- */
-//--------------------------------------------------------
-bool MoenchZMQ::is_live_period_allowed(TANGO_UNUSED(Tango::AttReqType type))
-{
-	//	Not any excluded states for live_period attribute in Write access.
-	/*----- PROTECTED REGION ID(MoenchZMQ::live_periodStateAllowed_WRITE) ENABLED START -----*/
-  /* clang-format on */
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::live_periodStateAllowed_WRITE
-
-	//	Not any excluded states for live_period attribute in read access.
-	/*----- PROTECTED REGION ID(MoenchZMQ::live_periodStateAllowed_READ) ENABLED START -----*/
-  /* clang-format on */
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::live_periodStateAllowed_READ
-	return true;
-}
-
-//--------------------------------------------------------
-/**
  *	Method      : MoenchZMQ::is_process_pedestal_allowed()
  * Description:  Execution allowed for process_pedestal attribute
  */
