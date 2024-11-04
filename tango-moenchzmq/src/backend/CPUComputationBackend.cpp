@@ -1,5 +1,6 @@
 #include "CPUComputationBackend.hpp"
 #include <algorithm>
+#include <boost/asio/post.hpp>
 #include <cmath>
 #include <condition_variable>
 #include <fmt/chrono.h>
@@ -20,7 +21,9 @@ CPUComputationBackend::CPUComputationBackend(FileWriter *fileWriter,
     : frame_ptr_queue(20000), fileWriter(fileWriter),
       PEDESTAL_BUFFER_LENGTH(PEDESTAL_BUFFER_LENGTH),
       THREAD_AMOUNT(THREAD_AMOUNT) {
-  initThreads();
+  thread_pool = new boost::asio::thread_pool(THREAD_AMOUNT);
+  dispatcher_thread = std::thread(&CPUComputationBackend::dispatchTasks, this);
+  // initThreads();
   resetAccumulators();
 };
 
@@ -28,7 +31,12 @@ CPUComputationBackend::CPUComputationBackend(FileWriter *fileWriter)
     : CPUComputationBackend(fileWriter, 5000, 1) {};
 
 CPUComputationBackend::~CPUComputationBackend() {
-  destroyThreads();
+  destoy_dispatcher = true;
+  dispatcher_thread.join();
+  thread_pool->join();
+  // delete dispatcher_thread;
+  delete thread_pool;
+  // destroyThreads();
 #ifdef SINGLE_FRAMES_DEBUG
   delete[] pedestal_storage_ptr;
   delete[] pedestal_rms_storage_ptr;
@@ -302,6 +310,19 @@ void CPUComputationBackend::updatePedestalMovingAverage(
     }
   }
 };
+
+void CPUComputationBackend::dispatchTasks() {
+  FullFrame *ff_ptr;
+  while (true) {
+    while (frame_ptr_queue.pop(ff_ptr)) {
+      boost::asio::post(*thread_pool,
+                        [this, ff_ptr] { this->processFrame(ff_ptr); });
+    }
+    this_thread::sleep_for(0.01s);
+    if (destoy_dispatcher)
+      break;
+  }
+}
 
 void CPUComputationBackend::threadTask() {
   FullFrame *ff_ptr;

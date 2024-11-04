@@ -1,4 +1,5 @@
 #pragma once
+#include <boost/asio/thread_pool.hpp>
 #include <boost/lockfree/queue.hpp>
 #include <boost/pool/singleton_pool.hpp>
 #include <filesystem>
@@ -18,7 +19,10 @@ public:
   const unsigned int THREAD_AMOUNT;
   std::atomic_bool threads_sleep = true;
   std::atomic_bool destroy_threads = false;
+  std::atomic_bool destoy_dispatcher = false;
   std::vector<std::thread> threads;
+  std::thread dispatcher_thread;
+  boost::asio::thread_pool *thread_pool;
   std::string save_root_path, file_path, file_name;
   int max_frame_index = 0;
   std::atomic<float> counting_sigma = 4;
@@ -49,6 +53,7 @@ public:
   void updatePedestalMovingAverage(
       OrderedFrame<unsigned short, consts::LENGTH> &raw_frame,
       OrderedFrame<char, consts::LENGTH> &frame_classes, bool isPedestal);
+  void dispatchTasks();
   void threadTask();
   void processFrame(FullFrame *ptr);
 
