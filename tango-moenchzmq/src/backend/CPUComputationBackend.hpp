@@ -27,7 +27,7 @@ public:
 
   std::shared_mutex pedestal_share;
   std::mutex frames_sums;
-  std::atomic<long> processed_frames_amount;
+  std::atomic<long> processed_frames_amount{ 0 };
 
   CPUComputationBackend(FileWriter *fileWriter, float PEDESTAL_BUFFER_LENGTH,
                         unsigned int THREAD_AMOUNT);
@@ -68,7 +68,7 @@ public:
   OrderedFrame<int, consts::LENGTH> counting_sum_pumped;
   std::atomic_bool isSplitPumped = false;
   std::atomic_bool isPedestal = true;
-  std::atomic<long> updatePedestalPeriod = 1;
+  long updatePedestalPeriod = 1;
   std::atomic_bool saveIndividualFrames = true;
   int *frameindex_storage_ptr = nullptr;
   float *individual_analog_storage_ptr = nullptr;

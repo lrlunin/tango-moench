@@ -17,7 +17,7 @@ using namespace std;
 CPUComputationBackend::CPUComputationBackend(FileWriter *fileWriter,
                                              float PEDESTAL_BUFFER_LENGTH,
                                              unsigned int THREAD_AMOUNT)
-    : frame_ptr_queue(5000), fileWriter(fileWriter),
+    : frame_ptr_queue(20000), fileWriter(fileWriter),
       PEDESTAL_BUFFER_LENGTH(PEDESTAL_BUFFER_LENGTH),
       THREAD_AMOUNT(THREAD_AMOUNT) {
   initThreads();
@@ -25,7 +25,7 @@ CPUComputationBackend::CPUComputationBackend(FileWriter *fileWriter,
 };
 
 CPUComputationBackend::CPUComputationBackend(FileWriter *fileWriter)
-    : CPUComputationBackend(fileWriter, 5000, 10) {};
+    : CPUComputationBackend(fileWriter, 5000, 1) {};
 
 CPUComputationBackend::~CPUComputationBackend() {
   destroyThreads();

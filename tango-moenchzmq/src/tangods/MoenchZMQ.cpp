@@ -131,6 +131,10 @@ void MoenchZMQ::delete_device()
   //	Delete device allocated objects
   /* clang-format off */
 	/*----- PROTECTED REGION END -----*/	//	MoenchZMQ::delete_device
+
+	delete zmq_listener_ptr->comp_backend_ptr;
+	delete zmq_listener_ptr;
+	delete file_writer_ptr;
 	delete[] attr_file_index_read;
 	delete[] attr_file_name_read;
 	delete[] attr_session_directory_read;
@@ -166,9 +170,9 @@ void MoenchZMQ::init_device()
 	set_state(Tango::INIT);
 	get_device_property();
 
-	file_writer_ptr = std::make_unique<HDFWriter>(SAVE_ROOT_PATH);
-	zmq_listener_ptr = std::make_unique<ZMQListener>(ZMQ_RX_IP, ZMQ_RX_PORT);
-	zmq_listener_ptr->comp_backend_ptr = std::make_unique<CPUComputationBackend>(file_writer_ptr.get()).get();
+	file_writer_ptr = new HDFWriter(SAVE_ROOT_PATH);
+	zmq_listener_ptr = new ZMQListener(ZMQ_RX_IP, ZMQ_RX_PORT);
+	zmq_listener_ptr->comp_backend_ptr = new CPUComputationBackend(file_writer_ptr);
 
 
 	attr_file_index_read = new Tango::DevULong[1];
