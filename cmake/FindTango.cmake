@@ -46,30 +46,31 @@ function(_tango_find_version)
         return()
     endif()
 
-# File containing version information.  We should find it under tango for 9.3.x
+# Files containing version information.  We should find them under tango for 9.3.x
 # releases and under tango/common for post 9.4.0 releases.
-    find_file(tango_const_include_file
-        NAMES tango_const.h
+# tango_version.h holds the version information since the 9.5.0 release.
+    find_file(tango_version_files
+        NAMES tango_version.h tango_const.h
         PATHS
             ${Tango_INCLUDE_DIR}/tango
             ${Tango_INCLUDE_DIR}/tango/common
         NO_DEFAULT_PATH
     )
 
-    if (NOT tango_const_include_file)
-        message(WARNING "Could not fine tango_const.h under ${Tango_INCLUDE_DIR}")
+    if (NOT tango_version_files)
+        message(WARNING "Could not find tango_const.h/tango_version.h under ${Tango_INCLUDE_DIR}")
         set(Tango_VERSION Tango_VERSION-NOTFOUND PARENT_SCOPE)
         return()
     endif()
 
-    file(STRINGS ${tango_const_include_file} version_info
+    file(STRINGS ${tango_version_files} version_info
         REGEX "^#define[ \t]+TANGO_VERSION_(MAJOR|MINOR|PATCH).*")
-    unset(tango_const_include_file CACHE)
+    unset(tango_version_files CACHE)
 
     list(LENGTH version_info version_info_length)
 
     if (NOT version_info_length EQUAL 3)
-        message(WARNING "Could not find version information in ${tango_const_include_file}")
+        message(WARNING "Could not find version information in ${tango_version_files}")
         set(Tango_VERSION Tango_VERSION-NOTFOUND PARENT_SCOPE)
         return()
     endif()
@@ -88,6 +89,14 @@ function(_tango_find_version)
     set(Tango_VERSION_PATCH ${version_patch} PARENT_SCOPE)
 endfunction()
 
+find_package(Tango CONFIG QUIET)
+if (Tango_FOUND)
+    get_target_property(_tango_location Tango::Tango LOCATION)
+    message(STATUS "Found Tango with CMake config file: ${_tango_location}")
+    unset(_tango_location)
+    return()
+endif()
+
 if (WIN32)
     set(_tango_default_use_pkg_config OFF)
 else()
@@ -102,11 +111,17 @@ if(Tango_FORCE_STATIC AND Tango_USE_PKG_CONFIG)
     set(Tango_USE_PKG_CONFIG OFF)
 endif()
 
+set(_tango_pkg_config_quiet "")  # initialise variable
 if (NOT Tango_USE_PKG_CONFIG OR Tango_FIND_QUIETLY)
     set(_tango_pkg_config_quiet QUIET)
 endif()
 find_package(PkgConfig ${_tango_pkg_config_quiet})
 unset(_tango_pkg_config_quiet)
+
+# initialise variables that may be set by pkg_search_module
+set(_Tango_PKG_LIBRARY_DIRS "")
+set(_Tango_PKG_INCLUDE_DIRS "")  # initialise variable
+
 if (PKG_CONFIG_FOUND)
     if (Tango_FIND_REQUIRED AND NOT Tango_FIND_QUIETLY AND Tango_USE_PKG_CONFIG)
         pkg_search_module(_Tango_PKG tango IMPORTED_TARGET)
@@ -114,15 +129,6 @@ if (PKG_CONFIG_FOUND)
         pkg_search_module(_Tango_PKG tango QUIET IMPORTED_TARGET)
     endif()
 endif()
-
-# This will not find the header file for the (Windows?) 9.3.5 release, however,
-# I don't think this device server will work with the 9.3.5 release.
-find_path(Tango_INCLUDE_DIR
-    NAMES tango/tango.h
-    PATHS "" ${_Tango_PKG_INCLUDE_DIRS}
-)
-
-_tango_find_version()
 
 if (_Tango_PKG_FOUND AND Tango_USE_PKG_CONFIG)
     if (NOT TARGET Tango::Tango)
@@ -132,6 +138,7 @@ if (_Tango_PKG_FOUND AND Tango_USE_PKG_CONFIG)
         message(STATUS "Tango found via pkg-config")
     endif()
     set(Tango_FOUND TRUE)
+    set(Tango_VERSION ${_Tango_PKG_VERSION} CACHE INTERNAL "Tango version")
     return()
 endif()
 
@@ -139,11 +146,20 @@ if (NOT _Tango_PKG_FOUND AND Tango_USE_PKG_CONFIG AND NOT Tango_FIND_QUIETLY)
     message(STATUS "Tango not found via pkg-config, falling back to cmake find")
 endif()
 
+# This will not find the header file for the (Windows?) 9.3.5 release, however,
+# I don't think this device server will work with the 9.3.5 release.
+find_path(Tango_INCLUDE_DIR
+    NAMES tango/tango.h
+    PATHS ${_Tango_PKG_INCLUDE_DIRS}
+)
+
+_tango_find_version()
+
 if (WIN32)
     set(_tango_release_names tango)
     set(_tango_debug_names tangod)
-    set(_tango_static_release_names libtango)
-    set(_tango_static_debug_names libtangod)
+    set(_tango_static_release_names libtango libtango-static)
+    set(_tango_static_debug_names libtangod libtangod-staticd)
 else()
     set(_tango_release_names tango)
     set(_tango_debug_names tango)
@@ -153,32 +169,32 @@ endif()
 
 find_library(Tango_LIBRARY_RELEASE
     NAMES ${_tango_release_names}
-    PATHS "" ${_Tango_PKG_LIBRARY_DIRS}
+    PATHS ${_Tango_PKG_LIBRARY_DIRS}
 )
 
 find_library(Tango_LIBRARY_RELEASE
     NAMES ${_tango_static_release_names}
-    PATHS "" ${_Tango_PKG_LIBRARY_DIRS}
+    PATHS ${_Tango_PKG_LIBRARY_DIRS}
 )
 
 find_library(Tango_LIBRARY_DEBUG
     NAMES ${_tango_debug_names}
-    PATHS "" ${_Tango_PKG_LIBRARY_DIRS}
+    PATHS ${_Tango_PKG_LIBRARY_DIRS}
 )
 
 find_library(Tango_LIBRARY_DEBUG
     NAMES ${_tango_static_debug_names}
-    PATHS "" ${_Tango_PKG_LIBRARY_DIRS}
+    PATHS ${_Tango_PKG_LIBRARY_DIRS}
 )
 
 find_library(Tango_static_LIBRARY_RELEASE
     NAMES ${_tango_static_release_names}
-    PATHS "" ${_Tango_PKG_LIBRARY_DIRS}
+    PATHS ${_Tango_PKG_LIBRARY_DIRS}
 )
 
 find_library(Tango_static_LIBRARY_DEBUG
     NAMES ${_tango_static_debug_names}
-    PATHS "" ${_Tango_PKG_LIBRARY_DIRS}
+    PATHS ${_Tango_PKG_LIBRARY_DIRS}
 )
 
 unset(_tango_release_names)
@@ -192,16 +208,20 @@ select_library_configurations(Tango_static)
 
 if(Tango_LIBRARY STREQUAL Tango_static_LIBRARY)
     set(Tango_IS_STATIC TRUE)
+else()
+    set(Tango_IS_STATIC FALSE)
 endif()
 
 if (Tango_static_LIBRARY)
     set(Tango_static_FOUND TRUE)
+else()
+    set(Tango_static_FOUND FALSE)
 endif()
 
+set(_tango_quiet "") # initialise variable
 if(Tango_FIND_QUIETLY)
     set(_tango_quiet QUIET)
 endif()
-
 find_package(cppzmq ${_tango_quiet})
 find_package(omniORB4 ${_tango_quiet}
     COMPONENTS COS4 Dynamic4)
@@ -268,11 +288,11 @@ function(_tango_add_target prefix targetsuffix is_static)
         omniORB4::COS4${targetsuffix}
         omniORB4::Dynamic4${targetsuffix})
 
+    set(_tango_definitions "") # initialise variable
     if (WIN32)
         if(NOT is_static)
-            set(_tango_definitions /DTANGO_HAS_DLL /DLOG4TANGO_HAS_DLL)
+            set(_tango_definitions -DTANGO_HAS_DLL -DLOG4TANGO_HAS_DLL)
         else()
-            set(_tango_definitions /D_WINSTATIC)
             list(APPEND _tango_dependents comctl32.lib)
         endif()
     endif()
