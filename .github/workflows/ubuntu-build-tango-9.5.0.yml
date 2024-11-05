@@ -37,7 +37,7 @@ jobs:
       run: wget https://kumisystems.dl.sourceforge.net/project/omniorb/omniORB/omniORB-4.3.2/omniORB-4.3.2.tar.bz2
 
     - name: Untar, cd, configure, compile and install omniORB
-      run: tar xjvf omniORB-4.3.2.tar.bz2 && cd omniORB-4.3.2 && cmake -B build && cmake --build build -j$CPU_CORES && sudo cmake --install build
+      run: tar xjvf omniORB-4.3.2.tar.bz2 && cd omniORB-4.3.2 && ./configure && make -j$CPU_CORES && sudo make install
 
     - name: Download tango-idl
       run: wget https://gitlab.com/tango-controls/tango-idl/-/archive/6.0.2/tango-idl-6.0.2.tar.gz
