@@ -102,8 +102,8 @@ void MoenchZMQ::init_device() {
 
   file_writer_ptr = new HDFWriter(SAVE_ROOT_PATH);
   zmq_listener_ptr = new ZMQListener(ZMQ_RX_IP, ZMQ_RX_PORT);
-  zmq_listener_ptr->comp_backend_ptr
-      = new CPUComputationBackend(file_writer_ptr);
+  zmq_listener_ptr->comp_backend_ptr = new CPUComputationBackend(
+      file_writer_ptr, PEDESTAL_BUFFER_LENGTH, THREAD_AMOUNT);
 
   attr_file_index_read = new Tango::DevULong[1];
   attr_file_name_read = new Tango::DevString[1];
@@ -136,24 +136,42 @@ void MoenchZMQ::init_device() {
 //--------------------------------------------------------
 void MoenchZMQ::get_device_property() {
   //	Initialize property data members
-
+  ZMQ_RX_IP = "127.0.0.1";
+  ZMQ_RX_PORT = 50003;
+  SAVE_ROOT_PATH = "/home/data";
+  THREAD_AMOUNT = 2;
+  PEDESTAL_BUFFER_LENGTH = 5000;
   mandatoryNotDefined = false;
   Tango::DbData dev_prop{ Tango::DbDatum("ZMQ_RX_IP"),
                           Tango::DbDatum("ZMQ_RX_PORT"),
-                          Tango::DbDatum("SAVE_ROOT_PATH") };
+                          Tango::DbDatum("SAVE_ROOT_PATH"),
+                          Tango::DbDatum("THREAD_AMOUNT"),
+                          Tango::DbDatum("PEDESTAL_BUFFER_LENGTH") };
   get_db_device()->get_property(dev_prop);
   // if any of the properties is empty, mark the device as not initialized
   for (auto &prop : dev_prop) {
-    if (prop.is_empty()) {
-      ERROR_STREAM << "Property " << prop.name << " not set" << std::endl;
-      mandatoryNotDefined = true;
+    if (!prop.is_empty()) {
+      if (prop.name == "ZMQ_RX_IP") {
+        prop >> ZMQ_RX_IP;
+      } else if (prop.name == "ZMQ_RX_PORT") {
+        prop >> ZMQ_RX_PORT;
+      } else if (prop.name == "SAVE_ROOT_PATH") {
+        prop >> SAVE_ROOT_PATH;
+      } else if (prop.name == "THREAD_AMOUNT") {
+        prop >> THREAD_AMOUNT;
+      } else if (prop.name == "PEDESTAL_BUFFER_LENGTH") {
+        prop >> PEDESTAL_BUFFER_LENGTH;
+      } else
+        DEBUG_STREAM << "Not defined, use default value for " << prop.name
+                     << std::endl;
     }
   }
-  dev_prop[0] >> ZMQ_RX_IP;
-  dev_prop[1] >> ZMQ_RX_PORT;
-  dev_prop[2] >> SAVE_ROOT_PATH;
-
-  //	Check device property data members init
+  DEBUG_STREAM << "ZMQ_RX_IP: " << ZMQ_RX_IP << std::endl;
+  DEBUG_STREAM << "ZMQ_RX_PORT: " << ZMQ_RX_PORT << std::endl;
+  DEBUG_STREAM << "SAVE_ROOT_PATH: " << SAVE_ROOT_PATH << std::endl;
+  DEBUG_STREAM << "THREAD_AMOUNT: " << THREAD_AMOUNT << std::endl;
+  DEBUG_STREAM << "PEDESTAL_BUFFER_LENGTH: " << PEDESTAL_BUFFER_LENGTH
+               << std::endl;
 }
 
 void MoenchZMQ::load_images_previews() {

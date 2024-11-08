@@ -29,7 +29,7 @@ private:
 public:
   CPUComputationBackend *comp_backend_ptr;
   std::atomic<long> received_frames_amount;
-  ZMQListener(std::string socket_addr, std::string socket_port);
+  ZMQListener(std::string socket_addr, unsigned long long socket_port);
   void listen_socket();
   void start_receive();
   void stop_receive();

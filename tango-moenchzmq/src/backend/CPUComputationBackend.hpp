@@ -34,7 +34,7 @@ public:
   std::atomic<long> processed_frames_amount{ 0 };
 
   CPUComputationBackend(FileWriter *fileWriter, float PEDESTAL_BUFFER_LENGTH,
-                        unsigned int THREAD_AMOUNT);
+                        unsigned long long THREAD_AMOUNT);
   CPUComputationBackend(FileWriter *fileWriter);
   ~CPUComputationBackend();
   void initThreads();

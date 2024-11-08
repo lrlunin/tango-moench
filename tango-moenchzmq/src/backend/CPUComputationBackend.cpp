@@ -17,7 +17,7 @@ using namespace std;
 
 CPUComputationBackend::CPUComputationBackend(FileWriter *fileWriter,
                                              float PEDESTAL_BUFFER_LENGTH,
-                                             unsigned int THREAD_AMOUNT)
+                                             unsigned long long THREAD_AMOUNT)
     : frame_ptr_queue(20000), fileWriter(fileWriter),
       PEDESTAL_BUFFER_LENGTH(PEDESTAL_BUFFER_LENGTH),
       THREAD_AMOUNT(THREAD_AMOUNT) {
@@ -217,7 +217,6 @@ void CPUComputationBackend::processFrame(FullFrame *ff_ptr) {
   }
   processed_frames_amount++;
   memory_pool::free(ff_ptr);
-  std::cout << processed_frames_amount << std::endl;
 }
 
 OrderedFrame<char, consts::LENGTH> CPUComputationBackend::classifyFrame(

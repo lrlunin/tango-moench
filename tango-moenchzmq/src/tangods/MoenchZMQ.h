@@ -28,9 +28,13 @@ public:
   //	ZMQ_IP:
   std::string ZMQ_RX_IP;
   //	ZMQ_PORT:
-  std::string ZMQ_RX_PORT;
+  Tango::DevULong64 ZMQ_RX_PORT;
   // SAVE_ROOT_PATH
   std::string SAVE_ROOT_PATH;
+  // THREAD_AMOUNT
+  Tango::DevULong64 THREAD_AMOUNT;
+  // PEDESTAL_BUFFER_LENGTH
+  Tango::DevFloat PEDESTAL_BUFFER_LENGTH;
   bool mandatoryNotDefined;
 
   //	Attribute data members

@@ -6,11 +6,12 @@
 
 using namespace std;
 
-ZMQListener::ZMQListener(std::string socket_addr, std::string socket_port) {
+ZMQListener::ZMQListener(std::string socket_addr,
+                         unsigned long long socket_port) {
   if (!socket_addr.starts_with("tcp://")) {
     socket_addr = "tcp://" + socket_addr;
   }
-  std::string full_address = socket_addr + ":" + socket_port;
+  std::string full_address = socket_addr + ":" + std::to_string(socket_port);
   context = zmq::context_t(1);
   socket = zmq::socket_t(context, ZMQ_SUB);
   socket.connect(full_address.c_str());
