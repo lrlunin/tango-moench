@@ -1,5 +1,3 @@
-/*----- PROTECTED REGION ID(MoenchControlClass.h) ENABLED START -----*/
-/* clang-format on */
 //=============================================================================
 //
 // file :        MoenchControlClass.h
@@ -40,348 +38,414 @@
 #include "MoenchControl.h"
 #include <tango/tango.h>
 
-/* clang-format off */
-/*----- PROTECTED REGION END -----*/	//	MoenchControlClass.h
-
-
-namespace MoenchControl_ns
-{
-/*----- PROTECTED REGION ID(MoenchControlClass::classes for dynamic creation) ENABLED START -----*/
-/* clang-format on */
-
-/* clang-format off */
-/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::classes for dynamic creation
+namespace MoenchControl_ns {
 
 //=========================================
 //	Define classes for attributes
 //=========================================
 //	Attribute exposure class definition
-class exposureAttrib: public Tango::Attr
-{
+class exposureAttrib : public Tango::Attr {
 public:
-	exposureAttrib():Attr("exposure",
-			Tango::DEV_FLOAT, Tango::READ_WRITE) {};
-	~exposureAttrib() {};
-	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
-		{(static_cast<MoenchControl *>(dev))->read_exposure(att);}
-	virtual void write(Tango::DeviceImpl *dev,Tango::WAttribute &att)
-		{(static_cast<MoenchControl *>(dev))->write_exposure(att);}
-	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
-		{return (static_cast<MoenchControl *>(dev))->is_exposure_allowed(ty);}
+  exposureAttrib() : Attr("exposure", Tango::DEV_FLOAT, Tango::READ_WRITE) {};
+  ~exposureAttrib() {};
+
+  virtual void read(Tango::DeviceImpl *dev, Tango::Attribute &att) {
+    (static_cast<MoenchControl *>(dev))->read_exposure(att);
+  }
+
+  virtual void write(Tango::DeviceImpl *dev, Tango::WAttribute &att) {
+    (static_cast<MoenchControl *>(dev))->write_exposure(att);
+  }
+
+  virtual bool is_allowed(Tango::DeviceImpl *dev, Tango::AttReqType ty) {
+    return (static_cast<MoenchControl *>(dev))->is_exposure_allowed(ty);
+  }
 };
 
 //	Attribute delay class definition
-class delayAttrib: public Tango::Attr
-{
+class delayAttrib : public Tango::Attr {
 public:
-	delayAttrib():Attr("delay",
-			Tango::DEV_FLOAT, Tango::READ_WRITE) {};
-	~delayAttrib() {};
-	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
-		{(static_cast<MoenchControl *>(dev))->read_delay(att);}
-	virtual void write(Tango::DeviceImpl *dev,Tango::WAttribute &att)
-		{(static_cast<MoenchControl *>(dev))->write_delay(att);}
-	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
-		{return (static_cast<MoenchControl *>(dev))->is_delay_allowed(ty);}
+  delayAttrib() : Attr("delay", Tango::DEV_FLOAT, Tango::READ_WRITE) {};
+  ~delayAttrib() {};
+
+  virtual void read(Tango::DeviceImpl *dev, Tango::Attribute &att) {
+    (static_cast<MoenchControl *>(dev))->read_delay(att);
+  }
+
+  virtual void write(Tango::DeviceImpl *dev, Tango::WAttribute &att) {
+    (static_cast<MoenchControl *>(dev))->write_delay(att);
+  }
+
+  virtual bool is_allowed(Tango::DeviceImpl *dev, Tango::AttReqType ty) {
+    return (static_cast<MoenchControl *>(dev))->is_delay_allowed(ty);
+  }
 };
 
 //	Attribute timing_mode class definition
-class timing_modeAttrib: public Tango::Attr
-{
+class timing_modeAttrib : public Tango::Attr {
 public:
-	timing_modeAttrib():Attr("timing_mode",
-			Tango::DEV_ENUM, Tango::READ_WRITE) {};
-	~timing_modeAttrib() {};
-	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
-		{(static_cast<MoenchControl *>(dev))->read_timing_mode(att);}
-	virtual void write(Tango::DeviceImpl *dev,Tango::WAttribute &att)
-		{(static_cast<MoenchControl *>(dev))->write_timing_mode(att);}
-	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
-		{return (static_cast<MoenchControl *>(dev))->is_timing_mode_allowed(ty);}
-	virtual bool same_type(const std::type_info &in_type) {return typeid(timing_modeEnum) == in_type;}
-	virtual std::string get_enum_type() {return std::string("timing_modeEnum");}
+  timing_modeAttrib()
+      : Attr("timing_mode", Tango::DEV_ENUM, Tango::READ_WRITE) {};
+  ~timing_modeAttrib() {};
+
+  virtual void read(Tango::DeviceImpl *dev, Tango::Attribute &att) {
+    (static_cast<MoenchControl *>(dev))->read_timing_mode(att);
+  }
+
+  virtual void write(Tango::DeviceImpl *dev, Tango::WAttribute &att) {
+    (static_cast<MoenchControl *>(dev))->write_timing_mode(att);
+  }
+
+  virtual bool is_allowed(Tango::DeviceImpl *dev, Tango::AttReqType ty) {
+    return (static_cast<MoenchControl *>(dev))->is_timing_mode_allowed(ty);
+  }
+
+  virtual bool same_type(const std::type_info &in_type) {
+    return typeid(timing_modeEnum) == in_type;
+  }
+
+  virtual std::string get_enum_type() {
+    return std::string("timing_modeEnum");
+  }
 };
 
 //	Attribute triggers class definition
-class triggersAttrib: public Tango::Attr
-{
+class triggersAttrib : public Tango::Attr {
 public:
-	triggersAttrib():Attr("triggers",
-			Tango::DEV_LONG64, Tango::READ_WRITE) {};
-	~triggersAttrib() {};
-	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
-		{(static_cast<MoenchControl *>(dev))->read_triggers(att);}
-	virtual void write(Tango::DeviceImpl *dev,Tango::WAttribute &att)
-		{(static_cast<MoenchControl *>(dev))->write_triggers(att);}
-	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
-		{return (static_cast<MoenchControl *>(dev))->is_triggers_allowed(ty);}
+  triggersAttrib() : Attr("triggers", Tango::DEV_LONG64, Tango::READ_WRITE) {};
+  ~triggersAttrib() {};
+
+  virtual void read(Tango::DeviceImpl *dev, Tango::Attribute &att) {
+    (static_cast<MoenchControl *>(dev))->read_triggers(att);
+  }
+
+  virtual void write(Tango::DeviceImpl *dev, Tango::WAttribute &att) {
+    (static_cast<MoenchControl *>(dev))->write_triggers(att);
+  }
+
+  virtual bool is_allowed(Tango::DeviceImpl *dev, Tango::AttReqType ty) {
+    return (static_cast<MoenchControl *>(dev))->is_triggers_allowed(ty);
+  }
 };
 
 //	Attribute frames class definition
-class framesAttrib: public Tango::Attr
-{
+class framesAttrib : public Tango::Attr {
 public:
-	framesAttrib():Attr("frames",
-			Tango::DEV_LONG64, Tango::READ_WRITE) {};
-	~framesAttrib() {};
-	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
-		{(static_cast<MoenchControl *>(dev))->read_frames(att);}
-	virtual void write(Tango::DeviceImpl *dev,Tango::WAttribute &att)
-		{(static_cast<MoenchControl *>(dev))->write_frames(att);}
-	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
-		{return (static_cast<MoenchControl *>(dev))->is_frames_allowed(ty);}
+  framesAttrib() : Attr("frames", Tango::DEV_LONG64, Tango::READ_WRITE) {};
+  ~framesAttrib() {};
+
+  virtual void read(Tango::DeviceImpl *dev, Tango::Attribute &att) {
+    (static_cast<MoenchControl *>(dev))->read_frames(att);
+  }
+
+  virtual void write(Tango::DeviceImpl *dev, Tango::WAttribute &att) {
+    (static_cast<MoenchControl *>(dev))->write_frames(att);
+  }
+
+  virtual bool is_allowed(Tango::DeviceImpl *dev, Tango::AttReqType ty) {
+    return (static_cast<MoenchControl *>(dev))->is_frames_allowed(ty);
+  }
 };
 
 //	Attribute high_voltage class definition
-class high_voltageAttrib: public Tango::Attr
-{
+class high_voltageAttrib : public Tango::Attr {
 public:
-	high_voltageAttrib():Attr("high_voltage",
-			Tango::DEV_LONG64, Tango::READ_WRITE) {};
-	~high_voltageAttrib() {};
-	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
-		{(static_cast<MoenchControl *>(dev))->read_high_voltage(att);}
-	virtual void write(Tango::DeviceImpl *dev,Tango::WAttribute &att)
-		{(static_cast<MoenchControl *>(dev))->write_high_voltage(att);}
-	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
-		{return (static_cast<MoenchControl *>(dev))->is_high_voltage_allowed(ty);}
+  high_voltageAttrib()
+      : Attr("high_voltage", Tango::DEV_LONG64, Tango::READ_WRITE) {};
+  ~high_voltageAttrib() {};
+
+  virtual void read(Tango::DeviceImpl *dev, Tango::Attribute &att) {
+    (static_cast<MoenchControl *>(dev))->read_high_voltage(att);
+  }
+
+  virtual void write(Tango::DeviceImpl *dev, Tango::WAttribute &att) {
+    (static_cast<MoenchControl *>(dev))->write_high_voltage(att);
+  }
+
+  virtual bool is_allowed(Tango::DeviceImpl *dev, Tango::AttReqType ty) {
+    return (static_cast<MoenchControl *>(dev))->is_high_voltage_allowed(ty);
+  }
 };
 
 //	Attribute period class definition
-class periodAttrib: public Tango::Attr
-{
+class periodAttrib : public Tango::Attr {
 public:
-	periodAttrib():Attr("period",
-			Tango::DEV_FLOAT, Tango::READ_WRITE) {};
-	~periodAttrib() {};
-	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
-		{(static_cast<MoenchControl *>(dev))->read_period(att);}
-	virtual void write(Tango::DeviceImpl *dev,Tango::WAttribute &att)
-		{(static_cast<MoenchControl *>(dev))->write_period(att);}
-	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
-		{return (static_cast<MoenchControl *>(dev))->is_period_allowed(ty);}
+  periodAttrib() : Attr("period", Tango::DEV_FLOAT, Tango::READ_WRITE) {};
+  ~periodAttrib() {};
+
+  virtual void read(Tango::DeviceImpl *dev, Tango::Attribute &att) {
+    (static_cast<MoenchControl *>(dev))->read_period(att);
+  }
+
+  virtual void write(Tango::DeviceImpl *dev, Tango::WAttribute &att) {
+    (static_cast<MoenchControl *>(dev))->write_period(att);
+  }
+
+  virtual bool is_allowed(Tango::DeviceImpl *dev, Tango::AttReqType ty) {
+    return (static_cast<MoenchControl *>(dev))->is_period_allowed(ty);
+  }
 };
 
 //	Attribute zmq_rx_ip class definition
-class zmq_rx_ipAttrib: public Tango::Attr
-{
+class zmq_rx_ipAttrib : public Tango::Attr {
 public:
-	zmq_rx_ipAttrib():Attr("zmq_rx_ip",
-			Tango::DEV_STRING, Tango::READ_WRITE) {};
-	~zmq_rx_ipAttrib() {};
-	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
-		{(static_cast<MoenchControl *>(dev))->read_zmq_rx_ip(att);}
-	virtual void write(Tango::DeviceImpl *dev,Tango::WAttribute &att)
-		{(static_cast<MoenchControl *>(dev))->write_zmq_rx_ip(att);}
-	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
-		{return (static_cast<MoenchControl *>(dev))->is_zmq_rx_ip_allowed(ty);}
+  zmq_rx_ipAttrib()
+      : Attr("zmq_rx_ip", Tango::DEV_STRING, Tango::READ_WRITE) {};
+  ~zmq_rx_ipAttrib() {};
+
+  virtual void read(Tango::DeviceImpl *dev, Tango::Attribute &att) {
+    (static_cast<MoenchControl *>(dev))->read_zmq_rx_ip(att);
+  }
+
+  virtual void write(Tango::DeviceImpl *dev, Tango::WAttribute &att) {
+    (static_cast<MoenchControl *>(dev))->write_zmq_rx_ip(att);
+  }
+
+  virtual bool is_allowed(Tango::DeviceImpl *dev, Tango::AttReqType ty) {
+    return (static_cast<MoenchControl *>(dev))->is_zmq_rx_ip_allowed(ty);
+  }
 };
 
 //	Attribute zmq_rx_port class definition
-class zmq_rx_portAttrib: public Tango::Attr
-{
+class zmq_rx_portAttrib : public Tango::Attr {
 public:
-	zmq_rx_portAttrib():Attr("zmq_rx_port",
-			Tango::DEV_USHORT, Tango::READ_WRITE) {};
-	~zmq_rx_portAttrib() {};
-	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
-		{(static_cast<MoenchControl *>(dev))->read_zmq_rx_port(att);}
-	virtual void write(Tango::DeviceImpl *dev,Tango::WAttribute &att)
-		{(static_cast<MoenchControl *>(dev))->write_zmq_rx_port(att);}
-	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
-		{return (static_cast<MoenchControl *>(dev))->is_zmq_rx_port_allowed(ty);}
+  zmq_rx_portAttrib()
+      : Attr("zmq_rx_port", Tango::DEV_USHORT, Tango::READ_WRITE) {};
+  ~zmq_rx_portAttrib() {};
+
+  virtual void read(Tango::DeviceImpl *dev, Tango::Attribute &att) {
+    (static_cast<MoenchControl *>(dev))->read_zmq_rx_port(att);
+  }
+
+  virtual void write(Tango::DeviceImpl *dev, Tango::WAttribute &att) {
+    (static_cast<MoenchControl *>(dev))->write_zmq_rx_port(att);
+  }
+
+  virtual bool is_allowed(Tango::DeviceImpl *dev, Tango::AttReqType ty) {
+    return (static_cast<MoenchControl *>(dev))->is_zmq_rx_port_allowed(ty);
+  }
 };
 
 //	Attribute rx_discard_policy class definition
-class rx_discard_policyAttrib: public Tango::Attr
-{
+class rx_discard_policyAttrib : public Tango::Attr {
 public:
-	rx_discard_policyAttrib():Attr("rx_discard_policy",
-			Tango::DEV_ENUM, Tango::READ_WRITE) {};
-	~rx_discard_policyAttrib() {};
-	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
-		{(static_cast<MoenchControl *>(dev))->read_rx_discard_policy(att);}
-	virtual void write(Tango::DeviceImpl *dev,Tango::WAttribute &att)
-		{(static_cast<MoenchControl *>(dev))->write_rx_discard_policy(att);}
-	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
-		{return (static_cast<MoenchControl *>(dev))->is_rx_discard_policy_allowed(ty);}
-	virtual bool same_type(const std::type_info &in_type) {return typeid(rx_discard_policyEnum) == in_type;}
-	virtual std::string get_enum_type() {return std::string("rx_discard_policyEnum");}
+  rx_discard_policyAttrib()
+      : Attr("rx_discard_policy", Tango::DEV_ENUM, Tango::READ_WRITE) {};
+  ~rx_discard_policyAttrib() {};
+
+  virtual void read(Tango::DeviceImpl *dev, Tango::Attribute &att) {
+    (static_cast<MoenchControl *>(dev))->read_rx_discard_policy(att);
+  }
+
+  virtual void write(Tango::DeviceImpl *dev, Tango::WAttribute &att) {
+    (static_cast<MoenchControl *>(dev))->write_rx_discard_policy(att);
+  }
+
+  virtual bool is_allowed(Tango::DeviceImpl *dev, Tango::AttReqType ty) {
+    return (static_cast<MoenchControl *>(dev))
+        ->is_rx_discard_policy_allowed(ty);
+  }
+
+  virtual bool same_type(const std::type_info &in_type) {
+    return typeid(rx_discard_policyEnum) == in_type;
+  }
+
+  virtual std::string get_enum_type() {
+    return std::string("rx_discard_policyEnum");
+  }
 };
 
 //	Attribute rx_hostname class definition
-class rx_hostnameAttrib: public Tango::Attr
-{
+class rx_hostnameAttrib : public Tango::Attr {
 public:
-	rx_hostnameAttrib():Attr("rx_hostname",
-			Tango::DEV_STRING, Tango::READ_WRITE) {};
-	~rx_hostnameAttrib() {};
-	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
-		{(static_cast<MoenchControl *>(dev))->read_rx_hostname(att);}
-	virtual void write(Tango::DeviceImpl *dev,Tango::WAttribute &att)
-		{(static_cast<MoenchControl *>(dev))->write_rx_hostname(att);}
-	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
-		{return (static_cast<MoenchControl *>(dev))->is_rx_hostname_allowed(ty);}
+  rx_hostnameAttrib()
+      : Attr("rx_hostname", Tango::DEV_STRING, Tango::READ_WRITE) {};
+  ~rx_hostnameAttrib() {};
+
+  virtual void read(Tango::DeviceImpl *dev, Tango::Attribute &att) {
+    (static_cast<MoenchControl *>(dev))->read_rx_hostname(att);
+  }
+
+  virtual void write(Tango::DeviceImpl *dev, Tango::WAttribute &att) {
+    (static_cast<MoenchControl *>(dev))->write_rx_hostname(att);
+  }
+
+  virtual bool is_allowed(Tango::DeviceImpl *dev, Tango::AttReqType ty) {
+    return (static_cast<MoenchControl *>(dev))->is_rx_hostname_allowed(ty);
+  }
 };
 
 //	Attribute rx_tcp_port class definition
-class rx_tcp_portAttrib: public Tango::Attr
-{
+class rx_tcp_portAttrib : public Tango::Attr {
 public:
-	rx_tcp_portAttrib():Attr("rx_tcp_port",
-			Tango::DEV_LONG64, Tango::READ_WRITE) {};
-	~rx_tcp_portAttrib() {};
-	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
-		{(static_cast<MoenchControl *>(dev))->read_rx_tcp_port(att);}
-	virtual void write(Tango::DeviceImpl *dev,Tango::WAttribute &att)
-		{(static_cast<MoenchControl *>(dev))->write_rx_tcp_port(att);}
-	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
-		{return (static_cast<MoenchControl *>(dev))->is_rx_tcp_port_allowed(ty);}
+  rx_tcp_portAttrib()
+      : Attr("rx_tcp_port", Tango::DEV_LONG64, Tango::READ_WRITE) {};
+  ~rx_tcp_portAttrib() {};
+
+  virtual void read(Tango::DeviceImpl *dev, Tango::Attribute &att) {
+    (static_cast<MoenchControl *>(dev))->read_rx_tcp_port(att);
+  }
+
+  virtual void write(Tango::DeviceImpl *dev, Tango::WAttribute &att) {
+    (static_cast<MoenchControl *>(dev))->write_rx_tcp_port(att);
+  }
+
+  virtual bool is_allowed(Tango::DeviceImpl *dev, Tango::AttReqType ty) {
+    return (static_cast<MoenchControl *>(dev))->is_rx_tcp_port_allowed(ty);
+  }
 };
 
 //	Attribute detector_status class definition
-class detector_statusAttrib: public Tango::Attr
-{
+class detector_statusAttrib : public Tango::Attr {
 public:
-	detector_statusAttrib():Attr("detector_status",
-			Tango::DEV_ENUM, Tango::READ) {};
-	~detector_statusAttrib() {};
-	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
-		{(static_cast<MoenchControl *>(dev))->read_detector_status(att);}
-	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
-		{return (static_cast<MoenchControl *>(dev))->is_detector_status_allowed(ty);}
-	virtual bool same_type(const std::type_info &in_type) {return typeid(detector_statusEnum) == in_type;}
-	virtual std::string get_enum_type() {return std::string("detector_statusEnum");}
+  detector_statusAttrib()
+      : Attr("detector_status", Tango::DEV_ENUM, Tango::READ) {};
+  ~detector_statusAttrib() {};
+
+  virtual void read(Tango::DeviceImpl *dev, Tango::Attribute &att) {
+    (static_cast<MoenchControl *>(dev))->read_detector_status(att);
+  }
+
+  virtual bool is_allowed(Tango::DeviceImpl *dev, Tango::AttReqType ty) {
+    return (static_cast<MoenchControl *>(dev))->is_detector_status_allowed(ty);
+  }
+
+  virtual bool same_type(const std::type_info &in_type) {
+    return typeid(detector_statusEnum) == in_type;
+  }
+
+  virtual std::string get_enum_type() {
+    return std::string("detector_statusEnum");
+  }
 };
 
 //	Attribute rx_zmq_data_stream class definition
-class rx_zmq_data_streamAttrib: public Tango::Attr
-{
+class rx_zmq_data_streamAttrib : public Tango::Attr {
 public:
-	rx_zmq_data_streamAttrib():Attr("rx_zmq_data_stream",
-			Tango::DEV_BOOLEAN, Tango::READ_WRITE) {};
-	~rx_zmq_data_streamAttrib() {};
-	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
-		{(static_cast<MoenchControl *>(dev))->read_rx_zmq_data_stream(att);}
-	virtual void write(Tango::DeviceImpl *dev,Tango::WAttribute &att)
-		{(static_cast<MoenchControl *>(dev))->write_rx_zmq_data_stream(att);}
-	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
-		{return (static_cast<MoenchControl *>(dev))->is_rx_zmq_data_stream_allowed(ty);}
+  rx_zmq_data_streamAttrib()
+      : Attr("rx_zmq_data_stream", Tango::DEV_BOOLEAN, Tango::READ_WRITE) {};
+  ~rx_zmq_data_streamAttrib() {};
+
+  virtual void read(Tango::DeviceImpl *dev, Tango::Attribute &att) {
+    (static_cast<MoenchControl *>(dev))->read_rx_zmq_data_stream(att);
+  }
+
+  virtual void write(Tango::DeviceImpl *dev, Tango::WAttribute &att) {
+    (static_cast<MoenchControl *>(dev))->write_rx_zmq_data_stream(att);
+  }
+
+  virtual bool is_allowed(Tango::DeviceImpl *dev, Tango::AttReqType ty) {
+    return (static_cast<MoenchControl *>(dev))
+        ->is_rx_zmq_data_stream_allowed(ty);
+  }
 };
 
 //	Attribute triggers_left class definition
-class triggers_leftAttrib: public Tango::Attr
-{
+class triggers_leftAttrib : public Tango::Attr {
 public:
-	triggers_leftAttrib():Attr("triggers_left",
-			Tango::DEV_LONG64, Tango::READ) {};
-	~triggers_leftAttrib() {};
-	virtual void read(Tango::DeviceImpl *dev,Tango::Attribute &att)
-		{(static_cast<MoenchControl *>(dev))->read_triggers_left(att);}
-	virtual bool is_allowed(Tango::DeviceImpl *dev,Tango::AttReqType ty)
-		{return (static_cast<MoenchControl *>(dev))->is_triggers_left_allowed(ty);}
-};
+  triggers_leftAttrib()
+      : Attr("triggers_left", Tango::DEV_LONG64, Tango::READ) {};
+  ~triggers_leftAttrib() {};
 
+  virtual void read(Tango::DeviceImpl *dev, Tango::Attribute &att) {
+    (static_cast<MoenchControl *>(dev))->read_triggers_left(att);
+  }
+
+  virtual bool is_allowed(Tango::DeviceImpl *dev, Tango::AttReqType ty) {
+    return (static_cast<MoenchControl *>(dev))->is_triggers_left_allowed(ty);
+  }
+};
 
 //=========================================
 //	Define classes for commands
 //=========================================
 //	Command start_acquire class definition
-class start_acquireClass : public Tango::Command
-{
+class start_acquireClass : public Tango::Command {
 public:
-	start_acquireClass(const char   *cmd_name,
-	               Tango::CmdArgType in,
-				   Tango::CmdArgType out,
-				   const char        *in_desc,
-				   const char        *out_desc,
-				   Tango::DispLevel  level)
-	:Command(cmd_name,in,out,in_desc,out_desc, level)	{};
+  start_acquireClass(const char *cmd_name, Tango::CmdArgType in,
+                     Tango::CmdArgType out, const char *in_desc,
+                     const char *out_desc, Tango::DispLevel level)
+      : Command(cmd_name, in, out, in_desc, out_desc, level) {};
 
-	start_acquireClass(const char   *cmd_name,
-	               Tango::CmdArgType in,
-				   Tango::CmdArgType out)
-	:Command(cmd_name,in,out)	{};
-	~start_acquireClass() {};
+  start_acquireClass(const char *cmd_name, Tango::CmdArgType in,
+                     Tango::CmdArgType out)
+      : Command(cmd_name, in, out) {};
+  ~start_acquireClass() {};
 
-	virtual CORBA::Any *execute (Tango::DeviceImpl *dev, const CORBA::Any &any);
-	virtual bool is_allowed (Tango::DeviceImpl *dev, const CORBA::Any &any)
-	{return (static_cast<MoenchControl *>(dev))->is_start_acquire_allowed(any);}
+  virtual CORBA::Any *execute(Tango::DeviceImpl *dev, const CORBA::Any &any);
+
+  virtual bool is_allowed(Tango::DeviceImpl *dev, const CORBA::Any &any) {
+    return (static_cast<MoenchControl *>(dev))->is_start_acquire_allowed(any);
+  }
 };
 
 //	Command stop_acquire class definition
-class stop_acquireClass : public Tango::Command
-{
+class stop_acquireClass : public Tango::Command {
 public:
-	stop_acquireClass(const char   *cmd_name,
-	               Tango::CmdArgType in,
-				   Tango::CmdArgType out,
-				   const char        *in_desc,
-				   const char        *out_desc,
-				   Tango::DispLevel  level)
-	:Command(cmd_name,in,out,in_desc,out_desc, level)	{};
+  stop_acquireClass(const char *cmd_name, Tango::CmdArgType in,
+                    Tango::CmdArgType out, const char *in_desc,
+                    const char *out_desc, Tango::DispLevel level)
+      : Command(cmd_name, in, out, in_desc, out_desc, level) {};
 
-	stop_acquireClass(const char   *cmd_name,
-	               Tango::CmdArgType in,
-				   Tango::CmdArgType out)
-	:Command(cmd_name,in,out)	{};
-	~stop_acquireClass() {};
+  stop_acquireClass(const char *cmd_name, Tango::CmdArgType in,
+                    Tango::CmdArgType out)
+      : Command(cmd_name, in, out) {};
+  ~stop_acquireClass() {};
 
-	virtual CORBA::Any *execute (Tango::DeviceImpl *dev, const CORBA::Any &any);
-	virtual bool is_allowed (Tango::DeviceImpl *dev, const CORBA::Any &any)
-	{return (static_cast<MoenchControl *>(dev))->is_stop_acquire_allowed(any);}
+  virtual CORBA::Any *execute(Tango::DeviceImpl *dev, const CORBA::Any &any);
+
+  virtual bool is_allowed(Tango::DeviceImpl *dev, const CORBA::Any &any) {
+    return (static_cast<MoenchControl *>(dev))->is_stop_acquire_allowed(any);
+  }
 };
-
 
 /**
  *	The MoenchControlClass singleton definition
  */
 
 #ifdef _TG_WINDOWS_
-class __declspec(dllexport)  MoenchControlClass : public Tango::DeviceClass
+class __declspec(dllexport) MoenchControlClass : public Tango::DeviceClass
 #else
 class MoenchControlClass : public Tango::DeviceClass
 #endif
 {
-	/*----- PROTECTED REGION ID(MoenchControlClass::Additional DServer data members) ENABLED START -----*/
-  /* clang-format on */
   //	Add your own code
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::Additional DServer data members
 
-	public:
-		//	write class properties data members
-		Tango::DbData	cl_prop;
-		Tango::DbData	cl_def_prop;
-		Tango::DbData	dev_def_prop;
-		//	Method prototypes
-		static MoenchControlClass *init(const char *);
-		static MoenchControlClass *instance();
-		~MoenchControlClass();
-		Tango::DbDatum	get_class_property(std::string &);
-		Tango::DbDatum	get_default_device_property(std::string &);
-		Tango::DbDatum	get_default_class_property(std::string &);
+public:
+  //	write class properties data members
+  Tango::DbData cl_prop;
+  Tango::DbData cl_def_prop;
+  Tango::DbData dev_def_prop;
+  //	Method prototypes
+  static MoenchControlClass *init(const char *);
+  static MoenchControlClass *instance();
+  ~MoenchControlClass();
+  Tango::DbDatum get_class_property(std::string &);
+  Tango::DbDatum get_default_device_property(std::string &);
+  Tango::DbDatum get_default_class_property(std::string &);
 
-	protected:
-		MoenchControlClass(std::string &);
-		static MoenchControlClass *_instance;
-		void command_factory();
-		void attribute_factory(std::vector<Tango::Attr *> &);
-		void pipe_factory();
-		void write_class_property();
-		void set_default_property();
-		void get_class_property();
-		std::string get_cvstag();
-		std::string get_cvsroot();
+protected:
+  MoenchControlClass(std::string &);
+  static MoenchControlClass *_instance;
+  void command_factory();
+  void attribute_factory(std::vector<Tango::Attr *> &);
+  void pipe_factory();
+  void write_class_property();
+  void set_default_property();
+  void get_class_property();
+  std::string get_cvstag();
+  std::string get_cvsroot();
 
-	private:
-		void device_factory(TANGO_UNUSED(const Tango::DevVarStringArray *));
-		void create_static_attribute_list(std::vector<Tango::Attr *> &);
-		void erase_dynamic_attributes(const Tango::DevVarStringArray *,std::vector<Tango::Attr *> &);
-		std::vector<std::string>	defaultAttList;
-		Tango::Attr *get_attr_object_by_name(std::vector<Tango::Attr *> &att_list, std::string attname);
+private:
+  void device_factory(TANGO_UNUSED(const Tango::DevVarStringArray *));
+  void create_static_attribute_list(std::vector<Tango::Attr *> &);
+  void erase_dynamic_attributes(const Tango::DevVarStringArray *,
+                                std::vector<Tango::Attr *> &);
+  std::vector<std::string> defaultAttList;
+  Tango::Attr *get_attr_object_by_name(std::vector<Tango::Attr *> &att_list,
+                                       std::string attname);
 };
 
-}	//	End of namespace
+} //	End of namespace
 
-#endif   //	MoenchControl_H
+#endif //	MoenchControl_H

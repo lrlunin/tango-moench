@@ -1,5 +1,3 @@
-/*----- PROTECTED REGION ID(MoenchControl.cpp) ENABLED START -----*/
-/* clang-format on */
 //=============================================================================
 //
 // file :        MoenchControl.cpp
@@ -40,12 +38,9 @@
 #include <chrono>
 #include <thread>
 
-/* clang-format off */
-/*----- PROTECTED REGION END -----*/	//	MoenchControl.cpp
-
 /**
  *  MoenchControl class description:
- *    
+ *
  */
 
 //================================================================
@@ -80,14 +75,9 @@
 //  triggers_left       |  Tango::DevLong64	Scalar
 //================================================================
 
-namespace MoenchControl_ns
-{
-/*----- PROTECTED REGION ID(MoenchControl::namespace_starting) ENABLED START -----*/
-/* clang-format on */
+namespace MoenchControl_ns {
 
 //	static initializations
-/* clang-format off */
-/*----- PROTECTED REGION END -----*/	//	MoenchControl::namespace_starting
 
 //--------------------------------------------------------
 /**
@@ -97,39 +87,25 @@ namespace MoenchControl_ns
  */
 //--------------------------------------------------------
 MoenchControl::MoenchControl(Tango::DeviceClass *cl, std::string &s)
- : TANGO_BASE_CLASS(cl, s.c_str())
-{
-	/*----- PROTECTED REGION ID(MoenchControl::constructor_1) ENABLED START -----*/
-  /* clang-format on */
+    : TANGO_BASE_CLASS(cl, s.c_str()) {
   init_device();
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::constructor_1
 }
+
 //--------------------------------------------------------
 MoenchControl::MoenchControl(Tango::DeviceClass *cl, const char *s)
- : TANGO_BASE_CLASS(cl, s)
-{
-	/*----- PROTECTED REGION ID(MoenchControl::constructor_2) ENABLED START -----*/
-  /* clang-format on */
+    : TANGO_BASE_CLASS(cl, s) {
   init_device();
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::constructor_2
 }
+
 //--------------------------------------------------------
-MoenchControl::MoenchControl(Tango::DeviceClass *cl, const char *s, const char *d)
- : TANGO_BASE_CLASS(cl, s, d)
-{
-	/*----- PROTECTED REGION ID(MoenchControl::constructor_3) ENABLED START -----*/
-  /* clang-format on */
+MoenchControl::MoenchControl(Tango::DeviceClass *cl, const char *s,
+                             const char *d)
+    : TANGO_BASE_CLASS(cl, s, d) {
   init_device();
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::constructor_3
 }
+
 //--------------------------------------------------------
-MoenchControl::~MoenchControl()
-{
-	delete_device();
-}
+MoenchControl::~MoenchControl() { delete_device(); }
 
 //--------------------------------------------------------
 /**
@@ -137,28 +113,24 @@ MoenchControl::~MoenchControl()
  * Description:  will be called at device destruction or at init command
  */
 //--------------------------------------------------------
-void MoenchControl::delete_device()
-{
-	DEBUG_STREAM << "MoenchControl::delete_device() " << device_name << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::delete_device) ENABLED START -----*/
-  /* clang-format on */
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::delete_device
-	delete[] attr_exposure_read;
-	delete[] attr_delay_read;
-	delete[] attr_timing_mode_read;
-	delete[] attr_triggers_read;
-	delete[] attr_frames_read;
-	delete[] attr_high_voltage_read;
-	delete[] attr_period_read;
-	delete[] attr_zmq_rx_ip_read;
-	delete[] attr_zmq_rx_port_read;
-	delete[] attr_rx_discard_policy_read;
-	delete[] attr_rx_hostname_read;
-	delete[] attr_rx_tcp_port_read;
-	delete[] attr_detector_status_read;
-	delete[] attr_rx_zmq_data_stream_read;
-	delete[] attr_triggers_left_read;
+void MoenchControl::delete_device() {
+  DEBUG_STREAM << "MoenchControl::delete_device() " << device_name
+               << std::endl;
+  delete[] attr_exposure_read;
+  delete[] attr_delay_read;
+  delete[] attr_timing_mode_read;
+  delete[] attr_triggers_read;
+  delete[] attr_frames_read;
+  delete[] attr_high_voltage_read;
+  delete[] attr_period_read;
+  delete[] attr_zmq_rx_ip_read;
+  delete[] attr_zmq_rx_port_read;
+  delete[] attr_rx_discard_policy_read;
+  delete[] attr_rx_hostname_read;
+  delete[] attr_rx_tcp_port_read;
+  delete[] attr_detector_status_read;
+  delete[] attr_rx_zmq_data_stream_read;
+  delete[] attr_triggers_left_read;
 }
 
 //--------------------------------------------------------
@@ -167,40 +139,33 @@ void MoenchControl::delete_device()
  * Description:  will be called at device initialization.
  */
 //--------------------------------------------------------
-void MoenchControl::init_device()
-{
-	DEBUG_STREAM << "MoenchControl::init_device() create device " << device_name << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::init_device_before) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::init_device() {
+  DEBUG_STREAM << "MoenchControl::init_device() create device " << device_name
+               << std::endl;
   //	Initialization before get_device_property() call
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::init_device_before
 
+  //	Get the device properties from database
+  get_device_property();
 
-	//	Get the device properties from database
-	get_device_property();
+  attr_exposure_read = new Tango::DevFloat[1];
+  attr_delay_read = new Tango::DevFloat[1];
+  attr_timing_mode_read = new timing_modeEnum[1];
+  attr_triggers_read = new Tango::DevLong64[1];
+  attr_frames_read = new Tango::DevLong64[1];
+  attr_high_voltage_read = new Tango::DevLong64[1];
+  attr_period_read = new Tango::DevFloat[1];
+  attr_zmq_rx_ip_read = new Tango::DevString[1];
+  attr_zmq_rx_port_read = new Tango::DevUShort[1];
+  attr_rx_discard_policy_read = new rx_discard_policyEnum[1];
+  attr_rx_hostname_read = new Tango::DevString[1];
+  attr_rx_tcp_port_read = new Tango::DevLong64[1];
+  attr_detector_status_read = new detector_statusEnum[1];
+  attr_rx_zmq_data_stream_read = new Tango::DevBoolean[1];
+  attr_triggers_left_read = new Tango::DevLong64[1];
+  //	No longer if mandatory property not set.
+  if (mandatoryNotDefined)
+    return;
 
-	attr_exposure_read = new Tango::DevFloat[1];
-	attr_delay_read = new Tango::DevFloat[1];
-	attr_timing_mode_read = new timing_modeEnum[1];
-	attr_triggers_read = new Tango::DevLong64[1];
-	attr_frames_read = new Tango::DevLong64[1];
-	attr_high_voltage_read = new Tango::DevLong64[1];
-	attr_period_read = new Tango::DevFloat[1];
-	attr_zmq_rx_ip_read = new Tango::DevString[1];
-	attr_zmq_rx_port_read = new Tango::DevUShort[1];
-	attr_rx_discard_policy_read = new rx_discard_policyEnum[1];
-	attr_rx_hostname_read = new Tango::DevString[1];
-	attr_rx_tcp_port_read = new Tango::DevLong64[1];
-	attr_detector_status_read = new detector_statusEnum[1];
-	attr_rx_zmq_data_stream_read = new Tango::DevBoolean[1];
-	attr_triggers_left_read = new Tango::DevLong64[1];
-	//	No longer if mandatory property not set.
-	if (mandatoryNotDefined)
-		return;
-
-	/*----- PROTECTED REGION ID(MoenchControl::init_device) ENABLED START -----*/
-  /* clang-format on */
   receiver_ptr = std::make_unique<sls::Receiver>(sLS_RECEIVER_PORT);
   detector_ptr = std::make_unique<sls::Detector>();
   try {
@@ -209,8 +174,6 @@ void MoenchControl::init_device()
     TANGO_LOG_INFO << "Error loading detector configuration" << std::endl;
   }
   set_state(Tango::ON);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::init_device
 }
 
 //--------------------------------------------------------
@@ -219,163 +182,175 @@ void MoenchControl::init_device()
  * Description:  Read database to initialize property data members.
  */
 //--------------------------------------------------------
-void MoenchControl::get_device_property()
-{
-	/*----- PROTECTED REGION ID(MoenchControl::get_device_property_before) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::get_device_property() {
   //	Initialize property data members
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::get_device_property_before
 
-	mandatoryNotDefined = false;
+  mandatoryNotDefined = false;
 
-	//	Read device properties from database.
-	Tango::DbData	dev_prop;
-	dev_prop.push_back(Tango::DbDatum("SLS_RECEIVER_PORT"));
-	dev_prop.push_back(Tango::DbDatum("PROCESSING_RX_IP"));
-	dev_prop.push_back(Tango::DbDatum("PROCESSING_RX_PORT"));
-	dev_prop.push_back(Tango::DbDatum("CONTROL_TX_IP"));
-	dev_prop.push_back(Tango::DbDatum("CONTROL_TX_PORT"));
-	dev_prop.push_back(Tango::DbDatum("MOENCHZMQ_DEVICE"));
-	dev_prop.push_back(Tango::DbDatum("DETECTOR_CONFIG_PATH"));
+  //	Read device properties from database.
+  Tango::DbData dev_prop;
+  dev_prop.push_back(Tango::DbDatum("SLS_RECEIVER_PORT"));
+  dev_prop.push_back(Tango::DbDatum("PROCESSING_RX_IP"));
+  dev_prop.push_back(Tango::DbDatum("PROCESSING_RX_PORT"));
+  dev_prop.push_back(Tango::DbDatum("CONTROL_TX_IP"));
+  dev_prop.push_back(Tango::DbDatum("CONTROL_TX_PORT"));
+  dev_prop.push_back(Tango::DbDatum("MOENCHZMQ_DEVICE"));
+  dev_prop.push_back(Tango::DbDatum("DETECTOR_CONFIG_PATH"));
 
-	//	is there at least one property to be read ?
-	if (dev_prop.size()>0)
-	{
-		//	Call database and extract values
-		if (Tango::Util::instance()->_UseDb==true)
-			get_db_device()->get_property(dev_prop);
+  //	is there at least one property to be read ?
+  if (dev_prop.size() > 0) {
+    //	Call database and extract values
+    if (Tango::Util::instance()->_UseDb == true)
+      get_db_device()->get_property(dev_prop);
 
-		//	get instance on MoenchControlClass to get class property
-		Tango::DbDatum	def_prop, cl_prop;
-		MoenchControlClass	*ds_class =
-			(static_cast<MoenchControlClass *>(get_device_class()));
-		int	i = -1;
+    //	get instance on MoenchControlClass to get class property
+    Tango::DbDatum def_prop, cl_prop;
+    MoenchControlClass *ds_class
+        = (static_cast<MoenchControlClass *>(get_device_class()));
+    int i = -1;
 
-		//	Try to initialize SLS_RECEIVER_PORT from class property
-		cl_prop = ds_class->get_class_property(dev_prop[++i].name);
-		if (cl_prop.is_empty()==false)	cl_prop  >>  sLS_RECEIVER_PORT;
-		else {
-			//	Try to initialize SLS_RECEIVER_PORT from default device value
-			def_prop = ds_class->get_default_device_property(dev_prop[i].name);
-			if (def_prop.is_empty()==false)	def_prop  >>  sLS_RECEIVER_PORT;
-		}
-		//	And try to extract SLS_RECEIVER_PORT value from database
-		if (dev_prop[i].is_empty()==false)	dev_prop[i]  >>  sLS_RECEIVER_PORT;
-		//	Property StartDsPath is mandatory, check if has been defined in database.
-		check_mandatory_property(cl_prop, dev_prop[i]);
+    //	Try to initialize SLS_RECEIVER_PORT from class property
+    cl_prop = ds_class->get_class_property(dev_prop[++i].name);
+    if (cl_prop.is_empty() == false)
+      cl_prop >> sLS_RECEIVER_PORT;
+    else {
+      //	Try to initialize SLS_RECEIVER_PORT from default device value
+      def_prop = ds_class->get_default_device_property(dev_prop[i].name);
+      if (def_prop.is_empty() == false)
+        def_prop >> sLS_RECEIVER_PORT;
+    }
+    //	And try to extract SLS_RECEIVER_PORT value from database
+    if (dev_prop[i].is_empty() == false)
+      dev_prop[i] >> sLS_RECEIVER_PORT;
+    //	Property StartDsPath is mandatory, check if has been defined in
+    // database.
+    check_mandatory_property(cl_prop, dev_prop[i]);
 
-		//	Try to initialize PROCESSING_RX_IP from class property
-		cl_prop = ds_class->get_class_property(dev_prop[++i].name);
-		if (cl_prop.is_empty()==false)	cl_prop  >>  pROCESSING_RX_IP;
-		else {
-			//	Try to initialize PROCESSING_RX_IP from default device value
-			def_prop = ds_class->get_default_device_property(dev_prop[i].name);
-			if (def_prop.is_empty()==false)	def_prop  >>  pROCESSING_RX_IP;
-		}
-		//	And try to extract PROCESSING_RX_IP value from database
-		if (dev_prop[i].is_empty()==false)	dev_prop[i]  >>  pROCESSING_RX_IP;
-		//	Property StartDsPath is mandatory, check if has been defined in database.
-		check_mandatory_property(cl_prop, dev_prop[i]);
+    //	Try to initialize PROCESSING_RX_IP from class property
+    cl_prop = ds_class->get_class_property(dev_prop[++i].name);
+    if (cl_prop.is_empty() == false)
+      cl_prop >> pROCESSING_RX_IP;
+    else {
+      //	Try to initialize PROCESSING_RX_IP from default device value
+      def_prop = ds_class->get_default_device_property(dev_prop[i].name);
+      if (def_prop.is_empty() == false)
+        def_prop >> pROCESSING_RX_IP;
+    }
+    //	And try to extract PROCESSING_RX_IP value from database
+    if (dev_prop[i].is_empty() == false)
+      dev_prop[i] >> pROCESSING_RX_IP;
+    //	Property StartDsPath is mandatory, check if has been defined in
+    // database.
+    check_mandatory_property(cl_prop, dev_prop[i]);
 
-		//	Try to initialize PROCESSING_RX_PORT from class property
-		cl_prop = ds_class->get_class_property(dev_prop[++i].name);
-		if (cl_prop.is_empty()==false)	cl_prop  >>  pROCESSING_RX_PORT;
-		else {
-			//	Try to initialize PROCESSING_RX_PORT from default device value
-			def_prop = ds_class->get_default_device_property(dev_prop[i].name);
-			if (def_prop.is_empty()==false)	def_prop  >>  pROCESSING_RX_PORT;
-		}
-		//	And try to extract PROCESSING_RX_PORT value from database
-		if (dev_prop[i].is_empty()==false)	dev_prop[i]  >>  pROCESSING_RX_PORT;
-		//	Property StartDsPath is mandatory, check if has been defined in database.
-		check_mandatory_property(cl_prop, dev_prop[i]);
+    //	Try to initialize PROCESSING_RX_PORT from class property
+    cl_prop = ds_class->get_class_property(dev_prop[++i].name);
+    if (cl_prop.is_empty() == false)
+      cl_prop >> pROCESSING_RX_PORT;
+    else {
+      //	Try to initialize PROCESSING_RX_PORT from default device value
+      def_prop = ds_class->get_default_device_property(dev_prop[i].name);
+      if (def_prop.is_empty() == false)
+        def_prop >> pROCESSING_RX_PORT;
+    }
+    //	And try to extract PROCESSING_RX_PORT value from database
+    if (dev_prop[i].is_empty() == false)
+      dev_prop[i] >> pROCESSING_RX_PORT;
+    //	Property StartDsPath is mandatory, check if has been defined in
+    // database.
+    check_mandatory_property(cl_prop, dev_prop[i]);
 
-		//	Try to initialize CONTROL_TX_IP from class property
-		cl_prop = ds_class->get_class_property(dev_prop[++i].name);
-		if (cl_prop.is_empty()==false)	cl_prop  >>  cONTROL_TX_IP;
-		else {
-			//	Try to initialize CONTROL_TX_IP from default device value
-			def_prop = ds_class->get_default_device_property(dev_prop[i].name);
-			if (def_prop.is_empty()==false)	def_prop  >>  cONTROL_TX_IP;
-		}
-		//	And try to extract CONTROL_TX_IP value from database
-		if (dev_prop[i].is_empty()==false)	dev_prop[i]  >>  cONTROL_TX_IP;
-		//	Property StartDsPath is mandatory, check if has been defined in database.
-		check_mandatory_property(cl_prop, dev_prop[i]);
+    //	Try to initialize CONTROL_TX_IP from class property
+    cl_prop = ds_class->get_class_property(dev_prop[++i].name);
+    if (cl_prop.is_empty() == false)
+      cl_prop >> cONTROL_TX_IP;
+    else {
+      //	Try to initialize CONTROL_TX_IP from default device value
+      def_prop = ds_class->get_default_device_property(dev_prop[i].name);
+      if (def_prop.is_empty() == false)
+        def_prop >> cONTROL_TX_IP;
+    }
+    //	And try to extract CONTROL_TX_IP value from database
+    if (dev_prop[i].is_empty() == false)
+      dev_prop[i] >> cONTROL_TX_IP;
+    //	Property StartDsPath is mandatory, check if has been defined in
+    // database.
+    check_mandatory_property(cl_prop, dev_prop[i]);
 
-		//	Try to initialize CONTROL_TX_PORT from class property
-		cl_prop = ds_class->get_class_property(dev_prop[++i].name);
-		if (cl_prop.is_empty()==false)	cl_prop  >>  cONTROL_TX_PORT;
-		else {
-			//	Try to initialize CONTROL_TX_PORT from default device value
-			def_prop = ds_class->get_default_device_property(dev_prop[i].name);
-			if (def_prop.is_empty()==false)	def_prop  >>  cONTROL_TX_PORT;
-		}
-		//	And try to extract CONTROL_TX_PORT value from database
-		if (dev_prop[i].is_empty()==false)	dev_prop[i]  >>  cONTROL_TX_PORT;
-		//	Property StartDsPath is mandatory, check if has been defined in database.
-		check_mandatory_property(cl_prop, dev_prop[i]);
+    //	Try to initialize CONTROL_TX_PORT from class property
+    cl_prop = ds_class->get_class_property(dev_prop[++i].name);
+    if (cl_prop.is_empty() == false)
+      cl_prop >> cONTROL_TX_PORT;
+    else {
+      //	Try to initialize CONTROL_TX_PORT from default device value
+      def_prop = ds_class->get_default_device_property(dev_prop[i].name);
+      if (def_prop.is_empty() == false)
+        def_prop >> cONTROL_TX_PORT;
+    }
+    //	And try to extract CONTROL_TX_PORT value from database
+    if (dev_prop[i].is_empty() == false)
+      dev_prop[i] >> cONTROL_TX_PORT;
+    //	Property StartDsPath is mandatory, check if has been defined in
+    // database.
+    check_mandatory_property(cl_prop, dev_prop[i]);
 
-		//	Try to initialize MOENCHZMQ_DEVICE from class property
-		cl_prop = ds_class->get_class_property(dev_prop[++i].name);
-		if (cl_prop.is_empty()==false)	cl_prop  >>  mOENCHZMQ_DEVICE;
-		else {
-			//	Try to initialize MOENCHZMQ_DEVICE from default device value
-			def_prop = ds_class->get_default_device_property(dev_prop[i].name);
-			if (def_prop.is_empty()==false)	def_prop  >>  mOENCHZMQ_DEVICE;
-		}
-		//	And try to extract MOENCHZMQ_DEVICE value from database
-		if (dev_prop[i].is_empty()==false)	dev_prop[i]  >>  mOENCHZMQ_DEVICE;
-		//	Property StartDsPath is mandatory, check if has been defined in database.
-		check_mandatory_property(cl_prop, dev_prop[i]);
+    //	Try to initialize MOENCHZMQ_DEVICE from class property
+    cl_prop = ds_class->get_class_property(dev_prop[++i].name);
+    if (cl_prop.is_empty() == false)
+      cl_prop >> mOENCHZMQ_DEVICE;
+    else {
+      //	Try to initialize MOENCHZMQ_DEVICE from default device value
+      def_prop = ds_class->get_default_device_property(dev_prop[i].name);
+      if (def_prop.is_empty() == false)
+        def_prop >> mOENCHZMQ_DEVICE;
+    }
+    //	And try to extract MOENCHZMQ_DEVICE value from database
+    if (dev_prop[i].is_empty() == false)
+      dev_prop[i] >> mOENCHZMQ_DEVICE;
+    //	Property StartDsPath is mandatory, check if has been defined in
+    // database.
+    check_mandatory_property(cl_prop, dev_prop[i]);
 
-		//	Try to initialize DETECTOR_CONFIG_PATH from class property
-		cl_prop = ds_class->get_class_property(dev_prop[++i].name);
-		if (cl_prop.is_empty()==false)	cl_prop  >>  dETECTOR_CONFIG_PATH;
-		else {
-			//	Try to initialize DETECTOR_CONFIG_PATH from default device value
-			def_prop = ds_class->get_default_device_property(dev_prop[i].name);
-			if (def_prop.is_empty()==false)	def_prop  >>  dETECTOR_CONFIG_PATH;
-		}
-		//	And try to extract DETECTOR_CONFIG_PATH value from database
-		if (dev_prop[i].is_empty()==false)	dev_prop[i]  >>  dETECTOR_CONFIG_PATH;
+    //	Try to initialize DETECTOR_CONFIG_PATH from class property
+    cl_prop = ds_class->get_class_property(dev_prop[++i].name);
+    if (cl_prop.is_empty() == false)
+      cl_prop >> dETECTOR_CONFIG_PATH;
+    else {
+      //	Try to initialize DETECTOR_CONFIG_PATH from default device
+      // value
+      def_prop = ds_class->get_default_device_property(dev_prop[i].name);
+      if (def_prop.is_empty() == false)
+        def_prop >> dETECTOR_CONFIG_PATH;
+    }
+    //	And try to extract DETECTOR_CONFIG_PATH value from database
+    if (dev_prop[i].is_empty() == false)
+      dev_prop[i] >> dETECTOR_CONFIG_PATH;
+  }
 
-	}
-
-	/*----- PROTECTED REGION ID(MoenchControl::get_device_property_after) ENABLED START -----*/
-  /* clang-format on */
   //	Check device property data members init
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::get_device_property_after
 }
+
 //--------------------------------------------------------
 /**
  *	Method      : MoenchControl::check_mandatory_property()
  * Description:  For mandatory properties check if defined in database.
  */
 //--------------------------------------------------------
-void MoenchControl::check_mandatory_property(Tango::DbDatum &class_prop, Tango::DbDatum &dev_prop)
-{
-	//	Check if all properties are empty
-	if (class_prop.is_empty() && dev_prop.is_empty())
-	{
-		TangoSys_OMemStream	tms;
-		tms << std::endl <<"Property \'" << dev_prop.name;
-		if (Tango::Util::instance()->_UseDb==true)
-			tms << "\' is mandatory but not defined in database";
-		else
-			tms << "\' is mandatory but cannot be defined without database";
-		append_status(tms.str());
-		mandatoryNotDefined = true;
-		/*----- PROTECTED REGION ID(MoenchControl::check_mandatory_property) ENABLED START -----*/
-    /* clang-format on */
+void MoenchControl::check_mandatory_property(Tango::DbDatum &class_prop,
+                                             Tango::DbDatum &dev_prop) {
+  //	Check if all properties are empty
+  if (class_prop.is_empty() && dev_prop.is_empty()) {
+    TangoSys_OMemStream tms;
+    tms << std::endl << "Property \'" << dev_prop.name;
+    if (Tango::Util::instance()->_UseDb == true)
+      tms << "\' is mandatory but not defined in database";
+    else
+      tms << "\' is mandatory but cannot be defined without database";
+    append_status(tms.str());
+    mandatoryNotDefined = true;
     std::cerr << tms.str() << " for " << device_name << std::endl;
-    /* clang-format off */
-		/*----- PROTECTED REGION END -----*/	//	MoenchControl::check_mandatory_property
-	}
+  }
 }
-
 
 //--------------------------------------------------------
 /**
@@ -383,21 +358,15 @@ void MoenchControl::check_mandatory_property(Tango::DbDatum &class_prop, Tango::
  * Description:  method always executed before any command is executed
  */
 //--------------------------------------------------------
-void MoenchControl::always_executed_hook()
-{
-	DEBUG_STREAM << "MoenchControl::always_executed_hook()  " << device_name << std::endl;
-	if (mandatoryNotDefined)
-	{
-		Tango::Except::throw_exception(
-					(const char *)"PROPERTY_NOT_SET",
-					get_status().c_str(),
-					(const char *)"MoenchControl::always_executed_hook()");
-	}
-	/*----- PROTECTED REGION ID(MoenchControl::always_executed_hook) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::always_executed_hook() {
+  DEBUG_STREAM << "MoenchControl::always_executed_hook()  " << device_name
+               << std::endl;
+  if (mandatoryNotDefined) {
+    Tango::Except::throw_exception(
+        (const char *)"PROPERTY_NOT_SET", get_status().c_str(),
+        (const char *)"MoenchControl::always_executed_hook()");
+  }
   //	code always executed before all requests
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::always_executed_hook
 }
 
 //--------------------------------------------------------
@@ -406,29 +375,26 @@ void MoenchControl::always_executed_hook()
  * Description:  Hardware acquisition for attributes
  */
 //--------------------------------------------------------
-void MoenchControl::read_attr_hardware(TANGO_UNUSED(std::vector<long> &attr_list))
-{
-	DEBUG_STREAM << "MoenchControl::read_attr_hardware(std::vector<long> &attr_list) entering... " << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::read_attr_hardware) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::read_attr_hardware(
+    TANGO_UNUSED(std::vector<long> &attr_list)) {
+  DEBUG_STREAM << "MoenchControl::read_attr_hardware(std::vector<long> "
+                  "&attr_list) entering... "
+               << std::endl;
   //	Add your own code
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_attr_hardware
 }
+
 //--------------------------------------------------------
 /**
  *	Method      : MoenchControl::write_attr_hardware()
  * Description:  Hardware writing for attributes
  */
 //--------------------------------------------------------
-void MoenchControl::write_attr_hardware(TANGO_UNUSED(std::vector<long> &attr_list))
-{
-	DEBUG_STREAM << "MoenchControl::write_attr_hardware(std::vector<long> &attr_list) entering... " << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::write_attr_hardware) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::write_attr_hardware(
+    TANGO_UNUSED(std::vector<long> &attr_list)) {
+  DEBUG_STREAM << "MoenchControl::write_attr_hardware(std::vector<long> "
+                  "&attr_list) entering... "
+               << std::endl;
   //	Add your own code
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_attr_hardware
 }
 
 //--------------------------------------------------------
@@ -440,11 +406,10 @@ void MoenchControl::write_attr_hardware(TANGO_UNUSED(std::vector<long> &attr_lis
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::read_exposure(Tango::Attribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::read_exposure(Tango::Attribute &attr) entering... " << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::read_exposure) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::read_exposure(Tango::Attribute &attr) {
+  DEBUG_STREAM
+      << "MoenchControl::read_exposure(Tango::Attribute &attr) entering... "
+      << std::endl;
   //	Set the attribute value
   sls::Result<std::chrono::nanoseconds> exptime_result
       = detector_ptr->getExptime();
@@ -453,9 +418,8 @@ void MoenchControl::read_exposure(Tango::Attribute &attr)
             exptime_result.front())
             .count();
   attr.set_value(attr_exposure_read);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_exposure
 }
+
 //--------------------------------------------------------
 /**
  *	Write attribute exposure related method
@@ -465,20 +429,18 @@ void MoenchControl::read_exposure(Tango::Attribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::write_exposure(Tango::WAttribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::write_exposure(Tango::WAttribute &attr) entering... " << std::endl;
-	//	Retrieve write value
-	Tango::DevFloat	w_val;
-	attr.get_write_value(w_val);
-	/*----- PROTECTED REGION ID(MoenchControl::write_exposure) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::write_exposure(Tango::WAttribute &attr) {
+  DEBUG_STREAM
+      << "MoenchControl::write_exposure(Tango::WAttribute &attr) entering... "
+      << std::endl;
+  //	Retrieve write value
+  Tango::DevFloat w_val;
+  attr.get_write_value(w_val);
   *attr_exposure_read = w_val;
   detector_ptr->setExptime(
       std::chrono::round<std::chrono::nanoseconds>(floatsec{ w_val }));
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_exposure
 }
+
 //--------------------------------------------------------
 /**
  *	Read attribute delay related method
@@ -488,11 +450,10 @@ void MoenchControl::write_exposure(Tango::WAttribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::read_delay(Tango::Attribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::read_delay(Tango::Attribute &attr) entering... " << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::read_delay) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::read_delay(Tango::Attribute &attr) {
+  DEBUG_STREAM
+      << "MoenchControl::read_delay(Tango::Attribute &attr) entering... "
+      << std::endl;
   sls::Result<std::chrono::nanoseconds> delay_result
       = detector_ptr->getDelayAfterTrigger();
   *attr_delay_read
@@ -500,9 +461,8 @@ void MoenchControl::read_delay(Tango::Attribute &attr)
             delay_result.front())
             .count();
   attr.set_value(attr_delay_read);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_delay
 }
+
 //--------------------------------------------------------
 /**
  *	Write attribute delay related method
@@ -512,20 +472,18 @@ void MoenchControl::read_delay(Tango::Attribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::write_delay(Tango::WAttribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::write_delay(Tango::WAttribute &attr) entering... " << std::endl;
-	//	Retrieve write value
-	Tango::DevFloat	w_val;
-	attr.get_write_value(w_val);
-	/*----- PROTECTED REGION ID(MoenchControl::write_delay) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::write_delay(Tango::WAttribute &attr) {
+  DEBUG_STREAM
+      << "MoenchControl::write_delay(Tango::WAttribute &attr) entering... "
+      << std::endl;
+  //	Retrieve write value
+  Tango::DevFloat w_val;
+  attr.get_write_value(w_val);
   *attr_delay_read = w_val;
   detector_ptr->setDelayAfterTrigger(
       std::chrono::round<std::chrono::nanoseconds>(floatsec{ w_val }));
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_delay
 }
+
 //--------------------------------------------------------
 /**
  *	Read attribute timing_mode related method
@@ -535,16 +493,14 @@ void MoenchControl::write_delay(Tango::WAttribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::read_timing_mode(Tango::Attribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::read_timing_mode(Tango::Attribute &attr) entering... " << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::read_timing_mode) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::read_timing_mode(Tango::Attribute &attr) {
+  DEBUG_STREAM
+      << "MoenchControl::read_timing_mode(Tango::Attribute &attr) entering... "
+      << std::endl;
   *attr_timing_mode_read = detector_ptr->getTimingMode().front();
   attr.set_value(attr_timing_mode_read);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_timing_mode
 }
+
 //--------------------------------------------------------
 /**
  *	Write attribute timing_mode related method
@@ -554,19 +510,17 @@ void MoenchControl::read_timing_mode(Tango::Attribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::write_timing_mode(Tango::WAttribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::write_timing_mode(Tango::WAttribute &attr) entering... " << std::endl;
-	//	Retrieve write value
-	timing_modeEnum	w_val;
-	attr.get_write_value(w_val);
-	/*----- PROTECTED REGION ID(MoenchControl::write_timing_mode) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::write_timing_mode(Tango::WAttribute &attr) {
+  DEBUG_STREAM << "MoenchControl::write_timing_mode(Tango::WAttribute &attr) "
+                  "entering... "
+               << std::endl;
+  //	Retrieve write value
+  timing_modeEnum w_val;
+  attr.get_write_value(w_val);
   *attr_timing_mode_read = w_val;
   detector_ptr->setTimingMode(w_val);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_timing_mode
 }
+
 //--------------------------------------------------------
 /**
  *	Read attribute triggers related method
@@ -576,16 +530,14 @@ void MoenchControl::write_timing_mode(Tango::WAttribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::read_triggers(Tango::Attribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::read_triggers(Tango::Attribute &attr) entering... " << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::read_triggers) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::read_triggers(Tango::Attribute &attr) {
+  DEBUG_STREAM
+      << "MoenchControl::read_triggers(Tango::Attribute &attr) entering... "
+      << std::endl;
   *attr_triggers_read = detector_ptr->getNumberOfTriggers().front();
   attr.set_value(attr_triggers_read);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_triggers
 }
+
 //--------------------------------------------------------
 /**
  *	Write attribute triggers related method
@@ -595,19 +547,17 @@ void MoenchControl::read_triggers(Tango::Attribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::write_triggers(Tango::WAttribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::write_triggers(Tango::WAttribute &attr) entering... " << std::endl;
-	//	Retrieve write value
-	Tango::DevLong64	w_val;
-	attr.get_write_value(w_val);
-	/*----- PROTECTED REGION ID(MoenchControl::write_triggers) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::write_triggers(Tango::WAttribute &attr) {
+  DEBUG_STREAM
+      << "MoenchControl::write_triggers(Tango::WAttribute &attr) entering... "
+      << std::endl;
+  //	Retrieve write value
+  Tango::DevLong64 w_val;
+  attr.get_write_value(w_val);
   *attr_triggers_read = w_val;
   detector_ptr->setNumberOfTriggers(w_val);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_triggers
 }
+
 //--------------------------------------------------------
 /**
  *	Read attribute frames related method
@@ -617,17 +567,15 @@ void MoenchControl::write_triggers(Tango::WAttribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::read_frames(Tango::Attribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::read_frames(Tango::Attribute &attr) entering... " << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::read_frames) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::read_frames(Tango::Attribute &attr) {
+  DEBUG_STREAM
+      << "MoenchControl::read_frames(Tango::Attribute &attr) entering... "
+      << std::endl;
   //	Set the attribute value
   *attr_frames_read = detector_ptr->getNumberOfFrames().front();
   attr.set_value(attr_frames_read);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_frames
 }
+
 //--------------------------------------------------------
 /**
  *	Write attribute frames related method
@@ -637,19 +585,17 @@ void MoenchControl::read_frames(Tango::Attribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::write_frames(Tango::WAttribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::write_frames(Tango::WAttribute &attr) entering... " << std::endl;
-	//	Retrieve write value
-	Tango::DevLong64	w_val;
-	attr.get_write_value(w_val);
-	/*----- PROTECTED REGION ID(MoenchControl::write_frames) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::write_frames(Tango::WAttribute &attr) {
+  DEBUG_STREAM
+      << "MoenchControl::write_frames(Tango::WAttribute &attr) entering... "
+      << std::endl;
+  //	Retrieve write value
+  Tango::DevLong64 w_val;
+  attr.get_write_value(w_val);
   *attr_frames_read = w_val;
   detector_ptr->setNumberOfFrames(w_val);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_frames
 }
+
 //--------------------------------------------------------
 /**
  *	Read attribute high_voltage related method
@@ -659,16 +605,14 @@ void MoenchControl::write_frames(Tango::WAttribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::read_high_voltage(Tango::Attribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::read_high_voltage(Tango::Attribute &attr) entering... " << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::read_high_voltage) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::read_high_voltage(Tango::Attribute &attr) {
+  DEBUG_STREAM << "MoenchControl::read_high_voltage(Tango::Attribute &attr) "
+                  "entering... "
+               << std::endl;
   *attr_high_voltage_read = detector_ptr->getHighVoltage().front();
   attr.set_value(attr_high_voltage_read);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_high_voltage
 }
+
 //--------------------------------------------------------
 /**
  *	Write attribute high_voltage related method
@@ -678,18 +622,15 @@ void MoenchControl::read_high_voltage(Tango::Attribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::write_high_voltage(Tango::WAttribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::write_high_voltage(Tango::WAttribute &attr) entering... " << std::endl;
-	//	Retrieve write value
-	Tango::DevLong64	w_val;
-	attr.get_write_value(w_val);
-	/*----- PROTECTED REGION ID(MoenchControl::write_high_voltage) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::write_high_voltage(Tango::WAttribute &attr) {
+  DEBUG_STREAM << "MoenchControl::write_high_voltage(Tango::WAttribute &attr) "
+                  "entering... "
+               << std::endl;
+  //	Retrieve write value
+  Tango::DevLong64 w_val;
+  attr.get_write_value(w_val);
   *attr_high_voltage_read = w_val;
   detector_ptr->setHighVoltage(w_val);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_high_voltage
 }
 
 //--------------------------------------------------------
@@ -701,11 +642,10 @@ void MoenchControl::write_high_voltage(Tango::WAttribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::read_period(Tango::Attribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::read_period(Tango::Attribute &attr) entering... " << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::read_period) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::read_period(Tango::Attribute &attr) {
+  DEBUG_STREAM
+      << "MoenchControl::read_period(Tango::Attribute &attr) entering... "
+      << std::endl;
   sls::Result<std::chrono::nanoseconds> period_result
       = detector_ptr->getPeriod();
   *attr_period_read
@@ -713,9 +653,8 @@ void MoenchControl::read_period(Tango::Attribute &attr)
             period_result.front())
             .count();
   attr.set_value(attr_period_read);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_period
 }
+
 //--------------------------------------------------------
 /**
  *	Write attribute period related method
@@ -725,19 +664,17 @@ void MoenchControl::read_period(Tango::Attribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::write_period(Tango::WAttribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::write_period(Tango::WAttribute &attr) entering... " << std::endl;
-	//	Retrieve write value
-	Tango::DevFloat	w_val;
-	attr.get_write_value(w_val);
-	/*----- PROTECTED REGION ID(MoenchControl::write_period) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::write_period(Tango::WAttribute &attr) {
+  DEBUG_STREAM
+      << "MoenchControl::write_period(Tango::WAttribute &attr) entering... "
+      << std::endl;
+  //	Retrieve write value
+  Tango::DevFloat w_val;
+  attr.get_write_value(w_val);
   detector_ptr->setPeriod(
       std::chrono::round<std::chrono::nanoseconds>(floatsec{ w_val }));
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_period
 }
+
 //--------------------------------------------------------
 /**
  *	Read attribute zmq_rx_ip related method
@@ -747,17 +684,15 @@ void MoenchControl::write_period(Tango::WAttribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::read_zmq_rx_ip(Tango::Attribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::read_zmq_rx_ip(Tango::Attribute &attr) entering... " << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::read_zmq_rx_ip) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::read_zmq_rx_ip(Tango::Attribute &attr) {
+  DEBUG_STREAM
+      << "MoenchControl::read_zmq_rx_ip(Tango::Attribute &attr) entering... "
+      << std::endl;
   *attr_zmq_rx_ip_read
       = Tango::string_dup(detector_ptr->getRxZmqIP().front().str());
   attr.set_value(attr_zmq_rx_ip_read);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_zmq_rx_ip
 }
+
 //--------------------------------------------------------
 /**
  *	Write attribute zmq_rx_ip related method
@@ -767,18 +702,16 @@ void MoenchControl::read_zmq_rx_ip(Tango::Attribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::write_zmq_rx_ip(Tango::WAttribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::write_zmq_rx_ip(Tango::WAttribute &attr) entering... " << std::endl;
-	//	Retrieve write value
-	Tango::DevString	w_val;
-	attr.get_write_value(w_val);
-	/*----- PROTECTED REGION ID(MoenchControl::write_zmq_rx_ip) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::write_zmq_rx_ip(Tango::WAttribute &attr) {
+  DEBUG_STREAM
+      << "MoenchControl::write_zmq_rx_ip(Tango::WAttribute &attr) entering... "
+      << std::endl;
+  //	Retrieve write value
+  Tango::DevString w_val;
+  attr.get_write_value(w_val);
   detector_ptr->setRxZmqIP(sls::IpAddr(w_val));
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_zmq_rx_ip
 }
+
 //--------------------------------------------------------
 /**
  *	Read attribute zmq_rx_port related method
@@ -788,16 +721,14 @@ void MoenchControl::write_zmq_rx_ip(Tango::WAttribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::read_zmq_rx_port(Tango::Attribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::read_zmq_rx_port(Tango::Attribute &attr) entering... " << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::read_zmq_rx_port) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::read_zmq_rx_port(Tango::Attribute &attr) {
+  DEBUG_STREAM
+      << "MoenchControl::read_zmq_rx_port(Tango::Attribute &attr) entering... "
+      << std::endl;
   *attr_zmq_rx_port_read = detector_ptr->getRxZmqPort().front();
   attr.set_value(attr_zmq_rx_port_read);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_zmq_rx_port
 }
+
 //--------------------------------------------------------
 /**
  *	Write attribute zmq_rx_port related method
@@ -807,19 +738,17 @@ void MoenchControl::read_zmq_rx_port(Tango::Attribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::write_zmq_rx_port(Tango::WAttribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::write_zmq_rx_port(Tango::WAttribute &attr) entering... " << std::endl;
-	//	Retrieve write value
-	Tango::DevUShort	w_val;
-	attr.get_write_value(w_val);
-	/*----- PROTECTED REGION ID(MoenchControl::write_zmq_rx_port) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::write_zmq_rx_port(Tango::WAttribute &attr) {
+  DEBUG_STREAM << "MoenchControl::write_zmq_rx_port(Tango::WAttribute &attr) "
+                  "entering... "
+               << std::endl;
+  //	Retrieve write value
+  Tango::DevUShort w_val;
+  attr.get_write_value(w_val);
   *attr_zmq_rx_port_read = w_val;
   detector_ptr->setRxZmqPort(w_val);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_zmq_rx_port
 }
+
 //--------------------------------------------------------
 /**
  *	Read attribute rx_discard_policy related method
@@ -829,17 +758,15 @@ void MoenchControl::write_zmq_rx_port(Tango::WAttribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::read_rx_discard_policy(Tango::Attribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::read_rx_discard_policy(Tango::Attribute &attr) entering... " << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::read_rx_discard_policy) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::read_rx_discard_policy(Tango::Attribute &attr) {
+  DEBUG_STREAM << "MoenchControl::read_rx_discard_policy(Tango::Attribute "
+                  "&attr) entering... "
+               << std::endl;
   *attr_rx_discard_policy_read
       = detector_ptr->getRxFrameDiscardPolicy().front();
   attr.set_value(attr_rx_discard_policy_read);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_rx_discard_policy
 }
+
 //--------------------------------------------------------
 /**
  *	Write attribute rx_discard_policy related method
@@ -849,19 +776,17 @@ void MoenchControl::read_rx_discard_policy(Tango::Attribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::write_rx_discard_policy(Tango::WAttribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::write_rx_discard_policy(Tango::WAttribute &attr) entering... " << std::endl;
-	//	Retrieve write value
-	rx_discard_policyEnum	w_val;
-	attr.get_write_value(w_val);
-	/*----- PROTECTED REGION ID(MoenchControl::write_rx_discard_policy) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::write_rx_discard_policy(Tango::WAttribute &attr) {
+  DEBUG_STREAM << "MoenchControl::write_rx_discard_policy(Tango::WAttribute "
+                  "&attr) entering... "
+               << std::endl;
+  //	Retrieve write value
+  rx_discard_policyEnum w_val;
+  attr.get_write_value(w_val);
   *attr_rx_discard_policy_read = w_val;
   detector_ptr->setRxFrameDiscardPolicy(w_val);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_rx_discard_policy
 }
+
 //--------------------------------------------------------
 /**
  *	Read attribute rx_hostname related method
@@ -871,17 +796,15 @@ void MoenchControl::write_rx_discard_policy(Tango::WAttribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::read_rx_hostname(Tango::Attribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::read_rx_hostname(Tango::Attribute &attr) entering... " << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::read_rx_hostname) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::read_rx_hostname(Tango::Attribute &attr) {
+  DEBUG_STREAM
+      << "MoenchControl::read_rx_hostname(Tango::Attribute &attr) entering... "
+      << std::endl;
   *attr_rx_hostname_read
       = Tango::string_dup(detector_ptr->getRxHostname().front());
   attr.set_value(attr_rx_hostname_read);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_rx_hostname
 }
+
 //--------------------------------------------------------
 /**
  *	Write attribute rx_hostname related method
@@ -891,19 +814,17 @@ void MoenchControl::read_rx_hostname(Tango::Attribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::write_rx_hostname(Tango::WAttribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::write_rx_hostname(Tango::WAttribute &attr) entering... " << std::endl;
-	//	Retrieve write value
-	Tango::DevString	w_val;
-	attr.get_write_value(w_val);
-	/*----- PROTECTED REGION ID(MoenchControl::write_rx_hostname) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::write_rx_hostname(Tango::WAttribute &attr) {
+  DEBUG_STREAM << "MoenchControl::write_rx_hostname(Tango::WAttribute &attr) "
+                  "entering... "
+               << std::endl;
+  //	Retrieve write value
+  Tango::DevString w_val;
+  attr.get_write_value(w_val);
   *attr_rx_hostname_read = w_val;
   detector_ptr->setRxHostname(w_val);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_rx_hostname
 }
+
 //--------------------------------------------------------
 /**
  *	Read attribute rx_tcp_port related method
@@ -913,16 +834,14 @@ void MoenchControl::write_rx_hostname(Tango::WAttribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::read_rx_tcp_port(Tango::Attribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::read_rx_tcp_port(Tango::Attribute &attr) entering... " << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::read_rx_tcp_port) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::read_rx_tcp_port(Tango::Attribute &attr) {
+  DEBUG_STREAM
+      << "MoenchControl::read_rx_tcp_port(Tango::Attribute &attr) entering... "
+      << std::endl;
   *attr_rx_tcp_port_read = detector_ptr->getRxPort().front();
   attr.set_value(attr_rx_tcp_port_read);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_rx_tcp_port
 }
+
 //--------------------------------------------------------
 /**
  *	Write attribute rx_tcp_port related method
@@ -932,19 +851,17 @@ void MoenchControl::read_rx_tcp_port(Tango::Attribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::write_rx_tcp_port(Tango::WAttribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::write_rx_tcp_port(Tango::WAttribute &attr) entering... " << std::endl;
-	//	Retrieve write value
-	Tango::DevLong64	w_val;
-	attr.get_write_value(w_val);
-	/*----- PROTECTED REGION ID(MoenchControl::write_rx_tcp_port) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::write_rx_tcp_port(Tango::WAttribute &attr) {
+  DEBUG_STREAM << "MoenchControl::write_rx_tcp_port(Tango::WAttribute &attr) "
+                  "entering... "
+               << std::endl;
+  //	Retrieve write value
+  Tango::DevLong64 w_val;
+  attr.get_write_value(w_val);
   *attr_rx_tcp_port_read = w_val;
   detector_ptr->setRxPort(w_val);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_rx_tcp_port
 }
+
 //--------------------------------------------------------
 /**
  *	Read attribute detector_status related method
@@ -954,16 +871,14 @@ void MoenchControl::write_rx_tcp_port(Tango::WAttribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::read_detector_status(Tango::Attribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::read_detector_status(Tango::Attribute &attr) entering... " << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::read_detector_status) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::read_detector_status(Tango::Attribute &attr) {
+  DEBUG_STREAM << "MoenchControl::read_detector_status(Tango::Attribute "
+                  "&attr) entering... "
+               << std::endl;
   *attr_detector_status_read = detector_ptr->getDetectorStatus().front();
   attr.set_value(attr_detector_status_read);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_detector_status
 }
+
 //--------------------------------------------------------
 /**
  *	Read attribute rx_zmq_data_stream related method
@@ -973,16 +888,14 @@ void MoenchControl::read_detector_status(Tango::Attribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::read_rx_zmq_data_stream(Tango::Attribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::read_rx_zmq_data_stream(Tango::Attribute &attr) entering... " << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::read_rx_zmq_data_stream) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::read_rx_zmq_data_stream(Tango::Attribute &attr) {
+  DEBUG_STREAM << "MoenchControl::read_rx_zmq_data_stream(Tango::Attribute "
+                  "&attr) entering... "
+               << std::endl;
   *attr_rx_zmq_data_stream_read = detector_ptr->getRxZmqDataStream().front();
   attr.set_value(attr_rx_zmq_data_stream_read);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_rx_zmq_data_stream
 }
+
 //--------------------------------------------------------
 /**
  *	Write attribute rx_zmq_data_stream related method
@@ -992,19 +905,17 @@ void MoenchControl::read_rx_zmq_data_stream(Tango::Attribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::write_rx_zmq_data_stream(Tango::WAttribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::write_rx_zmq_data_stream(Tango::WAttribute &attr) entering... " << std::endl;
-	//	Retrieve write value
-	Tango::DevBoolean	w_val;
-	attr.get_write_value(w_val);
-	/*----- PROTECTED REGION ID(MoenchControl::write_rx_zmq_data_stream) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::write_rx_zmq_data_stream(Tango::WAttribute &attr) {
+  DEBUG_STREAM << "MoenchControl::write_rx_zmq_data_stream(Tango::WAttribute "
+                  "&attr) entering... "
+               << std::endl;
+  //	Retrieve write value
+  Tango::DevBoolean w_val;
+  attr.get_write_value(w_val);
   *attr_rx_zmq_data_stream_read = w_val;
   detector_ptr->setRxZmqDataStream(w_val);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::write_rx_zmq_data_stream
 }
+
 //--------------------------------------------------------
 /**
  *	Read attribute triggers_left related method
@@ -1014,15 +925,12 @@ void MoenchControl::write_rx_zmq_data_stream(Tango::WAttribute &attr)
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
-void MoenchControl::read_triggers_left(Tango::Attribute &attr)
-{
-	DEBUG_STREAM << "MoenchControl::read_triggers_left(Tango::Attribute &attr) entering... " << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::read_triggers_left) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::read_triggers_left(Tango::Attribute &attr) {
+  DEBUG_STREAM << "MoenchControl::read_triggers_left(Tango::Attribute &attr) "
+                  "entering... "
+               << std::endl;
   *attr_triggers_left_read = detector_ptr->getNumberOfTriggersLeft().front();
   attr.set_value(attr_triggers_left_read);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::read_triggers_left
 }
 
 //--------------------------------------------------------
@@ -1032,13 +940,8 @@ void MoenchControl::read_triggers_left(Tango::Attribute &attr)
  *                for specified device.
  */
 //--------------------------------------------------------
-void MoenchControl::add_dynamic_attributes()
-{
-	/*----- PROTECTED REGION ID(MoenchControl::add_dynamic_attributes) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::add_dynamic_attributes() {
   //	Add your own code to create and add dynamic attributes if any
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::add_dynamic_attributes
 }
 
 //--------------------------------------------------------
@@ -1048,11 +951,9 @@ void MoenchControl::add_dynamic_attributes()
  *
  */
 //--------------------------------------------------------
-void MoenchControl::start_acquire()
-{
-	DEBUG_STREAM << "MoenchControl::start_acquire()  - " << device_name << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::start_acquire) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::start_acquire() {
+  DEBUG_STREAM << "MoenchControl::start_acquire()  - " << device_name
+               << std::endl;
   detector_ptr->startReceiver();
   detector_ptr->startDetector();
   // A detector takes a while after startDetector() execution to change its
@@ -1063,18 +964,18 @@ void MoenchControl::start_acquire()
   set_state(Tango::MOVING);
 
   std::thread(&MoenchControl::check_stop_in_backgroud, this).detach();
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::start_acquire
 }
-void MoenchControl::check_stop_in_backgroud(){
-	slsDetectorDefs::runStatus det_status = detector_ptr->getDetectorStatus().front();
-	while(det_status != slsDetectorDefs::runStatus::IDLE &&
-	      det_status != slsDetectorDefs::runStatus::RUN_FINISHED &&
-		  det_status != slsDetectorDefs::runStatus::STOPPED){
-		std::this_thread::sleep_for(std::chrono::milliseconds(100));
-		det_status = detector_ptr->getDetectorStatus().front();
-	}
-	stop_acquire();
+
+void MoenchControl::check_stop_in_backgroud() {
+  slsDetectorDefs::runStatus det_status
+      = detector_ptr->getDetectorStatus().front();
+  while (det_status != slsDetectorDefs::runStatus::IDLE
+         && det_status != slsDetectorDefs::runStatus::RUN_FINISHED
+         && det_status != slsDetectorDefs::runStatus::STOPPED) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    det_status = detector_ptr->getDetectorStatus().front();
+  }
+  stop_acquire();
 }
 
 //--------------------------------------------------------
@@ -1084,19 +985,16 @@ void MoenchControl::check_stop_in_backgroud(){
  *
  */
 //--------------------------------------------------------
-void MoenchControl::stop_acquire()
-{
-	DEBUG_STREAM << "MoenchControl::stop_acquire()  - " << device_name << std::endl;
-	/*----- PROTECTED REGION ID(MoenchControl::stop_acquire) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::stop_acquire() {
+  DEBUG_STREAM << "MoenchControl::stop_acquire()  - " << device_name
+               << std::endl;
 
   detector_ptr->stopDetector();
   detector_ptr->stopReceiver();
   detector_ptr->clearAcquiringFlag();
   set_state(Tango::ON);
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::stop_acquire
 }
+
 //--------------------------------------------------------
 /**
  *	Method      : MoenchControl::add_dynamic_commands()
@@ -1104,18 +1002,9 @@ void MoenchControl::stop_acquire()
  *                for specified device.
  */
 //--------------------------------------------------------
-void MoenchControl::add_dynamic_commands()
-{
-	/*----- PROTECTED REGION ID(MoenchControl::add_dynamic_commands) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControl::add_dynamic_commands() {
   //	Add your own code to create and add dynamic commands if any
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControl::add_dynamic_commands
 }
 
-/*----- PROTECTED REGION ID(MoenchControl::namespace_ending) ENABLED START -----*/
-/* clang-format on */
 //	Additional Methods
-/* clang-format off */
-/*----- PROTECTED REGION END -----*/	//	MoenchControl::namespace_ending
 } //	namespace

@@ -1,5 +1,3 @@
-/*----- PROTECTED REGION ID(MoenchControlClass.cpp) ENABLED START -----*/
-/* clang-format on */
 //=============================================================================
 //
 // file :        MoenchControlClass.cpp
@@ -35,8 +33,6 @@
 //=============================================================================
 
 #include "MoenchControlClass.h"
-/* clang-format off */
-/*----- PROTECTED REGION END -----*/	//	MoenchControlClass.cpp
 
 //-------------------------------------------------------------------
 /**
@@ -51,13 +47,13 @@ __declspec(dllexport)
 
 #endif
 
-	Tango::DeviceClass *_create_MoenchControl_class(const char *name) {
-		return MoenchControl_ns::MoenchControlClass::init(name);
-	}
+Tango::DeviceClass *
+_create_MoenchControl_class(const char *name) {
+  return MoenchControl_ns::MoenchControlClass::init(name);
+}
 }
 
-namespace MoenchControl_ns
-{
+namespace MoenchControl_ns {
 //===================================================================
 //	Initialize pointer for singleton pattern
 //===================================================================
@@ -74,18 +70,13 @@ MoenchControlClass *MoenchControlClass::_instance = NULL;
  * @param s	The class name
  */
 //--------------------------------------------------------
-MoenchControlClass::MoenchControlClass(std::string &s):Tango::DeviceClass(s)
-{
-	TANGO_LOG_INFO << "Entering MoenchControlClass constructor" << std::endl;
-	set_default_property();
-	write_class_property();
+MoenchControlClass::MoenchControlClass(std::string &s)
+    : Tango::DeviceClass(s) {
+  TANGO_LOG_INFO << "Entering MoenchControlClass constructor" << std::endl;
+  set_default_property();
+  write_class_property();
 
-	/*----- PROTECTED REGION ID(MoenchControlClass::constructor) ENABLED START -----*/
-  /* clang-format on */
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::constructor
-
-	TANGO_LOG_INFO << "Leaving MoenchControlClass constructor" << std::endl;
+  TANGO_LOG_INFO << "Leaving MoenchControlClass constructor" << std::endl;
 }
 
 //--------------------------------------------------------
@@ -94,16 +85,7 @@ MoenchControlClass::MoenchControlClass(std::string &s):Tango::DeviceClass(s)
  * description : 	destructor for the MoenchControlClass
  */
 //--------------------------------------------------------
-MoenchControlClass::~MoenchControlClass()
-{
-	/*----- PROTECTED REGION ID(MoenchControlClass::destructor) ENABLED START -----*/
-  /* clang-format on */
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::destructor
-
-	_instance = NULL;
-}
-
+MoenchControlClass::~MoenchControlClass() { _instance = NULL; }
 
 //--------------------------------------------------------
 /**
@@ -114,21 +96,16 @@ MoenchControlClass::~MoenchControlClass()
  * @param	name	The class name
  */
 //--------------------------------------------------------
-MoenchControlClass *MoenchControlClass::init(const char *name)
-{
-	if (_instance == NULL)
-	{
-		try
-		{
-			std::string s(name);
-			_instance = new MoenchControlClass(s);
-		}
-		catch (std::bad_alloc &)
-		{
-			throw;
-		}
-	}
-	return _instance;
+MoenchControlClass *MoenchControlClass::init(const char *name) {
+  if (_instance == NULL) {
+    try {
+      std::string s(name);
+      _instance = new MoenchControlClass(s);
+    } catch (std::bad_alloc &) {
+      throw;
+    }
+  }
+  return _instance;
 }
 
 //--------------------------------------------------------
@@ -138,17 +115,13 @@ MoenchControlClass *MoenchControlClass::init(const char *name)
  *                  and return a pointer to the object
  */
 //--------------------------------------------------------
-MoenchControlClass *MoenchControlClass::instance()
-{
-	if (_instance == NULL)
-	{
-		std::cerr << "Class is not initialised !!" << std::endl;
-		exit(-1);
-	}
-	return _instance;
+MoenchControlClass *MoenchControlClass::instance() {
+  if (_instance == NULL) {
+    std::cerr << "Class is not initialised !!" << std::endl;
+    exit(-1);
+  }
+  return _instance;
 }
-
-
 
 //===================================================================
 //	Command execution method calls
@@ -164,11 +137,12 @@ MoenchControlClass *MoenchControlClass::instance()
  *	returns The command output data (packed in the Any object)
  */
 //--------------------------------------------------------
-CORBA::Any *start_acquireClass::execute(Tango::DeviceImpl *device, TANGO_UNUSED(const CORBA::Any &in_any))
-{
-	TANGO_LOG_INFO << "start_acquireClass::execute(): arrived" << std::endl;
-	((static_cast<MoenchControl *>(device))->start_acquire());
-	return new CORBA::Any();
+CORBA::Any *
+start_acquireClass::execute(Tango::DeviceImpl *device,
+                            TANGO_UNUSED(const CORBA::Any &in_any)) {
+  TANGO_LOG_INFO << "start_acquireClass::execute(): arrived" << std::endl;
+  ((static_cast<MoenchControl *>(device))->start_acquire());
+  return new CORBA::Any();
 }
 
 //--------------------------------------------------------
@@ -182,13 +156,13 @@ CORBA::Any *start_acquireClass::execute(Tango::DeviceImpl *device, TANGO_UNUSED(
  *	returns The command output data (packed in the Any object)
  */
 //--------------------------------------------------------
-CORBA::Any *stop_acquireClass::execute(Tango::DeviceImpl *device, TANGO_UNUSED(const CORBA::Any &in_any))
-{
-	TANGO_LOG_INFO << "stop_acquireClass::execute(): arrived" << std::endl;
-	((static_cast<MoenchControl *>(device))->stop_acquire());
-	return new CORBA::Any();
+CORBA::Any *
+stop_acquireClass::execute(Tango::DeviceImpl *device,
+                           TANGO_UNUSED(const CORBA::Any &in_any)) {
+  TANGO_LOG_INFO << "stop_acquireClass::execute(): arrived" << std::endl;
+  ((static_cast<MoenchControl *>(device))->stop_acquire());
+  return new CORBA::Any();
 }
-
 
 //===================================================================
 //	Properties management
@@ -199,13 +173,12 @@ CORBA::Any *stop_acquireClass::execute(Tango::DeviceImpl *device, TANGO_UNUSED(c
  * Description:  Get the class property for specified name.
  */
 //--------------------------------------------------------
-Tango::DbDatum MoenchControlClass::get_class_property(std::string &prop_name)
-{
-	for (unsigned int i=0 ; i<cl_prop.size() ; i++)
-		if (cl_prop[i].name == prop_name)
-			return cl_prop[i];
-	//	if not found, returns  an empty DbDatum
-	return Tango::DbDatum(prop_name);
+Tango::DbDatum MoenchControlClass::get_class_property(std::string &prop_name) {
+  for (unsigned int i = 0; i < cl_prop.size(); i++)
+    if (cl_prop[i].name == prop_name)
+      return cl_prop[i];
+  //	if not found, returns  an empty DbDatum
+  return Tango::DbDatum(prop_name);
 }
 
 //--------------------------------------------------------
@@ -214,13 +187,13 @@ Tango::DbDatum MoenchControlClass::get_class_property(std::string &prop_name)
  * Description:  Return the default value for device property.
  */
 //--------------------------------------------------------
-Tango::DbDatum MoenchControlClass::get_default_device_property(std::string &prop_name)
-{
-	for (unsigned int i=0 ; i<dev_def_prop.size() ; i++)
-		if (dev_def_prop[i].name == prop_name)
-			return dev_def_prop[i];
-	//	if not found, return  an empty DbDatum
-	return Tango::DbDatum(prop_name);
+Tango::DbDatum
+MoenchControlClass::get_default_device_property(std::string &prop_name) {
+  for (unsigned int i = 0; i < dev_def_prop.size(); i++)
+    if (dev_def_prop[i].name == prop_name)
+      return dev_def_prop[i];
+  //	if not found, return  an empty DbDatum
+  return Tango::DbDatum(prop_name);
 }
 
 //--------------------------------------------------------
@@ -229,126 +202,115 @@ Tango::DbDatum MoenchControlClass::get_default_device_property(std::string &prop
  * Description:  Return the default value for class property.
  */
 //--------------------------------------------------------
-Tango::DbDatum MoenchControlClass::get_default_class_property(std::string &prop_name)
-{
-	for (unsigned int i=0 ; i<cl_def_prop.size() ; i++)
-		if (cl_def_prop[i].name == prop_name)
-			return cl_def_prop[i];
-	//	if not found, return  an empty DbDatum
-	return Tango::DbDatum(prop_name);
+Tango::DbDatum
+MoenchControlClass::get_default_class_property(std::string &prop_name) {
+  for (unsigned int i = 0; i < cl_def_prop.size(); i++)
+    if (cl_def_prop[i].name == prop_name)
+      return cl_def_prop[i];
+  //	if not found, return  an empty DbDatum
+  return Tango::DbDatum(prop_name);
 }
-
 
 //--------------------------------------------------------
 /**
  *	Method      : MoenchControlClass::set_default_property()
  * Description:  Set default property (class and device) for wizard.
- *                For each property, add to wizard property name and description.
- *                If default value has been set, add it to wizard property and
+ *                For each property, add to wizard property name and
+ *description. If default value has been set, add it to wizard property and
  *                store it in a DbDatum.
  */
 //--------------------------------------------------------
-void MoenchControlClass::set_default_property()
-{
-	std::string	prop_name;
-	std::string	prop_desc;
-	std::string	prop_def;
-	std::vector<std::string>	vect_data;
+void MoenchControlClass::set_default_property() {
+  std::string prop_name;
+  std::string prop_desc;
+  std::string prop_def;
+  std::vector<std::string> vect_data;
 
-	//	Set Default Class Properties
+  //	Set Default Class Properties
 
-	//	Set Default device Properties
-	prop_name = "SLS_RECEIVER_PORT";
-	prop_desc = "port for slsReceiver, default: 1954";
-	prop_def  = "";
-	vect_data.clear();
-	if (prop_def.length()>0)
-	{
-		Tango::DbDatum	data(prop_name);
-		data << vect_data ;
-		dev_def_prop.push_back(data);
-		add_wiz_dev_prop(prop_name, prop_desc,  prop_def);
-	}
-	else
-		add_wiz_dev_prop(prop_name, prop_desc);
-	prop_name = "PROCESSING_RX_IP";
-	prop_desc = "ip of 10gbe ``PC <-> detector`` lane of PC,\nmust match the config,\ndefault: 192.168.2.200";
-	prop_def  = "";
-	vect_data.clear();
-	if (prop_def.length()>0)
-	{
-		Tango::DbDatum	data(prop_name);
-		data << vect_data ;
-		dev_def_prop.push_back(data);
-		add_wiz_dev_prop(prop_name, prop_desc,  prop_def);
-	}
-	else
-		add_wiz_dev_prop(prop_name, prop_desc);
-	prop_name = "PROCESSING_RX_PORT";
-	prop_desc = "port for 10gbe ``PC <-> detector`` lane of PC,\nmust match the config,\ndefault: 50003";
-	prop_def  = "";
-	vect_data.clear();
-	if (prop_def.length()>0)
-	{
-		Tango::DbDatum	data(prop_name);
-		data << vect_data ;
-		dev_def_prop.push_back(data);
-		add_wiz_dev_prop(prop_name, prop_desc,  prop_def);
-	}
-	else
-		add_wiz_dev_prop(prop_name, prop_desc);
-	prop_name = "CONTROL_TX_IP";
-	prop_desc = "ip for 1gbe lane (lab local network) of PC,\nmust match the config,\ndefault: 192.168.1.118";
-	prop_def  = "";
-	vect_data.clear();
-	if (prop_def.length()>0)
-	{
-		Tango::DbDatum	data(prop_name);
-		data << vect_data ;
-		dev_def_prop.push_back(data);
-		add_wiz_dev_prop(prop_name, prop_desc,  prop_def);
-	}
-	else
-		add_wiz_dev_prop(prop_name, prop_desc);
-	prop_name = "CONTROL_TX_PORT";
-	prop_desc = "port for 1gbe (lab local network) lane of PC,\nmust match the config,\ndefault: 50001";
-	prop_def  = "";
-	vect_data.clear();
-	if (prop_def.length()>0)
-	{
-		Tango::DbDatum	data(prop_name);
-		data << vect_data ;
-		dev_def_prop.push_back(data);
-		add_wiz_dev_prop(prop_name, prop_desc,  prop_def);
-	}
-	else
-		add_wiz_dev_prop(prop_name, prop_desc);
-	prop_name = "MOENCHZMQ_DEVICE";
-	prop_desc = "FQDN of Moenchzmq TangoDS,\ndefault: rsxs/moenchZmq/bchip286";
-	prop_def  = "";
-	vect_data.clear();
-	if (prop_def.length()>0)
-	{
-		Tango::DbDatum	data(prop_name);
-		data << vect_data ;
-		dev_def_prop.push_back(data);
-		add_wiz_dev_prop(prop_name, prop_desc,  prop_def);
-	}
-	else
-		add_wiz_dev_prop(prop_name, prop_desc);
-	prop_name = "DETECTOR_CONFIG_PATH";
-	prop_desc = "Path to the config file for the detector,\ndefault: /home/moench/.../moench03.config";
-	prop_def  = "";
-	vect_data.clear();
-	if (prop_def.length()>0)
-	{
-		Tango::DbDatum	data(prop_name);
-		data << vect_data ;
-		dev_def_prop.push_back(data);
-		add_wiz_dev_prop(prop_name, prop_desc,  prop_def);
-	}
-	else
-		add_wiz_dev_prop(prop_name, prop_desc);
+  //	Set Default device Properties
+  prop_name = "SLS_RECEIVER_PORT";
+  prop_desc = "port for slsReceiver, default: 1954";
+  prop_def = "";
+  vect_data.clear();
+  if (prop_def.length() > 0) {
+    Tango::DbDatum data(prop_name);
+    data << vect_data;
+    dev_def_prop.push_back(data);
+    add_wiz_dev_prop(prop_name, prop_desc, prop_def);
+  } else
+    add_wiz_dev_prop(prop_name, prop_desc);
+  prop_name = "PROCESSING_RX_IP";
+  prop_desc = "ip of 10gbe ``PC <-> detector`` lane of PC,\nmust match the "
+              "config,\ndefault: 192.168.2.200";
+  prop_def = "";
+  vect_data.clear();
+  if (prop_def.length() > 0) {
+    Tango::DbDatum data(prop_name);
+    data << vect_data;
+    dev_def_prop.push_back(data);
+    add_wiz_dev_prop(prop_name, prop_desc, prop_def);
+  } else
+    add_wiz_dev_prop(prop_name, prop_desc);
+  prop_name = "PROCESSING_RX_PORT";
+  prop_desc = "port for 10gbe ``PC <-> detector`` lane of PC,\nmust match the "
+              "config,\ndefault: 50003";
+  prop_def = "";
+  vect_data.clear();
+  if (prop_def.length() > 0) {
+    Tango::DbDatum data(prop_name);
+    data << vect_data;
+    dev_def_prop.push_back(data);
+    add_wiz_dev_prop(prop_name, prop_desc, prop_def);
+  } else
+    add_wiz_dev_prop(prop_name, prop_desc);
+  prop_name = "CONTROL_TX_IP";
+  prop_desc = "ip for 1gbe lane (lab local network) of PC,\nmust match the "
+              "config,\ndefault: 192.168.1.118";
+  prop_def = "";
+  vect_data.clear();
+  if (prop_def.length() > 0) {
+    Tango::DbDatum data(prop_name);
+    data << vect_data;
+    dev_def_prop.push_back(data);
+    add_wiz_dev_prop(prop_name, prop_desc, prop_def);
+  } else
+    add_wiz_dev_prop(prop_name, prop_desc);
+  prop_name = "CONTROL_TX_PORT";
+  prop_desc = "port for 1gbe (lab local network) lane of PC,\nmust match the "
+              "config,\ndefault: 50001";
+  prop_def = "";
+  vect_data.clear();
+  if (prop_def.length() > 0) {
+    Tango::DbDatum data(prop_name);
+    data << vect_data;
+    dev_def_prop.push_back(data);
+    add_wiz_dev_prop(prop_name, prop_desc, prop_def);
+  } else
+    add_wiz_dev_prop(prop_name, prop_desc);
+  prop_name = "MOENCHZMQ_DEVICE";
+  prop_desc = "FQDN of Moenchzmq TangoDS,\ndefault: rsxs/moenchZmq/bchip286";
+  prop_def = "";
+  vect_data.clear();
+  if (prop_def.length() > 0) {
+    Tango::DbDatum data(prop_name);
+    data << vect_data;
+    dev_def_prop.push_back(data);
+    add_wiz_dev_prop(prop_name, prop_desc, prop_def);
+  } else
+    add_wiz_dev_prop(prop_name, prop_desc);
+  prop_name = "DETECTOR_CONFIG_PATH";
+  prop_desc = "Path to the config file for the detector,\ndefault: "
+              "/home/moench/.../moench03.config";
+  prop_def = "";
+  vect_data.clear();
+  if (prop_def.length() > 0) {
+    Tango::DbDatum data(prop_name);
+    data << vect_data;
+    dev_def_prop.push_back(data);
+    add_wiz_dev_prop(prop_name, prop_desc, prop_def);
+  } else
+    add_wiz_dev_prop(prop_name, prop_desc);
 }
 
 //--------------------------------------------------------
@@ -357,38 +319,37 @@ void MoenchControlClass::set_default_property()
  * Description:  Set class description fields as property in database
  */
 //--------------------------------------------------------
-void MoenchControlClass::write_class_property()
-{
-//	First time, check if database used
-if (Tango::Util::_UseDb == false)
-	return;
+void MoenchControlClass::write_class_property() {
+  //	First time, check if database used
+  if (Tango::Util::_UseDb == false)
+    return;
 
-Tango::DbData	data;
-std::string	classname = get_name();
-std::string	header;
+  Tango::DbData data;
+  std::string classname = get_name();
+  std::string header;
 
-//	Put title
-Tango::DbDatum	title("ProjectTitle");
-std::string	str_title("Tango device for control of MOENCH detector");
-title << str_title;
-data.push_back(title);
+  //	Put title
+  Tango::DbDatum title("ProjectTitle");
+  std::string str_title("Tango device for control of MOENCH detector");
+  title << str_title;
+  data.push_back(title);
 
-//	Put Description
-Tango::DbDatum	description("Description");
-std::vector<std::string>	str_desc;
-str_desc.push_back("");
-description << str_desc;
-data.push_back(description);
+  //	Put Description
+  Tango::DbDatum description("Description");
+  std::vector<std::string> str_desc;
+  str_desc.push_back("");
+  description << str_desc;
+  data.push_back(description);
 
-//  Put inheritance
-Tango::DbDatum	inher_datum("InheritedFrom");
-std::vector<std::string> inheritance;
-inheritance.push_back("TANGO_BASE_CLASS");
-inher_datum << inheritance;
-data.push_back(inher_datum);
+  //  Put inheritance
+  Tango::DbDatum inher_datum("InheritedFrom");
+  std::vector<std::string> inheritance;
+  inheritance.push_back("TANGO_BASE_CLASS");
+  inher_datum << inheritance;
+  data.push_back(inher_datum);
 
-//	Call database and and values
-get_db_class()->put_property(data);
+  //	Call database and and values
+  get_db_class()->put_property(data);
 }
 
 //===================================================================
@@ -402,44 +363,36 @@ get_db_class()->put_property(data);
  *                and store them in the device list
  */
 //--------------------------------------------------------
-void MoenchControlClass::device_factory(const Tango::DevVarStringArray *devlist_ptr)
-{
-/*----- PROTECTED REGION ID(MoenchControlClass::device_factory_before) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControlClass::device_factory(
+    const Tango::DevVarStringArray *devlist_ptr) {
   //	Add your own code
-  /* clang-format off */
-/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::device_factory_before
 
-//	Create devices and add it into the device list
-for (unsigned long i=0 ; i<devlist_ptr->length() ; i++)
-{
-	TANGO_LOG_DEBUG << "Device name : " << (*devlist_ptr)[i].in() << std::endl;
-	device_list.push_back(new MoenchControl(this, (*devlist_ptr)[i]));
-}
+  //	Create devices and add it into the device list
+  for (unsigned long i = 0; i < devlist_ptr->length(); i++) {
+    TANGO_LOG_DEBUG << "Device name : " << (*devlist_ptr)[i].in() << std::endl;
+    device_list.push_back(new MoenchControl(this, (*devlist_ptr)[i]));
+  }
 
-//	Manage dynamic attributes if any
-erase_dynamic_attributes(devlist_ptr, get_class_attr()->get_attr_list());
+  //	Manage dynamic attributes if any
+  erase_dynamic_attributes(devlist_ptr, get_class_attr()->get_attr_list());
 
-//	Export devices to the outside world
-for (unsigned long i=1 ; i<=devlist_ptr->length() ; i++)
-{
-	//	Add dynamic attributes if any
-	MoenchControl *dev = static_cast<MoenchControl *>(device_list[device_list.size()-i]);
-	dev->add_dynamic_attributes();
+  //	Export devices to the outside world
+  for (unsigned long i = 1; i <= devlist_ptr->length(); i++) {
+    //	Add dynamic attributes if any
+    MoenchControl *dev
+        = static_cast<MoenchControl *>(device_list[device_list.size() - i]);
+    dev->add_dynamic_attributes();
 
-	//	Check before if database used.
-	if ((Tango::Util::_UseDb == true) && (Tango::Util::_FileDb == false))
-		export_device(dev);
-	else
-		export_device(dev, dev->get_name().c_str());
-}
+    //	Check before if database used.
+    if ((Tango::Util::_UseDb == true) && (Tango::Util::_FileDb == false))
+      export_device(dev);
+    else
+      export_device(dev, dev->get_name().c_str());
+  }
 
-/*----- PROTECTED REGION ID(MoenchControlClass::device_factory_after) ENABLED START -----*/
-  /* clang-format on */
   //	Add your own code
-  /* clang-format off */
-/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::device_factory_after
 }
+
 //--------------------------------------------------------
 /**
  *	Method      : MoenchControlClass::attribute_factory()
@@ -447,404 +400,397 @@ for (unsigned long i=1 ; i<=devlist_ptr->length() ; i++)
  *                and store them in the attribute list
  */
 //--------------------------------------------------------
-void MoenchControlClass::attribute_factory(std::vector<Tango::Attr *> &att_list)
-{
-	/*----- PROTECTED REGION ID(MoenchControlClass::attribute_factory_before) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControlClass::attribute_factory(
+    std::vector<Tango::Attr *> &att_list) {
   //	Add your own code
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::attribute_factory_before
-	//	Attribute : exposure
-	exposureAttrib	*exposure = new exposureAttrib();
-	Tango::UserDefaultAttrProp	exposure_prop;
-	//	description	not set for exposure
-	//	label	not set for exposure
-	exposure_prop.set_unit("s");
-	//	standard_unit	not set for exposure
-	//	display_unit	not set for exposure
-	exposure_prop.set_format("%.3e");
-	//	max_value	not set for exposure
-	exposure_prop.set_min_value("100E-9");
-	//	max_alarm	not set for exposure
-	//	min_alarm	not set for exposure
-	//	max_warning	not set for exposure
-	//	min_warning	not set for exposure
-	//	delta_t	not set for exposure
-	//	delta_val	not set for exposure
-	exposure->set_default_properties(exposure_prop);
-	//	Not Polled
-	exposure->set_disp_level(Tango::OPERATOR);
-	exposure->set_memorized();
-	exposure->set_memorized_init(true);
-	att_list.push_back(exposure);
+  //	Attribute : exposure
+  exposureAttrib *exposure = new exposureAttrib();
+  Tango::UserDefaultAttrProp exposure_prop;
+  //	description	not set for exposure
+  //	label	not set for exposure
+  exposure_prop.set_unit("s");
+  //	standard_unit	not set for exposure
+  //	display_unit	not set for exposure
+  exposure_prop.set_format("%.3e");
+  //	max_value	not set for exposure
+  exposure_prop.set_min_value("100E-9");
+  //	max_alarm	not set for exposure
+  //	min_alarm	not set for exposure
+  //	max_warning	not set for exposure
+  //	min_warning	not set for exposure
+  //	delta_t	not set for exposure
+  //	delta_val	not set for exposure
+  exposure->set_default_properties(exposure_prop);
+  //	Not Polled
+  exposure->set_disp_level(Tango::OPERATOR);
+  exposure->set_memorized();
+  exposure->set_memorized_init(true);
+  att_list.push_back(exposure);
 
-	//	Attribute : delay
-	delayAttrib	*delay = new delayAttrib();
-	Tango::UserDefaultAttrProp	delay_prop;
-	//	description	not set for delay
-	//	label	not set for delay
-	delay_prop.set_unit("s");
-	//	standard_unit	not set for delay
-	//	display_unit	not set for delay
-	delay_prop.set_format("%.3e");
-	//	max_value	not set for delay
-	//	min_value	not set for delay
-	//	max_alarm	not set for delay
-	//	min_alarm	not set for delay
-	//	max_warning	not set for delay
-	//	min_warning	not set for delay
-	//	delta_t	not set for delay
-	//	delta_val	not set for delay
-	delay->set_default_properties(delay_prop);
-	//	Not Polled
-	delay->set_disp_level(Tango::OPERATOR);
-	delay->set_memorized();
-	delay->set_memorized_init(true);
-	att_list.push_back(delay);
+  //	Attribute : delay
+  delayAttrib *delay = new delayAttrib();
+  Tango::UserDefaultAttrProp delay_prop;
+  //	description	not set for delay
+  //	label	not set for delay
+  delay_prop.set_unit("s");
+  //	standard_unit	not set for delay
+  //	display_unit	not set for delay
+  delay_prop.set_format("%.3e");
+  //	max_value	not set for delay
+  //	min_value	not set for delay
+  //	max_alarm	not set for delay
+  //	min_alarm	not set for delay
+  //	max_warning	not set for delay
+  //	min_warning	not set for delay
+  //	delta_t	not set for delay
+  //	delta_val	not set for delay
+  delay->set_default_properties(delay_prop);
+  //	Not Polled
+  delay->set_disp_level(Tango::OPERATOR);
+  delay->set_memorized();
+  delay->set_memorized_init(true);
+  att_list.push_back(delay);
 
-	//	Attribute : timing_mode
-	timing_modeAttrib	*timing_mode = new timing_modeAttrib();
-	Tango::UserDefaultAttrProp	timing_mode_prop;
-	//	description	not set for timing_mode
-	timing_mode_prop.set_label("timing mode");
-	//	unit	not set for timing_mode
-	//	standard_unit	not set for timing_mode
-	//	display_unit	not set for timing_mode
-	//	format	not set for timing_mode
-	//	max_value	not set for timing_mode
-	//	min_value	not set for timing_mode
-	//	max_alarm	not set for timing_mode
-	//	min_alarm	not set for timing_mode
-	//	max_warning	not set for timing_mode
-	//	min_warning	not set for timing_mode
-	//	delta_t	not set for timing_mode
-	//	delta_val	not set for timing_mode
-	{
-		std::vector<std::string> labels;
-		labels.push_back("AUTO_TIMING");
-		labels.push_back("TRIGGER_EXPOSURE");
-		timing_mode_prop.set_enum_labels(labels);
-	}
-	timing_mode->set_default_properties(timing_mode_prop);
-	//	Not Polled
-	timing_mode->set_disp_level(Tango::OPERATOR);
-	timing_mode->set_memorized();
-	timing_mode->set_memorized_init(true);
-	att_list.push_back(timing_mode);
+  //	Attribute : timing_mode
+  timing_modeAttrib *timing_mode = new timing_modeAttrib();
+  Tango::UserDefaultAttrProp timing_mode_prop;
+  //	description	not set for timing_mode
+  timing_mode_prop.set_label("timing mode");
+  //	unit	not set for timing_mode
+  //	standard_unit	not set for timing_mode
+  //	display_unit	not set for timing_mode
+  //	format	not set for timing_mode
+  //	max_value	not set for timing_mode
+  //	min_value	not set for timing_mode
+  //	max_alarm	not set for timing_mode
+  //	min_alarm	not set for timing_mode
+  //	max_warning	not set for timing_mode
+  //	min_warning	not set for timing_mode
+  //	delta_t	not set for timing_mode
+  //	delta_val	not set for timing_mode
+  {
+    std::vector<std::string> labels;
+    labels.push_back("AUTO_TIMING");
+    labels.push_back("TRIGGER_EXPOSURE");
+    timing_mode_prop.set_enum_labels(labels);
+  }
+  timing_mode->set_default_properties(timing_mode_prop);
+  //	Not Polled
+  timing_mode->set_disp_level(Tango::OPERATOR);
+  timing_mode->set_memorized();
+  timing_mode->set_memorized_init(true);
+  att_list.push_back(timing_mode);
 
-	//	Attribute : triggers
-	triggersAttrib	*triggers = new triggersAttrib();
-	Tango::UserDefaultAttrProp	triggers_prop;
-	//	description	not set for triggers
-	//	label	not set for triggers
-	//	unit	not set for triggers
-	//	standard_unit	not set for triggers
-	//	display_unit	not set for triggers
-	//	format	not set for triggers
-	//	max_value	not set for triggers
-	triggers_prop.set_min_value("1");
-	//	max_alarm	not set for triggers
-	//	min_alarm	not set for triggers
-	//	max_warning	not set for triggers
-	//	min_warning	not set for triggers
-	//	delta_t	not set for triggers
-	//	delta_val	not set for triggers
-	triggers->set_default_properties(triggers_prop);
-	//	Not Polled
-	triggers->set_disp_level(Tango::OPERATOR);
-	triggers->set_memorized();
-	triggers->set_memorized_init(true);
-	att_list.push_back(triggers);
+  //	Attribute : triggers
+  triggersAttrib *triggers = new triggersAttrib();
+  Tango::UserDefaultAttrProp triggers_prop;
+  //	description	not set for triggers
+  //	label	not set for triggers
+  //	unit	not set for triggers
+  //	standard_unit	not set for triggers
+  //	display_unit	not set for triggers
+  //	format	not set for triggers
+  //	max_value	not set for triggers
+  triggers_prop.set_min_value("1");
+  //	max_alarm	not set for triggers
+  //	min_alarm	not set for triggers
+  //	max_warning	not set for triggers
+  //	min_warning	not set for triggers
+  //	delta_t	not set for triggers
+  //	delta_val	not set for triggers
+  triggers->set_default_properties(triggers_prop);
+  //	Not Polled
+  triggers->set_disp_level(Tango::OPERATOR);
+  triggers->set_memorized();
+  triggers->set_memorized_init(true);
+  att_list.push_back(triggers);
 
-	//	Attribute : frames
-	framesAttrib	*frames = new framesAttrib();
-	Tango::UserDefaultAttrProp	frames_prop;
-	//	description	not set for frames
-	frames_prop.set_label("frames");
-	//	unit	not set for frames
-	//	standard_unit	not set for frames
-	//	display_unit	not set for frames
-	//	format	not set for frames
-	//	max_value	not set for frames
-	frames_prop.set_min_value("1");
-	//	max_alarm	not set for frames
-	//	min_alarm	not set for frames
-	//	max_warning	not set for frames
-	//	min_warning	not set for frames
-	//	delta_t	not set for frames
-	//	delta_val	not set for frames
-	frames->set_default_properties(frames_prop);
-	//	Not Polled
-	frames->set_disp_level(Tango::OPERATOR);
-	frames->set_memorized();
-	frames->set_memorized_init(true);
-	att_list.push_back(frames);
+  //	Attribute : frames
+  framesAttrib *frames = new framesAttrib();
+  Tango::UserDefaultAttrProp frames_prop;
+  //	description	not set for frames
+  frames_prop.set_label("frames");
+  //	unit	not set for frames
+  //	standard_unit	not set for frames
+  //	display_unit	not set for frames
+  //	format	not set for frames
+  //	max_value	not set for frames
+  frames_prop.set_min_value("1");
+  //	max_alarm	not set for frames
+  //	min_alarm	not set for frames
+  //	max_warning	not set for frames
+  //	min_warning	not set for frames
+  //	delta_t	not set for frames
+  //	delta_val	not set for frames
+  frames->set_default_properties(frames_prop);
+  //	Not Polled
+  frames->set_disp_level(Tango::OPERATOR);
+  frames->set_memorized();
+  frames->set_memorized_init(true);
+  att_list.push_back(frames);
 
-	//	Attribute : high_voltage
-	high_voltageAttrib	*high_voltage = new high_voltageAttrib();
-	Tango::UserDefaultAttrProp	high_voltage_prop;
-	//	description	not set for high_voltage
-	high_voltage_prop.set_label("high voltage");
-	high_voltage_prop.set_unit("V");
-	//	standard_unit	not set for high_voltage
-	//	display_unit	not set for high_voltage
-	//	format	not set for high_voltage
-	high_voltage_prop.set_max_value("180");
-	high_voltage_prop.set_min_value("60");
-	//	max_alarm	not set for high_voltage
-	//	min_alarm	not set for high_voltage
-	//	max_warning	not set for high_voltage
-	//	min_warning	not set for high_voltage
-	//	delta_t	not set for high_voltage
-	//	delta_val	not set for high_voltage
-	high_voltage->set_default_properties(high_voltage_prop);
-	//	Not Polled
-	high_voltage->set_disp_level(Tango::EXPERT);
-	high_voltage->set_memorized();
-	high_voltage->set_memorized_init(true);
-	att_list.push_back(high_voltage);
+  //	Attribute : high_voltage
+  high_voltageAttrib *high_voltage = new high_voltageAttrib();
+  Tango::UserDefaultAttrProp high_voltage_prop;
+  //	description	not set for high_voltage
+  high_voltage_prop.set_label("high voltage");
+  high_voltage_prop.set_unit("V");
+  //	standard_unit	not set for high_voltage
+  //	display_unit	not set for high_voltage
+  //	format	not set for high_voltage
+  high_voltage_prop.set_max_value("180");
+  high_voltage_prop.set_min_value("60");
+  //	max_alarm	not set for high_voltage
+  //	min_alarm	not set for high_voltage
+  //	max_warning	not set for high_voltage
+  //	min_warning	not set for high_voltage
+  //	delta_t	not set for high_voltage
+  //	delta_val	not set for high_voltage
+  high_voltage->set_default_properties(high_voltage_prop);
+  //	Not Polled
+  high_voltage->set_disp_level(Tango::EXPERT);
+  high_voltage->set_memorized();
+  high_voltage->set_memorized_init(true);
+  att_list.push_back(high_voltage);
 
-	//	Attribute : period
-	periodAttrib	*period = new periodAttrib();
-	Tango::UserDefaultAttrProp	period_prop;
-	//	description	not set for period
-	//	label	not set for period
-	period_prop.set_unit("s");
-	//	standard_unit	not set for period
-	//	display_unit	not set for period
-	period_prop.set_format("%.3e");
-	//	max_value	not set for period
-	//	min_value	not set for period
-	//	max_alarm	not set for period
-	//	min_alarm	not set for period
-	//	max_warning	not set for period
-	//	min_warning	not set for period
-	//	delta_t	not set for period
-	//	delta_val	not set for period
-	period->set_default_properties(period_prop);
-	//	Not Polled
-	period->set_disp_level(Tango::OPERATOR);
-	period->set_memorized();
-	period->set_memorized_init(true);
-	att_list.push_back(period);
+  //	Attribute : period
+  periodAttrib *period = new periodAttrib();
+  Tango::UserDefaultAttrProp period_prop;
+  //	description	not set for period
+  //	label	not set for period
+  period_prop.set_unit("s");
+  //	standard_unit	not set for period
+  //	display_unit	not set for period
+  period_prop.set_format("%.3e");
+  //	max_value	not set for period
+  //	min_value	not set for period
+  //	max_alarm	not set for period
+  //	min_alarm	not set for period
+  //	max_warning	not set for period
+  //	min_warning	not set for period
+  //	delta_t	not set for period
+  //	delta_val	not set for period
+  period->set_default_properties(period_prop);
+  //	Not Polled
+  period->set_disp_level(Tango::OPERATOR);
+  period->set_memorized();
+  period->set_memorized_init(true);
+  att_list.push_back(period);
 
-	//	Attribute : zmq_rx_ip
-	zmq_rx_ipAttrib	*zmq_rx_ip = new zmq_rx_ipAttrib();
-	Tango::UserDefaultAttrProp	zmq_rx_ip_prop;
-	//	description	not set for zmq_rx_ip
-	//	label	not set for zmq_rx_ip
-	//	unit	not set for zmq_rx_ip
-	//	standard_unit	not set for zmq_rx_ip
-	//	display_unit	not set for zmq_rx_ip
-	//	format	not set for zmq_rx_ip
-	//	max_value	not set for zmq_rx_ip
-	//	min_value	not set for zmq_rx_ip
-	//	max_alarm	not set for zmq_rx_ip
-	//	min_alarm	not set for zmq_rx_ip
-	//	max_warning	not set for zmq_rx_ip
-	//	min_warning	not set for zmq_rx_ip
-	//	delta_t	not set for zmq_rx_ip
-	//	delta_val	not set for zmq_rx_ip
-	zmq_rx_ip->set_default_properties(zmq_rx_ip_prop);
-	//	Not Polled
-	zmq_rx_ip->set_disp_level(Tango::EXPERT);
-	zmq_rx_ip->set_memorized();
-	zmq_rx_ip->set_memorized_init(true);
-	att_list.push_back(zmq_rx_ip);
+  //	Attribute : zmq_rx_ip
+  zmq_rx_ipAttrib *zmq_rx_ip = new zmq_rx_ipAttrib();
+  Tango::UserDefaultAttrProp zmq_rx_ip_prop;
+  //	description	not set for zmq_rx_ip
+  //	label	not set for zmq_rx_ip
+  //	unit	not set for zmq_rx_ip
+  //	standard_unit	not set for zmq_rx_ip
+  //	display_unit	not set for zmq_rx_ip
+  //	format	not set for zmq_rx_ip
+  //	max_value	not set for zmq_rx_ip
+  //	min_value	not set for zmq_rx_ip
+  //	max_alarm	not set for zmq_rx_ip
+  //	min_alarm	not set for zmq_rx_ip
+  //	max_warning	not set for zmq_rx_ip
+  //	min_warning	not set for zmq_rx_ip
+  //	delta_t	not set for zmq_rx_ip
+  //	delta_val	not set for zmq_rx_ip
+  zmq_rx_ip->set_default_properties(zmq_rx_ip_prop);
+  //	Not Polled
+  zmq_rx_ip->set_disp_level(Tango::EXPERT);
+  zmq_rx_ip->set_memorized();
+  zmq_rx_ip->set_memorized_init(true);
+  att_list.push_back(zmq_rx_ip);
 
-	//	Attribute : zmq_rx_port
-	zmq_rx_portAttrib	*zmq_rx_port = new zmq_rx_portAttrib();
-	Tango::UserDefaultAttrProp	zmq_rx_port_prop;
-	//	description	not set for zmq_rx_port
-	//	label	not set for zmq_rx_port
-	//	unit	not set for zmq_rx_port
-	//	standard_unit	not set for zmq_rx_port
-	//	display_unit	not set for zmq_rx_port
-	//	format	not set for zmq_rx_port
-	//	max_value	not set for zmq_rx_port
-	//	min_value	not set for zmq_rx_port
-	//	max_alarm	not set for zmq_rx_port
-	//	min_alarm	not set for zmq_rx_port
-	//	max_warning	not set for zmq_rx_port
-	//	min_warning	not set for zmq_rx_port
-	//	delta_t	not set for zmq_rx_port
-	//	delta_val	not set for zmq_rx_port
-	zmq_rx_port->set_default_properties(zmq_rx_port_prop);
-	//	Not Polled
-	zmq_rx_port->set_disp_level(Tango::EXPERT);
-	zmq_rx_port->set_memorized();
-	zmq_rx_port->set_memorized_init(true);
-	att_list.push_back(zmq_rx_port);
+  //	Attribute : zmq_rx_port
+  zmq_rx_portAttrib *zmq_rx_port = new zmq_rx_portAttrib();
+  Tango::UserDefaultAttrProp zmq_rx_port_prop;
+  //	description	not set for zmq_rx_port
+  //	label	not set for zmq_rx_port
+  //	unit	not set for zmq_rx_port
+  //	standard_unit	not set for zmq_rx_port
+  //	display_unit	not set for zmq_rx_port
+  //	format	not set for zmq_rx_port
+  //	max_value	not set for zmq_rx_port
+  //	min_value	not set for zmq_rx_port
+  //	max_alarm	not set for zmq_rx_port
+  //	min_alarm	not set for zmq_rx_port
+  //	max_warning	not set for zmq_rx_port
+  //	min_warning	not set for zmq_rx_port
+  //	delta_t	not set for zmq_rx_port
+  //	delta_val	not set for zmq_rx_port
+  zmq_rx_port->set_default_properties(zmq_rx_port_prop);
+  //	Not Polled
+  zmq_rx_port->set_disp_level(Tango::EXPERT);
+  zmq_rx_port->set_memorized();
+  zmq_rx_port->set_memorized_init(true);
+  att_list.push_back(zmq_rx_port);
 
-	//	Attribute : rx_discard_policy
-	rx_discard_policyAttrib	*rx_discard_policy = new rx_discard_policyAttrib();
-	Tango::UserDefaultAttrProp	rx_discard_policy_prop;
-	//	description	not set for rx_discard_policy
-	//	label	not set for rx_discard_policy
-	//	unit	not set for rx_discard_policy
-	//	standard_unit	not set for rx_discard_policy
-	//	display_unit	not set for rx_discard_policy
-	//	format	not set for rx_discard_policy
-	//	max_value	not set for rx_discard_policy
-	//	min_value	not set for rx_discard_policy
-	//	max_alarm	not set for rx_discard_policy
-	//	min_alarm	not set for rx_discard_policy
-	//	max_warning	not set for rx_discard_policy
-	//	min_warning	not set for rx_discard_policy
-	//	delta_t	not set for rx_discard_policy
-	//	delta_val	not set for rx_discard_policy
-	{
-		std::vector<std::string> labels;
-		labels.push_back("NO_DISCARD");
-		labels.push_back("DISCARD_EMPTY_FRAMES");
-		labels.push_back("DISCARD_PARTIAL_FRAMES");
-		rx_discard_policy_prop.set_enum_labels(labels);
-	}
-	rx_discard_policy->set_default_properties(rx_discard_policy_prop);
-	//	Not Polled
-	rx_discard_policy->set_disp_level(Tango::EXPERT);
-	rx_discard_policy->set_memorized();
-	rx_discard_policy->set_memorized_init(true);
-	att_list.push_back(rx_discard_policy);
+  //	Attribute : rx_discard_policy
+  rx_discard_policyAttrib *rx_discard_policy = new rx_discard_policyAttrib();
+  Tango::UserDefaultAttrProp rx_discard_policy_prop;
+  //	description	not set for rx_discard_policy
+  //	label	not set for rx_discard_policy
+  //	unit	not set for rx_discard_policy
+  //	standard_unit	not set for rx_discard_policy
+  //	display_unit	not set for rx_discard_policy
+  //	format	not set for rx_discard_policy
+  //	max_value	not set for rx_discard_policy
+  //	min_value	not set for rx_discard_policy
+  //	max_alarm	not set for rx_discard_policy
+  //	min_alarm	not set for rx_discard_policy
+  //	max_warning	not set for rx_discard_policy
+  //	min_warning	not set for rx_discard_policy
+  //	delta_t	not set for rx_discard_policy
+  //	delta_val	not set for rx_discard_policy
+  {
+    std::vector<std::string> labels;
+    labels.push_back("NO_DISCARD");
+    labels.push_back("DISCARD_EMPTY_FRAMES");
+    labels.push_back("DISCARD_PARTIAL_FRAMES");
+    rx_discard_policy_prop.set_enum_labels(labels);
+  }
+  rx_discard_policy->set_default_properties(rx_discard_policy_prop);
+  //	Not Polled
+  rx_discard_policy->set_disp_level(Tango::EXPERT);
+  rx_discard_policy->set_memorized();
+  rx_discard_policy->set_memorized_init(true);
+  att_list.push_back(rx_discard_policy);
 
-	//	Attribute : rx_hostname
-	rx_hostnameAttrib	*rx_hostname = new rx_hostnameAttrib();
-	Tango::UserDefaultAttrProp	rx_hostname_prop;
-	//	description	not set for rx_hostname
-	//	label	not set for rx_hostname
-	//	unit	not set for rx_hostname
-	//	standard_unit	not set for rx_hostname
-	//	display_unit	not set for rx_hostname
-	//	format	not set for rx_hostname
-	//	max_value	not set for rx_hostname
-	//	min_value	not set for rx_hostname
-	//	max_alarm	not set for rx_hostname
-	//	min_alarm	not set for rx_hostname
-	//	max_warning	not set for rx_hostname
-	//	min_warning	not set for rx_hostname
-	//	delta_t	not set for rx_hostname
-	//	delta_val	not set for rx_hostname
-	rx_hostname->set_default_properties(rx_hostname_prop);
-	//	Not Polled
-	rx_hostname->set_disp_level(Tango::EXPERT);
-	rx_hostname->set_memorized();
-	rx_hostname->set_memorized_init(true);
-	att_list.push_back(rx_hostname);
+  //	Attribute : rx_hostname
+  rx_hostnameAttrib *rx_hostname = new rx_hostnameAttrib();
+  Tango::UserDefaultAttrProp rx_hostname_prop;
+  //	description	not set for rx_hostname
+  //	label	not set for rx_hostname
+  //	unit	not set for rx_hostname
+  //	standard_unit	not set for rx_hostname
+  //	display_unit	not set for rx_hostname
+  //	format	not set for rx_hostname
+  //	max_value	not set for rx_hostname
+  //	min_value	not set for rx_hostname
+  //	max_alarm	not set for rx_hostname
+  //	min_alarm	not set for rx_hostname
+  //	max_warning	not set for rx_hostname
+  //	min_warning	not set for rx_hostname
+  //	delta_t	not set for rx_hostname
+  //	delta_val	not set for rx_hostname
+  rx_hostname->set_default_properties(rx_hostname_prop);
+  //	Not Polled
+  rx_hostname->set_disp_level(Tango::EXPERT);
+  rx_hostname->set_memorized();
+  rx_hostname->set_memorized_init(true);
+  att_list.push_back(rx_hostname);
 
-	//	Attribute : rx_tcp_port
-	rx_tcp_portAttrib	*rx_tcp_port = new rx_tcp_portAttrib();
-	Tango::UserDefaultAttrProp	rx_tcp_port_prop;
-	//	description	not set for rx_tcp_port
-	//	label	not set for rx_tcp_port
-	//	unit	not set for rx_tcp_port
-	//	standard_unit	not set for rx_tcp_port
-	//	display_unit	not set for rx_tcp_port
-	//	format	not set for rx_tcp_port
-	//	max_value	not set for rx_tcp_port
-	//	min_value	not set for rx_tcp_port
-	//	max_alarm	not set for rx_tcp_port
-	//	min_alarm	not set for rx_tcp_port
-	//	max_warning	not set for rx_tcp_port
-	//	min_warning	not set for rx_tcp_port
-	//	delta_t	not set for rx_tcp_port
-	//	delta_val	not set for rx_tcp_port
-	rx_tcp_port->set_default_properties(rx_tcp_port_prop);
-	//	Not Polled
-	rx_tcp_port->set_disp_level(Tango::EXPERT);
-	rx_tcp_port->set_memorized();
-	rx_tcp_port->set_memorized_init(true);
-	att_list.push_back(rx_tcp_port);
+  //	Attribute : rx_tcp_port
+  rx_tcp_portAttrib *rx_tcp_port = new rx_tcp_portAttrib();
+  Tango::UserDefaultAttrProp rx_tcp_port_prop;
+  //	description	not set for rx_tcp_port
+  //	label	not set for rx_tcp_port
+  //	unit	not set for rx_tcp_port
+  //	standard_unit	not set for rx_tcp_port
+  //	display_unit	not set for rx_tcp_port
+  //	format	not set for rx_tcp_port
+  //	max_value	not set for rx_tcp_port
+  //	min_value	not set for rx_tcp_port
+  //	max_alarm	not set for rx_tcp_port
+  //	min_alarm	not set for rx_tcp_port
+  //	max_warning	not set for rx_tcp_port
+  //	min_warning	not set for rx_tcp_port
+  //	delta_t	not set for rx_tcp_port
+  //	delta_val	not set for rx_tcp_port
+  rx_tcp_port->set_default_properties(rx_tcp_port_prop);
+  //	Not Polled
+  rx_tcp_port->set_disp_level(Tango::EXPERT);
+  rx_tcp_port->set_memorized();
+  rx_tcp_port->set_memorized_init(true);
+  att_list.push_back(rx_tcp_port);
 
-	//	Attribute : detector_status
-	detector_statusAttrib	*detector_status = new detector_statusAttrib();
-	Tango::UserDefaultAttrProp	detector_status_prop;
-	//	description	not set for detector_status
-	//	label	not set for detector_status
-	//	unit	not set for detector_status
-	//	standard_unit	not set for detector_status
-	//	display_unit	not set for detector_status
-	//	format	not set for detector_status
-	//	max_value	not set for detector_status
-	//	min_value	not set for detector_status
-	//	max_alarm	not set for detector_status
-	//	min_alarm	not set for detector_status
-	//	max_warning	not set for detector_status
-	//	min_warning	not set for detector_status
-	//	delta_t	not set for detector_status
-	//	delta_val	not set for detector_status
-	{
-		std::vector<std::string> labels;
-		labels.push_back("IDLE");
-		labels.push_back("ERROR");
-		labels.push_back("WAITING");
-		labels.push_back("RUN_FINISHED");
-		labels.push_back("TRANSMITTING");
-		labels.push_back("RUNNING");
-		labels.push_back("STOPPED");
-		detector_status_prop.set_enum_labels(labels);
-	}
-	detector_status->set_default_properties(detector_status_prop);
-	//	Not Polled
-	detector_status->set_disp_level(Tango::EXPERT);
-	//	Not Memorized
-	att_list.push_back(detector_status);
+  //	Attribute : detector_status
+  detector_statusAttrib *detector_status = new detector_statusAttrib();
+  Tango::UserDefaultAttrProp detector_status_prop;
+  //	description	not set for detector_status
+  //	label	not set for detector_status
+  //	unit	not set for detector_status
+  //	standard_unit	not set for detector_status
+  //	display_unit	not set for detector_status
+  //	format	not set for detector_status
+  //	max_value	not set for detector_status
+  //	min_value	not set for detector_status
+  //	max_alarm	not set for detector_status
+  //	min_alarm	not set for detector_status
+  //	max_warning	not set for detector_status
+  //	min_warning	not set for detector_status
+  //	delta_t	not set for detector_status
+  //	delta_val	not set for detector_status
+  {
+    std::vector<std::string> labels;
+    labels.push_back("IDLE");
+    labels.push_back("ERROR");
+    labels.push_back("WAITING");
+    labels.push_back("RUN_FINISHED");
+    labels.push_back("TRANSMITTING");
+    labels.push_back("RUNNING");
+    labels.push_back("STOPPED");
+    detector_status_prop.set_enum_labels(labels);
+  }
+  detector_status->set_default_properties(detector_status_prop);
+  //	Not Polled
+  detector_status->set_disp_level(Tango::EXPERT);
+  //	Not Memorized
+  att_list.push_back(detector_status);
 
-	//	Attribute : rx_zmq_data_stream
-	rx_zmq_data_streamAttrib	*rx_zmq_data_stream = new rx_zmq_data_streamAttrib();
-	Tango::UserDefaultAttrProp	rx_zmq_data_stream_prop;
-	//	description	not set for rx_zmq_data_stream
-	//	label	not set for rx_zmq_data_stream
-	//	unit	not set for rx_zmq_data_stream
-	//	standard_unit	not set for rx_zmq_data_stream
-	//	display_unit	not set for rx_zmq_data_stream
-	//	format	not set for rx_zmq_data_stream
-	//	max_value	not set for rx_zmq_data_stream
-	//	min_value	not set for rx_zmq_data_stream
-	//	max_alarm	not set for rx_zmq_data_stream
-	//	min_alarm	not set for rx_zmq_data_stream
-	//	max_warning	not set for rx_zmq_data_stream
-	//	min_warning	not set for rx_zmq_data_stream
-	//	delta_t	not set for rx_zmq_data_stream
-	//	delta_val	not set for rx_zmq_data_stream
-	rx_zmq_data_stream->set_default_properties(rx_zmq_data_stream_prop);
-	//	Not Polled
-	rx_zmq_data_stream->set_disp_level(Tango::OPERATOR);
-	rx_zmq_data_stream->set_memorized();
-	rx_zmq_data_stream->set_memorized_init(true);
-	att_list.push_back(rx_zmq_data_stream);
+  //	Attribute : rx_zmq_data_stream
+  rx_zmq_data_streamAttrib *rx_zmq_data_stream
+      = new rx_zmq_data_streamAttrib();
+  Tango::UserDefaultAttrProp rx_zmq_data_stream_prop;
+  //	description	not set for rx_zmq_data_stream
+  //	label	not set for rx_zmq_data_stream
+  //	unit	not set for rx_zmq_data_stream
+  //	standard_unit	not set for rx_zmq_data_stream
+  //	display_unit	not set for rx_zmq_data_stream
+  //	format	not set for rx_zmq_data_stream
+  //	max_value	not set for rx_zmq_data_stream
+  //	min_value	not set for rx_zmq_data_stream
+  //	max_alarm	not set for rx_zmq_data_stream
+  //	min_alarm	not set for rx_zmq_data_stream
+  //	max_warning	not set for rx_zmq_data_stream
+  //	min_warning	not set for rx_zmq_data_stream
+  //	delta_t	not set for rx_zmq_data_stream
+  //	delta_val	not set for rx_zmq_data_stream
+  rx_zmq_data_stream->set_default_properties(rx_zmq_data_stream_prop);
+  //	Not Polled
+  rx_zmq_data_stream->set_disp_level(Tango::OPERATOR);
+  rx_zmq_data_stream->set_memorized();
+  rx_zmq_data_stream->set_memorized_init(true);
+  att_list.push_back(rx_zmq_data_stream);
 
-	//	Attribute : triggers_left
-	triggers_leftAttrib	*triggers_left = new triggers_leftAttrib();
-	Tango::UserDefaultAttrProp	triggers_left_prop;
-	//	description	not set for triggers_left
-	triggers_left_prop.set_label("triggers left");
-	//	unit	not set for triggers_left
-	//	standard_unit	not set for triggers_left
-	//	display_unit	not set for triggers_left
-	//	format	not set for triggers_left
-	//	max_value	not set for triggers_left
-	//	min_value	not set for triggers_left
-	//	max_alarm	not set for triggers_left
-	//	min_alarm	not set for triggers_left
-	//	max_warning	not set for triggers_left
-	//	min_warning	not set for triggers_left
-	//	delta_t	not set for triggers_left
-	//	delta_val	not set for triggers_left
-	triggers_left->set_default_properties(triggers_left_prop);
-	//	Not Polled
-	triggers_left->set_disp_level(Tango::EXPERT);
-	//	Not Memorized
-	att_list.push_back(triggers_left);
+  //	Attribute : triggers_left
+  triggers_leftAttrib *triggers_left = new triggers_leftAttrib();
+  Tango::UserDefaultAttrProp triggers_left_prop;
+  //	description	not set for triggers_left
+  triggers_left_prop.set_label("triggers left");
+  //	unit	not set for triggers_left
+  //	standard_unit	not set for triggers_left
+  //	display_unit	not set for triggers_left
+  //	format	not set for triggers_left
+  //	max_value	not set for triggers_left
+  //	min_value	not set for triggers_left
+  //	max_alarm	not set for triggers_left
+  //	min_alarm	not set for triggers_left
+  //	max_warning	not set for triggers_left
+  //	min_warning	not set for triggers_left
+  //	delta_t	not set for triggers_left
+  //	delta_val	not set for triggers_left
+  triggers_left->set_default_properties(triggers_left_prop);
+  //	Not Polled
+  triggers_left->set_disp_level(Tango::EXPERT);
+  //	Not Memorized
+  att_list.push_back(triggers_left);
 
-
-	//	Create a list of static attributes
-	create_static_attribute_list(get_class_attr()->get_attr_list());
-	/*----- PROTECTED REGION ID(MoenchControlClass::attribute_factory_after) ENABLED START -----*/
-  /* clang-format on */
+  //	Create a list of static attributes
+  create_static_attribute_list(get_class_attr()->get_attr_list());
   //	Add your own code
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::attribute_factory_after
 }
+
 //--------------------------------------------------------
 /**
  *	Method      : MoenchControlClass::pipe_factory()
@@ -852,19 +798,11 @@ void MoenchControlClass::attribute_factory(std::vector<Tango::Attr *> &att_list)
  *                and store them in the pipe list
  */
 //--------------------------------------------------------
-void MoenchControlClass::pipe_factory()
-{
-	/*----- PROTECTED REGION ID(MoenchControlClass::pipe_factory_before) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControlClass::pipe_factory() {
   //	Add your own code
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::pipe_factory_before
-	/*----- PROTECTED REGION ID(MoenchControlClass::pipe_factory_after) ENABLED START -----*/
-  /* clang-format on */
   //	Add your own code
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::pipe_factory_after
 }
+
 //--------------------------------------------------------
 /**
  *	Method      : MoenchControlClass::command_factory()
@@ -872,38 +810,22 @@ void MoenchControlClass::pipe_factory()
  *                and store them in the command list
  */
 //--------------------------------------------------------
-void MoenchControlClass::command_factory()
-{
-	/*----- PROTECTED REGION ID(MoenchControlClass::command_factory_before) ENABLED START -----*/
-  /* clang-format on */
+void MoenchControlClass::command_factory() {
   //	Add your own code
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::command_factory_before
 
+  //	Command start_acquire
+  start_acquireClass *pstart_acquireCmd
+      = new start_acquireClass("start_acquire", Tango::DEV_VOID,
+                               Tango::DEV_VOID, "", "", Tango::OPERATOR);
+  command_list.push_back(pstart_acquireCmd);
 
-	//	Command start_acquire
-	start_acquireClass	*pstart_acquireCmd =
-		new start_acquireClass("start_acquire",
-			Tango::DEV_VOID, Tango::DEV_VOID,
-			"",
-			"",
-			Tango::OPERATOR);
-	command_list.push_back(pstart_acquireCmd);
+  //	Command stop_acquire
+  stop_acquireClass *pstop_acquireCmd
+      = new stop_acquireClass("stop_acquire", Tango::DEV_VOID, Tango::DEV_VOID,
+                              "", "", Tango::OPERATOR);
+  command_list.push_back(pstop_acquireCmd);
 
-	//	Command stop_acquire
-	stop_acquireClass	*pstop_acquireCmd =
-		new stop_acquireClass("stop_acquire",
-			Tango::DEV_VOID, Tango::DEV_VOID,
-			"",
-			"",
-			Tango::OPERATOR);
-	command_list.push_back(pstop_acquireCmd);
-
-	/*----- PROTECTED REGION ID(MoenchControlClass::command_factory_after) ENABLED START -----*/
-  /* clang-format on */
   //	Add your own code
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::command_factory_after
 }
 
 //===================================================================
@@ -918,23 +840,17 @@ void MoenchControlClass::command_factory()
  * @param	att_list	the created attribute list
  */
 //--------------------------------------------------------
-void MoenchControlClass::create_static_attribute_list(std::vector<Tango::Attr *> &att_list)
-{
-	for (unsigned long i=0 ; i<att_list.size() ; i++)
-	{
-		std::string att_name(att_list[i]->get_name());
-		transform(att_name.begin(), att_name.end(), att_name.begin(), ::tolower);
-		defaultAttList.push_back(att_name);
-	}
+void MoenchControlClass::create_static_attribute_list(
+    std::vector<Tango::Attr *> &att_list) {
+  for (unsigned long i = 0; i < att_list.size(); i++) {
+    std::string att_name(att_list[i]->get_name());
+    transform(att_name.begin(), att_name.end(), att_name.begin(), ::tolower);
+    defaultAttList.push_back(att_name);
+  }
 
-	TANGO_LOG_INFO << defaultAttList.size() << " attributes in default list" << std::endl;
-
-	/*----- PROTECTED REGION ID(MoenchControlClass::create_static_att_list) ENABLED START -----*/
-  /* clang-format on */
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::create_static_att_list
+  TANGO_LOG_INFO << defaultAttList.size() << " attributes in default list"
+                 << std::endl;
 }
-
 
 //--------------------------------------------------------
 /**
@@ -945,36 +861,37 @@ void MoenchControlClass::create_static_attribute_list(std::vector<Tango::Attr *>
  * @param	list of all attributes
  */
 //--------------------------------------------------------
-void MoenchControlClass::erase_dynamic_attributes(const Tango::DevVarStringArray *devlist_ptr, std::vector<Tango::Attr *> &att_list)
-{
-	Tango::Util *tg = Tango::Util::instance();
+void MoenchControlClass::erase_dynamic_attributes(
+    const Tango::DevVarStringArray *devlist_ptr,
+    std::vector<Tango::Attr *> &att_list) {
+  Tango::Util *tg = Tango::Util::instance();
 
-	for (unsigned long i=0 ; i<devlist_ptr->length() ; i++)
-	{
-		Tango::DeviceImpl *dev_impl = tg->get_device_by_name(((std::string)(*devlist_ptr)[i]).c_str());
-		MoenchControl *dev = static_cast<MoenchControl *> (dev_impl);
+  for (unsigned long i = 0; i < devlist_ptr->length(); i++) {
+    Tango::DeviceImpl *dev_impl
+        = tg->get_device_by_name(((std::string)(*devlist_ptr)[i]).c_str());
+    MoenchControl *dev = static_cast<MoenchControl *>(dev_impl);
 
-		std::vector<Tango::Attribute *> &dev_att_list = dev->get_device_attr()->get_attribute_list();
-		std::vector<Tango::Attribute *>::iterator ite_att;
-		for (ite_att=dev_att_list.begin() ; ite_att != dev_att_list.end() ; ++ite_att)
-		{
-			std::string att_name((*ite_att)->get_name_lower());
-			if ((att_name == "state") || (att_name == "status"))
-				continue;
-			std::vector<std::string>::iterator ite_str = find(defaultAttList.begin(), defaultAttList.end(), att_name);
-			if (ite_str == defaultAttList.end())
-			{
-				TANGO_LOG_INFO << att_name << " is a UNWANTED dynamic attribute for device " << (*devlist_ptr)[i] << std::endl;
-				Tango::Attribute &att = dev->get_device_attr()->get_attr_by_name(att_name.c_str());
-				dev->remove_attribute(att_list[att.get_attr_idx()], true, false);
-				--ite_att;
-			}
-		}
-	}
-	/*----- PROTECTED REGION ID(MoenchControlClass::erase_dynamic_attributes) ENABLED START -----*/
-  /* clang-format on */
-  /* clang-format off */
-	/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::erase_dynamic_attributes
+    std::vector<Tango::Attribute *> &dev_att_list
+        = dev->get_device_attr()->get_attribute_list();
+    std::vector<Tango::Attribute *>::iterator ite_att;
+    for (ite_att = dev_att_list.begin(); ite_att != dev_att_list.end();
+         ++ite_att) {
+      std::string att_name((*ite_att)->get_name_lower());
+      if ((att_name == "state") || (att_name == "status"))
+        continue;
+      std::vector<std::string>::iterator ite_str
+          = find(defaultAttList.begin(), defaultAttList.end(), att_name);
+      if (ite_str == defaultAttList.end()) {
+        TANGO_LOG_INFO << att_name
+                       << " is a UNWANTED dynamic attribute for device "
+                       << (*devlist_ptr)[i] << std::endl;
+        Tango::Attribute &att
+            = dev->get_device_attr()->get_attr_by_name(att_name.c_str());
+        dev->remove_attribute(att_list[att.get_attr_idx()], true, false);
+        --ite_att;
+      }
+    }
+  }
 }
 
 //--------------------------------------------------------
@@ -983,19 +900,14 @@ void MoenchControlClass::erase_dynamic_attributes(const Tango::DevVarStringArray
  * Description:  returns Tango::Attr * object found by name
  */
 //--------------------------------------------------------
-Tango::Attr *MoenchControlClass::get_attr_object_by_name(std::vector<Tango::Attr *> &att_list, std::string attname)
-{
-	std::vector<Tango::Attr *>::iterator it;
-	for (it=att_list.begin() ; it<att_list.end() ; ++it)
-		if ((*it)->get_name()==attname)
-			return (*it);
-	//	Attr does not exist
-	return NULL;
+Tango::Attr *MoenchControlClass::get_attr_object_by_name(
+    std::vector<Tango::Attr *> &att_list, std::string attname) {
+  std::vector<Tango::Attr *>::iterator it;
+  for (it = att_list.begin(); it < att_list.end(); ++it)
+    if ((*it)->get_name() == attname)
+      return (*it);
+  //	Attr does not exist
+  return NULL;
 }
 
-
-/*----- PROTECTED REGION ID(MoenchControlClass::Additional Methods) ENABLED START -----*/
-/* clang-format on */
-/* clang-format off */
-/*----- PROTECTED REGION END -----*/	//	MoenchControlClass::Additional Methods
 } //	namespace

@@ -28,7 +28,7 @@ CPUComputationBackend::CPUComputationBackend(FileWriter *fileWriter,
 };
 
 CPUComputationBackend::CPUComputationBackend(FileWriter *fileWriter)
-    : CPUComputationBackend(fileWriter, 5000, 1) {};
+    : CPUComputationBackend(fileWriter, 5000, 10) {};
 
 CPUComputationBackend::~CPUComputationBackend() {
   destoy_dispatcher = true;
@@ -217,6 +217,7 @@ void CPUComputationBackend::processFrame(FullFrame *ff_ptr) {
   }
   processed_frames_amount++;
   memory_pool::free(ff_ptr);
+  std::cout << processed_frames_amount << std::endl;
 }
 
 OrderedFrame<char, consts::LENGTH> CPUComputationBackend::classifyFrame(

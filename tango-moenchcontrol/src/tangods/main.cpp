@@ -1,5 +1,3 @@
-/*----- PROTECTED REGION ID(MoenchControl::main.cpp) ENABLED START -----*/
-/* clang-format on */
 //=============================================================================
 //
 // file :        main.cpp
@@ -77,6 +75,3 @@ int main(int argc, char *argv[]) {
   }
   return (0);
 }
-
-/* clang-format off */
-/*----- PROTECTED REGION END -----*/	//	MoenchControl::main.cpp
