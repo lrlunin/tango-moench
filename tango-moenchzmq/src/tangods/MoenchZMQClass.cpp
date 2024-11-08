@@ -285,8 +285,8 @@ void MoenchZMQClass::set_default_property() {
 
   //	Set Default device Properties
   prop_name = "ZMQ_RX_IP";
-  prop_desc = "";
-  prop_def = "";
+  prop_desc = "IP address of the ZMQ upstream\nNeed to match with the config";
+  prop_def = "Default: IP of 10Gbs NIC";
   vect_data.clear();
   if (prop_def.length() > 0) {
     Tango::DbDatum data(prop_name);
@@ -296,8 +296,20 @@ void MoenchZMQClass::set_default_property() {
   } else
     add_wiz_dev_prop(prop_name, prop_desc);
   prop_name = "ZMQ_RX_PORT";
-  prop_desc = "";
-  prop_def = "";
+  prop_desc = "Port of the ZMQ upstream\nNeed to match with the config";
+  prop_def = "Default: 5XXXX";
+  vect_data.clear();
+  if (prop_def.length() > 0) {
+    Tango::DbDatum data(prop_name);
+    data << vect_data;
+    dev_def_prop.push_back(data);
+    add_wiz_dev_prop(prop_name, prop_desc, prop_def);
+  } else
+    add_wiz_dev_prop(prop_name, prop_desc);
+  prop_name = "SAVE_ROOT_PATH";
+  prop_desc = "Root path for saving the images\nA folder with the date will "
+              "be created";
+  prop_def = "Default: /home/data";
   vect_data.clear();
   if (prop_def.length() > 0) {
     Tango::DbDatum data(prop_name);

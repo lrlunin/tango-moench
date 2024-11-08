@@ -29,6 +29,7 @@ public:
   std::string ZMQ_RX_IP;
   //	ZMQ_PORT:
   std::string ZMQ_RX_PORT;
+  // SAVE_ROOT_PATH
   std::string SAVE_ROOT_PATH;
   bool mandatoryNotDefined;
 
