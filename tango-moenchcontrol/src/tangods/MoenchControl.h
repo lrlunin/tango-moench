@@ -90,27 +90,7 @@ private:
 public:
   //	SLS_RECEIVER_PORT:	port for slsReceiver, default: 1954
   Tango::DevLong64 sLS_RECEIVER_PORT;
-  //	PROCESSING_RX_IP:	ip of 10gbe ``PC <-> detector`` lane of PC,
-  //  must match the config,
-  //  default: 192.168.2.200
-  std::string pROCESSING_RX_IP;
-  //	PROCESSING_RX_PORT:	port for 10gbe ``PC <-> detector`` lane of PC,
-  //  must match the config,
-  //  default: 50003
-  std::string pROCESSING_RX_PORT;
-  //	CONTROL_TX_IP:	ip for 1gbe lane (lab local network) of PC,
-  //  must match the config,
-  //  default: 192.168.1.118
-  std::string cONTROL_TX_IP;
-  //	CONTROL_TX_PORT:	port for 1gbe (lab local network) lane of PC,
-  //  must match the config,
-  //  default: 50001
-  Tango::DevLong64 cONTROL_TX_PORT;
-  //	MOENCHZMQ_DEVICE:	FQDN of Moenchzmq TangoDS,
-  //  default: rsxs/moenchZmq/bchip286
-  std::string mOENCHZMQ_DEVICE;
-  //	DETECTOR_CONFIG_PATH:	Path to the config file for the detector,
-  //  default: /home/moench/.../moench03.config
+  //	DETECTOR_CONFIG_PATH:	absolute path to detector configuration file
   std::string dETECTOR_CONFIG_PATH;
 
   bool mandatoryNotDefined;

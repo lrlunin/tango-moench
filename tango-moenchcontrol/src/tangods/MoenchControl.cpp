@@ -190,11 +190,6 @@ void MoenchControl::get_device_property() {
   //	Read device properties from database.
   Tango::DbData dev_prop;
   dev_prop.push_back(Tango::DbDatum("SLS_RECEIVER_PORT"));
-  dev_prop.push_back(Tango::DbDatum("PROCESSING_RX_IP"));
-  dev_prop.push_back(Tango::DbDatum("PROCESSING_RX_PORT"));
-  dev_prop.push_back(Tango::DbDatum("CONTROL_TX_IP"));
-  dev_prop.push_back(Tango::DbDatum("CONTROL_TX_PORT"));
-  dev_prop.push_back(Tango::DbDatum("MOENCHZMQ_DEVICE"));
   dev_prop.push_back(Tango::DbDatum("DETECTOR_CONFIG_PATH"));
 
   //	is there at least one property to be read ?
@@ -222,91 +217,6 @@ void MoenchControl::get_device_property() {
     //	And try to extract SLS_RECEIVER_PORT value from database
     if (dev_prop[i].is_empty() == false)
       dev_prop[i] >> sLS_RECEIVER_PORT;
-    //	Property StartDsPath is mandatory, check if has been defined in
-    // database.
-    check_mandatory_property(cl_prop, dev_prop[i]);
-
-    //	Try to initialize PROCESSING_RX_IP from class property
-    cl_prop = ds_class->get_class_property(dev_prop[++i].name);
-    if (cl_prop.is_empty() == false)
-      cl_prop >> pROCESSING_RX_IP;
-    else {
-      //	Try to initialize PROCESSING_RX_IP from default device value
-      def_prop = ds_class->get_default_device_property(dev_prop[i].name);
-      if (def_prop.is_empty() == false)
-        def_prop >> pROCESSING_RX_IP;
-    }
-    //	And try to extract PROCESSING_RX_IP value from database
-    if (dev_prop[i].is_empty() == false)
-      dev_prop[i] >> pROCESSING_RX_IP;
-    //	Property StartDsPath is mandatory, check if has been defined in
-    // database.
-    check_mandatory_property(cl_prop, dev_prop[i]);
-
-    //	Try to initialize PROCESSING_RX_PORT from class property
-    cl_prop = ds_class->get_class_property(dev_prop[++i].name);
-    if (cl_prop.is_empty() == false)
-      cl_prop >> pROCESSING_RX_PORT;
-    else {
-      //	Try to initialize PROCESSING_RX_PORT from default device value
-      def_prop = ds_class->get_default_device_property(dev_prop[i].name);
-      if (def_prop.is_empty() == false)
-        def_prop >> pROCESSING_RX_PORT;
-    }
-    //	And try to extract PROCESSING_RX_PORT value from database
-    if (dev_prop[i].is_empty() == false)
-      dev_prop[i] >> pROCESSING_RX_PORT;
-    //	Property StartDsPath is mandatory, check if has been defined in
-    // database.
-    check_mandatory_property(cl_prop, dev_prop[i]);
-
-    //	Try to initialize CONTROL_TX_IP from class property
-    cl_prop = ds_class->get_class_property(dev_prop[++i].name);
-    if (cl_prop.is_empty() == false)
-      cl_prop >> cONTROL_TX_IP;
-    else {
-      //	Try to initialize CONTROL_TX_IP from default device value
-      def_prop = ds_class->get_default_device_property(dev_prop[i].name);
-      if (def_prop.is_empty() == false)
-        def_prop >> cONTROL_TX_IP;
-    }
-    //	And try to extract CONTROL_TX_IP value from database
-    if (dev_prop[i].is_empty() == false)
-      dev_prop[i] >> cONTROL_TX_IP;
-    //	Property StartDsPath is mandatory, check if has been defined in
-    // database.
-    check_mandatory_property(cl_prop, dev_prop[i]);
-
-    //	Try to initialize CONTROL_TX_PORT from class property
-    cl_prop = ds_class->get_class_property(dev_prop[++i].name);
-    if (cl_prop.is_empty() == false)
-      cl_prop >> cONTROL_TX_PORT;
-    else {
-      //	Try to initialize CONTROL_TX_PORT from default device value
-      def_prop = ds_class->get_default_device_property(dev_prop[i].name);
-      if (def_prop.is_empty() == false)
-        def_prop >> cONTROL_TX_PORT;
-    }
-    //	And try to extract CONTROL_TX_PORT value from database
-    if (dev_prop[i].is_empty() == false)
-      dev_prop[i] >> cONTROL_TX_PORT;
-    //	Property StartDsPath is mandatory, check if has been defined in
-    // database.
-    check_mandatory_property(cl_prop, dev_prop[i]);
-
-    //	Try to initialize MOENCHZMQ_DEVICE from class property
-    cl_prop = ds_class->get_class_property(dev_prop[++i].name);
-    if (cl_prop.is_empty() == false)
-      cl_prop >> mOENCHZMQ_DEVICE;
-    else {
-      //	Try to initialize MOENCHZMQ_DEVICE from default device value
-      def_prop = ds_class->get_default_device_property(dev_prop[i].name);
-      if (def_prop.is_empty() == false)
-        def_prop >> mOENCHZMQ_DEVICE;
-    }
-    //	And try to extract MOENCHZMQ_DEVICE value from database
-    if (dev_prop[i].is_empty() == false)
-      dev_prop[i] >> mOENCHZMQ_DEVICE;
     //	Property StartDsPath is mandatory, check if has been defined in
     // database.
     check_mandatory_property(cl_prop, dev_prop[i]);

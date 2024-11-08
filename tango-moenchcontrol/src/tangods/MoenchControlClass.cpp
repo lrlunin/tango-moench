@@ -231,7 +231,7 @@ void MoenchControlClass::set_default_property() {
   //	Set Default device Properties
   prop_name = "SLS_RECEIVER_PORT";
   prop_desc = "port for slsReceiver, default: 1954";
-  prop_def = "";
+  prop_def = "1954";
   vect_data.clear();
   if (prop_def.length() > 0) {
     Tango::DbDatum data(prop_name);
@@ -240,65 +240,7 @@ void MoenchControlClass::set_default_property() {
     add_wiz_dev_prop(prop_name, prop_desc, prop_def);
   } else
     add_wiz_dev_prop(prop_name, prop_desc);
-  prop_name = "PROCESSING_RX_IP";
-  prop_desc = "ip of 10gbe ``PC <-> detector`` lane of PC,\nmust match the "
-              "config,\ndefault: 192.168.2.200";
-  prop_def = "";
-  vect_data.clear();
-  if (prop_def.length() > 0) {
-    Tango::DbDatum data(prop_name);
-    data << vect_data;
-    dev_def_prop.push_back(data);
-    add_wiz_dev_prop(prop_name, prop_desc, prop_def);
-  } else
-    add_wiz_dev_prop(prop_name, prop_desc);
-  prop_name = "PROCESSING_RX_PORT";
-  prop_desc = "port for 10gbe ``PC <-> detector`` lane of PC,\nmust match the "
-              "config,\ndefault: 50003";
-  prop_def = "";
-  vect_data.clear();
-  if (prop_def.length() > 0) {
-    Tango::DbDatum data(prop_name);
-    data << vect_data;
-    dev_def_prop.push_back(data);
-    add_wiz_dev_prop(prop_name, prop_desc, prop_def);
-  } else
-    add_wiz_dev_prop(prop_name, prop_desc);
-  prop_name = "CONTROL_TX_IP";
-  prop_desc = "ip for 1gbe lane (lab local network) of PC,\nmust match the "
-              "config,\ndefault: 192.168.1.118";
-  prop_def = "";
-  vect_data.clear();
-  if (prop_def.length() > 0) {
-    Tango::DbDatum data(prop_name);
-    data << vect_data;
-    dev_def_prop.push_back(data);
-    add_wiz_dev_prop(prop_name, prop_desc, prop_def);
-  } else
-    add_wiz_dev_prop(prop_name, prop_desc);
-  prop_name = "CONTROL_TX_PORT";
-  prop_desc = "port for 1gbe (lab local network) lane of PC,\nmust match the "
-              "config,\ndefault: 50001";
-  prop_def = "";
-  vect_data.clear();
-  if (prop_def.length() > 0) {
-    Tango::DbDatum data(prop_name);
-    data << vect_data;
-    dev_def_prop.push_back(data);
-    add_wiz_dev_prop(prop_name, prop_desc, prop_def);
-  } else
-    add_wiz_dev_prop(prop_name, prop_desc);
-  prop_name = "MOENCHZMQ_DEVICE";
-  prop_desc = "FQDN of Moenchzmq TangoDS,\ndefault: rsxs/moenchZmq/bchip286";
-  prop_def = "";
-  vect_data.clear();
-  if (prop_def.length() > 0) {
-    Tango::DbDatum data(prop_name);
-    data << vect_data;
-    dev_def_prop.push_back(data);
-    add_wiz_dev_prop(prop_name, prop_desc, prop_def);
-  } else
-    add_wiz_dev_prop(prop_name, prop_desc);
+
   prop_name = "DETECTOR_CONFIG_PATH";
   prop_desc = "Path to the config file for the detector,\ndefault: "
               "/home/moench/.../moench03.config";
@@ -413,7 +355,9 @@ void MoenchControlClass::attribute_factory(
   //	display_unit	not set for exposure
   exposure_prop.set_format("%.3e");
   //	max_value	not set for exposure
-  exposure_prop.set_min_value("100E-9");
+  // since tango has issues with rounding,
+  // we set the min_value to 99E-9 instead of 100E-9
+  exposure_prop.set_min_value("99E-9");
   //	max_alarm	not set for exposure
   //	min_alarm	not set for exposure
   //	max_warning	not set for exposure
@@ -469,6 +413,7 @@ void MoenchControlClass::attribute_factory(
   //	delta_t	not set for timing_mode
   //	delta_val	not set for timing_mode
   {
+    // see MoenchControl.h for the enum values
     std::vector<std::string> labels;
     labels.push_back("AUTO_TIMING");
     labels.push_back("TRIGGER_EXPOSURE");
@@ -548,7 +493,7 @@ void MoenchControlClass::attribute_factory(
   //	delta_val	not set for high_voltage
   high_voltage->set_default_properties(high_voltage_prop);
   //	Not Polled
-  high_voltage->set_disp_level(Tango::EXPERT);
+  high_voltage->set_disp_level(Tango::OPERATOR);
   high_voltage->set_memorized();
   high_voltage->set_memorized_init(true);
   att_list.push_back(high_voltage);
@@ -564,6 +509,9 @@ void MoenchControlClass::attribute_factory(
   period_prop.set_format("%.3e");
   //	max_value	not set for period
   //	min_value	not set for period
+  // set to at least 300us to prevent the
+  // detector from crashing ;)
+  period_prop.set_min_value("300E-6");
   //	max_alarm	not set for period
   //	min_alarm	not set for period
   //	max_warning	not set for period
@@ -643,6 +591,7 @@ void MoenchControlClass::attribute_factory(
   //	delta_t	not set for rx_discard_policy
   //	delta_val	not set for rx_discard_policy
   {
+    // see MoenchControl.h for the enum values
     std::vector<std::string> labels;
     labels.push_back("NO_DISCARD");
     labels.push_back("DISCARD_EMPTY_FRAMES");
@@ -722,6 +671,7 @@ void MoenchControlClass::attribute_factory(
   //	delta_t	not set for detector_status
   //	delta_val	not set for detector_status
   {
+    // see MoenchControl.h for the enum values
     std::vector<std::string> labels;
     labels.push_back("IDLE");
     labels.push_back("ERROR");
