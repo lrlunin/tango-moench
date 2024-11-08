@@ -37,11 +37,10 @@ public:
                         unsigned long long THREAD_AMOUNT);
   CPUComputationBackend(FileWriter *fileWriter);
   ~CPUComputationBackend();
-  void initThreads();
-  void destroyThreads();
   void pause();
   void resume();
   void allocateIndividualStorage();
+  void deleteIndividualStorage();
   void resetAccumulators();
   void resetPedestalAndRMS();
   void dumpAccumulators();
@@ -54,7 +53,6 @@ public:
       OrderedFrame<unsigned short, consts::LENGTH> &raw_frame,
       OrderedFrame<char, consts::LENGTH> &frame_classes, bool isPedestal);
   void dispatchTasks();
-  void threadTask();
   void processFrame(FullFrame *ptr);
 
   OrderedFrame<float, consts::LENGTH> pedestal_counter_counting;
@@ -75,8 +73,10 @@ public:
   std::atomic_bool isPedestal = true;
   long updatePedestalPeriod = 1;
   std::atomic_bool saveIndividualFrames = true;
+  std::atomic_bool saveRawFrames = true;
   int *frameindex_storage_ptr = nullptr;
   float *individual_analog_storage_ptr = nullptr;
+  unsigned short *individual_raw_storage_ptr = nullptr;
 #ifdef SINGLE_FRAMES_DEBUG
   float *pedestal_storage_ptr = nullptr;
   float *pedestal_rms_storage_ptr = nullptr;

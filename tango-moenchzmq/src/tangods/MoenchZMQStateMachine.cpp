@@ -139,6 +139,19 @@ bool MoenchZMQ::is_process_pedestal_allowed(
 
 //--------------------------------------------------------
 /**
+ *	Method      : MoenchZMQ::is_save_raw_frames_allowed()
+ * Description:  Execution allowed for save_raw_frames attribute
+ */
+//--------------------------------------------------------
+bool MoenchZMQ::is_save_raw_frames_allowed(
+    TANGO_UNUSED(Tango::AttReqType type)) {
+
+  //	Not any excluded states for save_raw_frames attribute in read access.
+  return true;
+}
+
+//--------------------------------------------------------
+/**
  *	Method      : MoenchZMQ::is_split_pumped_allowed()
  * Description:  Execution allowed for split_pumped attribute
  */

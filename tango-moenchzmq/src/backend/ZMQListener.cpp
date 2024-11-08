@@ -37,13 +37,15 @@ void ZMQListener::listen_socket() {
     if (d["data"].GetUint() == 1) {
       std::cout << "Received data" << std::endl;
       if (socket.recv(data_zmq_msg) && receive_data) {
+        // if data is not a full frame, skip it
+        if (data_zmq_msg.size() < FRAME_SIZE) {
+          continue;
+        }
         FullFrame *ff_ptr = static_cast<FullFrame *>(
             CPUComputationBackend::memory_pool::malloc());
         ff_ptr->m.frameIndex = d["frameIndex"].GetUint64();
         ff_ptr->m.bitmode = d["bitmode"].GetUint();
-        std::memcpy(ff_ptr->f.arr, data_zmq_msg.data(),
-                    std::min(data_zmq_msg.size(),
-                             static_cast<size_t>(sizeof(FullFrame::f.arr))));
+        std::memcpy(ff_ptr->f.arr, data_zmq_msg.data(), FRAME_SIZE);
         comp_backend_ptr->frame_ptr_queue.push(ff_ptr);
         received_frames_amount++;
       }

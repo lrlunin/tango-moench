@@ -23,7 +23,6 @@ CPUComputationBackend::CPUComputationBackend(FileWriter *fileWriter,
       THREAD_AMOUNT(THREAD_AMOUNT) {
   thread_pool = new boost::asio::thread_pool(THREAD_AMOUNT);
   dispatcher_thread = std::thread(&CPUComputationBackend::dispatchTasks, this);
-  // initThreads();
   resetAccumulators();
 };
 
@@ -34,37 +33,9 @@ CPUComputationBackend::~CPUComputationBackend() {
   destoy_dispatcher = true;
   dispatcher_thread.join();
   thread_pool->join();
-  // delete dispatcher_thread;
   delete thread_pool;
-  // destroyThreads();
-#ifdef SINGLE_FRAMES_DEBUG
-  delete[] pedestal_storage_ptr;
-  delete[] pedestal_rms_storage_ptr;
-  delete[] frame_classes_storage_ptr;
-#endif
-  delete[] individual_analog_storage_ptr;
-  delete frameindex_storage_ptr;
+  deleteIndividualStorage();
 };
-
-void CPUComputationBackend::initThreads() {
-  /*
-   * Creation of kind of thread pool instead of spawning threads.
-   * Maybe can be done better with async and futures.
-   */
-  for (unsigned int x = 0; x < THREAD_AMOUNT; x++) {
-    auto t = thread(&CPUComputationBackend::threadTask, this);
-    threads.push_back(move(t));
-  }
-}
-
-void CPUComputationBackend::destroyThreads() {
-  // send signal to threads to stop in threadTask loop
-  destroy_threads = true;
-  // before this object is destroyed, we need to join all threads
-  for (auto &thread : threads) {
-    thread.join();
-  }
-}
 
 void CPUComputationBackend::pause() { threads_sleep = true; }
 
@@ -74,24 +45,52 @@ void CPUComputationBackend::resume() {
 }
 
 void CPUComputationBackend::allocateIndividualStorage() {
-  delete[] frameindex_storage_ptr;
+  /*** To be sure that we don't delete the same storage pointer
+   *   twice we delete the storage only here and allocate it
+   *   only here too.
+   *
+   *   So the individual storage pointers are garanteed to be
+   *   either nullptr or valid allocation address.
+   */
+  deleteIndividualStorage();
   frameindex_storage_ptr = new int[individual_frame_buffer_capacity];
   // fill with zeros, because we will take the max value later
   std::fill(frameindex_storage_ptr,
             frameindex_storage_ptr + individual_frame_buffer_capacity, 0);
-  delete[] individual_analog_storage_ptr;
   individual_analog_storage_ptr
       = new float[individual_frame_buffer_capacity * consts::LENGTH];
+  // need to consider the case if after the acquistion the
+  // save raw frames will be disabled -> the allocated memory will be wasted
+  if (saveRawFrames) {
+    individual_raw_storage_ptr
+        = new unsigned short[individual_frame_buffer_capacity
+                             * consts::LENGTH];
+  }
 #ifdef SINGLE_FRAMES_DEBUG
-  delete[] pedestal_storage_ptr;
   pedestal_storage_ptr
       = new float[individual_frame_buffer_capacity * consts::LENGTH];
-  delete[] pedestal_rms_storage_ptr;
   pedestal_rms_storage_ptr
       = new float[individual_frame_buffer_capacity * consts::LENGTH];
-  delete[] frame_classes_storage_ptr;
   frame_classes_storage_ptr
       = new char[individual_frame_buffer_capacity * consts::LENGTH];
+#endif
+}
+
+void CPUComputationBackend::deleteIndividualStorage() {
+  delete[] frameindex_storage_ptr;
+  frameindex_storage_ptr = nullptr;
+  delete[] individual_analog_storage_ptr;
+  individual_analog_storage_ptr = nullptr;
+  // I believe this would be safe now and we would not waste any memory
+  delete[] individual_raw_storage_ptr;
+  individual_raw_storage_ptr = nullptr;
+#ifdef SINGLE_FRAMES_DEBUG
+  delete[] pedestal_storage_ptr;
+  pedestal_storage_ptr = nullptr;
+  delete[] pedestal_rms_storage_ptr;
+  pedestal_rms_storage_ptr = nullptr;
+  delete[] frame_classes_storage_ptr;
+  frame_classes_storage_ptr = nullptr;
 #endif
 }
 
@@ -119,12 +118,17 @@ void CPUComputationBackend::dumpAccumulators() {
     int max_frame_index = *std::max_element(
         frameindex_storage_ptr,
         frameindex_storage_ptr + individual_frame_buffer_capacity);
-    // for the frameindex of 0...max_frame_index there are max_frame_index+1
-    // frames
+    // for the frameindex of (0, ..., max_frame_index) there are
+    // max_frame_index+1 frames
     int max_stack_length = max_frame_index + 1;
     fileWriter->writeFrameStack("individual_frames", "analog",
                                 individual_analog_storage_ptr,
                                 max_stack_length);
+    if (saveRawFrames) {
+      fileWriter->writeFrameStack("individual_frames", "raw",
+                                  individual_raw_storage_ptr,
+                                  max_stack_length);
+    }
 #ifdef SINGLE_FRAMES_DEBUG
     fileWriter->writeFrameStack("individual_frames", "pedestal",
                                 pedestal_storage_ptr, max_stack_length);
@@ -178,6 +182,11 @@ void CPUComputationBackend::processFrame(FullFrame *ff_ptr) {
       float *frame_ptr
           = individual_analog_storage_ptr + frameindex * consts::LENGTH;
       frame_subtracted_pedestal.copy_to_buffer<float *>(frame_ptr, true);
+      if (saveRawFrames) {
+        unsigned short *raw_frame_ptr
+            = individual_raw_storage_ptr + frameindex * consts::LENGTH;
+        ff_ptr->f.copy_to_buffer<unsigned short *>(raw_frame_ptr, true);
+      }
 #ifdef SINGLE_FRAMES_DEBUG
       std::memcpy(pedestal_storage_ptr + frameindex * consts::LENGTH,
                   pedestal_current.arr,
@@ -320,19 +329,6 @@ void CPUComputationBackend::dispatchTasks() {
     }
     this_thread::sleep_for(0.01s);
     if (destoy_dispatcher)
-      break;
-  }
-}
-
-void CPUComputationBackend::threadTask() {
-  FullFrame *ff_ptr;
-  while (true) {
-    while (!threads_sleep && frame_ptr_queue.pop(ff_ptr)) {
-      CPUComputationBackend::processFrame(ff_ptr);
-    }
-    this_thread::sleep_for(0.03s);
-    // if the threads should be destroyed, we should break the loop
-    if (destroy_threads)
       break;
   }
 }

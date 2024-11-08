@@ -28,6 +28,7 @@
 //  threshold         |  Tango::DevDouble	Scalar
 //  counting_sigma    |  Tango::DevFloat	Scalar
 //  process_pedestal  |  Tango::DevBoolean	Scalar
+//  save raw frames   | Tango::DevBoolean	Scalar
 //  analog_img        |  Tango::DevFloat	Image  ( max = 400 x 400)
 //  counting_img      |  Tango::DevFloat	Image  ( max = 400 x 400)
 //================================================================
@@ -79,6 +80,7 @@ void MoenchZMQ::delete_device() {
   delete[] attr_threshold_read;
   delete[] attr_counting_sigma_read;
   delete[] attr_process_pedestal_read;
+  delete[] attr_save_raw_frames_read;
   delete[] attr_analog_img_read;
   delete[] attr_counting_img_read;
   delete[] attr_analog_img_pumped_read;
@@ -114,6 +116,7 @@ void MoenchZMQ::init_device() {
   attr_threshold_read = new Tango::DevDouble[1];
   attr_counting_sigma_read = new Tango::DevFloat[1];
   attr_process_pedestal_read = new Tango::DevBoolean[1];
+  attr_save_raw_frames_read = new Tango::DevBoolean[1];
   attr_split_pumped_read = new Tango::DevBoolean[1];
   attr_analog_img_read = new Tango::DevFloat[400 * 400];
   attr_analog_img_pumped_read = new Tango::DevFloat[400 * 400];
@@ -138,7 +141,7 @@ void MoenchZMQ::get_device_property() {
   //	Initialize property data members
   ZMQ_RX_IP = "127.0.0.1";
   ZMQ_RX_PORT = 50003;
-  SAVE_ROOT_PATH = "/home/data";
+  SAVE_ROOT_PATH = "/tmp";
   THREAD_AMOUNT = 2;
   PEDESTAL_BUFFER_LENGTH = 5000;
   mandatoryNotDefined = false;
@@ -558,6 +561,25 @@ void MoenchZMQ::read_process_pedestal(Tango::Attribute &attr) {
 
 //--------------------------------------------------------
 /**
+ *	Read attribute save_raw_frames related method
+ *
+ *
+ *	Data type:	Tango::DevBoolean
+ *	Attr type:	Scalar
+ */
+//--------------------------------------------------------
+void MoenchZMQ::read_save_raw_frames(Tango::Attribute &attr) {
+  DEBUG_STREAM << "MoenchZMQ::read_save_raw_frames(Tango::Attribute &attr) "
+                  "entering... "
+               << std::endl;
+  //	Set the attribute value
+  *attr_save_raw_frames_read
+      = zmq_listener_ptr->comp_backend_ptr->saveRawFrames;
+  attr.set_value(attr_save_raw_frames_read);
+}
+
+//--------------------------------------------------------
+/**
  *	Read attribute split_pumped related method
  *
  *
@@ -619,6 +641,14 @@ void MoenchZMQ::write_process_pedestal(Tango::WAttribute &attr) {
 
   *attr_process_pedestal_read = w_val;
   zmq_listener_ptr->comp_backend_ptr->isPedestal = w_val;
+}
+
+void MoenchZMQ::write_save_raw_frames(Tango::WAttribute &attr) {
+  Tango::DevBoolean w_val;
+  attr.get_write_value(w_val);
+
+  *attr_save_raw_frames_read = w_val;
+  zmq_listener_ptr->comp_backend_ptr->saveRawFrames = w_val;
 }
 
 //--------------------------------------------------------
@@ -737,7 +767,7 @@ void MoenchZMQ::stop_receiver() {
 void MoenchZMQ::abort_receiver() {
   DEBUG_STREAM << "MoenchZMQ::abort_receiver()  - " << device_name
                << std::endl;
-
+  zmq_listener_ptr->abort_receive();
   //	Add your own code
 }
 

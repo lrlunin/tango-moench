@@ -25,6 +25,7 @@ private:
   std::thread zmq_listener_thread;
   std::atomic_bool receive_data;
   std::atomic_bool abort_wait;
+  constexpr static size_t FRAME_SIZE = sizeof(FullFrame::f.arr);
 
 public:
   CPUComputationBackend *comp_backend_ptr;

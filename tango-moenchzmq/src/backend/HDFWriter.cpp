@@ -120,3 +120,25 @@ void HDFWriter::writeFrameStack(const std::string group_name,
                                               image_stack_dataspace);
   dataset.write(frame_stack_ptr, image_datatype, image_stack_dataspace);
 };
+
+void HDFWriter::writeFrameStack(const std::string group_name,
+                                const std::string frame_stack_name,
+                                unsigned short *frame_stack_ptr,
+                                size_t frame_stack_length) {
+  const H5::DataType image_datatype(H5::PredType::NATIVE_UINT16);
+  const hsize_t image_stack_dimension[3]
+      = { static_cast<hsize_t>(frame_stack_length), consts::FRAME_HEIGHT,
+          consts::FRAME_WIDTH };
+  const H5::DataSpace image_stack_dataspace(3, image_stack_dimension);
+
+  const hsize_t image_single_dimension[3]
+      = { 1, consts::FRAME_HEIGHT, consts::FRAME_WIDTH };
+  const H5::DataSpace image_single_dataspace(3, image_single_dimension, NULL);
+  H5::H5File h5_file(buildFullFilePath(), H5F_ACC_RDWR);
+  if (!h5_file.exists(group_name))
+    h5_file.createGroup(group_name);
+  std::string image_path = fmt::format("{}/{}", group_name, frame_stack_name);
+  H5::DataSet dataset = h5_file.createDataSet(image_path, image_datatype,
+                                              image_stack_dataspace);
+  dataset.write(frame_stack_ptr, image_datatype, image_stack_dataspace);
+};

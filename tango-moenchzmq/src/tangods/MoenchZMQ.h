@@ -54,6 +54,7 @@ public:
   Tango::DevDouble *attr_threshold_read;
   Tango::DevFloat *attr_counting_sigma_read;
   Tango::DevBoolean *attr_process_pedestal_read;
+  Tango::DevBoolean *attr_save_raw_frames_read;
   Tango::DevBoolean *attr_split_pumped_read;
   Tango::DevLong *attr_acquired_frames_read;
   Tango::DevFloat *attr_analog_img_read;
@@ -213,6 +214,16 @@ public:
   virtual void read_process_pedestal(Tango::Attribute &attr);
   virtual void write_process_pedestal(Tango::WAttribute &attr);
   virtual bool is_process_pedestal_allowed(Tango::AttReqType type);
+  /**
+   *	Attribute save_raw_frames related methods
+   *
+   *
+   *	Data type:  Tango::DevBoolean
+   *	Attr type:	Scalar
+   */
+  virtual void read_save_raw_frames(Tango::Attribute &attr);
+  virtual void write_save_raw_frames(Tango::WAttribute &attr);
+  virtual bool is_save_raw_frames_allowed(Tango::AttReqType type);
   /**
    *	Attribute split_pumped related methods
    *

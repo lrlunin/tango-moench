@@ -601,6 +601,7 @@ void MoenchZMQClass::attribute_factory(std::vector<Tango::Attr *> &att_list) {
   Tango::UserDefaultAttrProp process_pedestal_prop;
   //	description	not set for process_pedestal
   //	label	not set for process_pedestal
+  process_pedestal_prop.set_label("process as pedestal");
   //	unit	not set for process_pedestal
   //	standard_unit	not set for process_pedestal
   //	display_unit	not set for process_pedestal
@@ -642,6 +643,30 @@ void MoenchZMQClass::attribute_factory(std::vector<Tango::Attr *> &att_list) {
   split_pumped->set_memorized();
   split_pumped->set_memorized_init(true);
   att_list.push_back(split_pumped);
+
+  //	Attribute : save_raw_frames
+  save_raw_framesAttrib *save_raw_frames = new save_raw_framesAttrib();
+  Tango::UserDefaultAttrProp save_raw_frames_prop;
+  //	description	not set for process_pedestal
+  //	label	not set for process_pedestal
+  save_raw_frames_prop.set_label("save raw frames");
+  //	unit	not set for process_pedestal
+  //	standard_unit	not set for process_pedestal
+  //	display_unit	not set for process_pedestal
+  //	format	not set for process_pedestal
+  //	max_value	not set for process_pedestal
+  //	min_value	not set for process_pedestal
+  //	max_alarm	not set for process_pedestal
+  //	min_alarm	not set for process_pedestal
+  //	max_warning	not set for process_pedestal
+  //	min_warning	not set for process_pedestal
+  //	delta_t	not set for process_pedestal
+  //	delta_val	not set for process_pedestal
+  save_raw_frames->set_default_properties(save_raw_frames_prop);
+  //	Not Polled
+  save_raw_frames->set_disp_level(Tango::OPERATOR);
+  //	Not Memorized
+  att_list.push_back(save_raw_frames);
 
   //	Attribute : individual_frame_buffer_capacity
   individual_frame_buffer_capacityAttrib *individual_frame_buffer_capacity

@@ -85,4 +85,9 @@ public:
                                char *frame_stack_ptr,
                                size_t frame_stack_length)
       = 0;
+  virtual void writeFrameStack(const std::string group_name,
+                               const std::string frame_stack_name,
+                               unsigned short *frame_stack_ptr,
+                               size_t frame_stack_length)
+      = 0;
 };

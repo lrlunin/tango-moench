@@ -192,6 +192,26 @@ public:
   }
 };
 
+//	Attribute save_raw_frames class definition
+class save_raw_framesAttrib : public Tango::Attr {
+public:
+  save_raw_framesAttrib()
+      : Attr("save_raw_frames", Tango::DEV_BOOLEAN, Tango::READ_WRITE) {};
+  ~save_raw_framesAttrib() {};
+
+  virtual void read(Tango::DeviceImpl *dev, Tango::Attribute &att) {
+    (static_cast<MoenchZMQ *>(dev))->read_save_raw_frames(att);
+  }
+
+  virtual void write(Tango::DeviceImpl *dev, Tango::WAttribute &att) {
+    (static_cast<MoenchZMQ *>(dev))->write_save_raw_frames(att);
+  }
+
+  virtual bool is_allowed(Tango::DeviceImpl *dev, Tango::AttReqType ty) {
+    return (static_cast<MoenchZMQ *>(dev))->is_save_raw_frames_allowed(ty);
+  }
+};
+
 //	Attribute split_pumped class definition
 class split_pumpedAttrib : public Tango::Attr {
 public:

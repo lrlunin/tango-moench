@@ -103,7 +103,7 @@ TEST_F(HDFWriterTest, FileWriteFloatFrameStack) {
 
   // write frame to file
   file_writer_ptr->openFile();
-  file_writer_ptr->writeFrameStack("group", "frame_stack", frame_stack,
+  file_writer_ptr->writeFrameStack("group", "float_frame_stack", frame_stack,
                                    frame_stack_length);
   file_writer_ptr->closeFile();
 
@@ -112,7 +112,7 @@ TEST_F(HDFWriterTest, FileWriteFloatFrameStack) {
                       + fmt::format("{:%Y%m%d}_run_{:06d}.h5", now,
                                     file_writer_ptr->file_index),
                   H5F_ACC_RDONLY);
-  H5::DataSet dataset = file.openDataSet("group/frame_stack");
+  H5::DataSet dataset = file.openDataSet("group/float_frame_stack");
   H5::DataSpace dataspace = dataset.getSpace();
   hsize_t dims_out[3];
   dataspace.getSimpleExtentDims(dims_out, NULL);
@@ -132,12 +132,13 @@ TEST_F(HDFWriterTest, FileWriteCharFrameStack) {
   const size_t frame_stack_length = 10;
   char *frame_stack = new char[frame_stack_length * consts::LENGTH];
   for (size_t x = 0; x < frame_stack_length * consts::LENGTH; x++) {
-    frame_stack[x] = static_cast<char>(std::rand() / 256);
+    frame_stack[x]
+        = static_cast<char>(std::rand() / std::numeric_limits<char>::max());
   }
 
   // write frame to file
   file_writer_ptr->openFile();
-  file_writer_ptr->writeFrameStack("group", "frame_stack", frame_stack,
+  file_writer_ptr->writeFrameStack("group", "char_frame_stack", frame_stack,
                                    frame_stack_length);
   file_writer_ptr->closeFile();
 
@@ -146,7 +147,7 @@ TEST_F(HDFWriterTest, FileWriteCharFrameStack) {
                       + fmt::format("{:%Y%m%d}_run_{:06d}.h5", now,
                                     file_writer_ptr->file_index),
                   H5F_ACC_RDONLY);
-  H5::DataSet dataset = file.openDataSet("group/frame_stack");
+  H5::DataSet dataset = file.openDataSet("group/char_frame_stack");
   H5::DataSpace dataspace = dataset.getSpace();
   hsize_t dims_out[3];
   dataspace.getSimpleExtentDims(dims_out, NULL);
@@ -155,6 +156,43 @@ TEST_F(HDFWriterTest, FileWriteCharFrameStack) {
   EXPECT_EQ(dims_out[2], consts::FRAME_WIDTH);
   char *data = new char[frame_stack_length * consts::LENGTH];
   dataset.read(data, H5::PredType::NATIVE_CHAR);
+  for (size_t x = 0; x < frame_stack_length * consts::LENGTH; x++) {
+    EXPECT_EQ(data[x], frame_stack[x]);
+  }
+  delete[] data;
+}
+
+TEST_F(HDFWriterTest, FileWriteUnsignedShortFrameStack) {
+  // allocate memory for frame stack
+  const size_t frame_stack_length = 10;
+  unsigned short *frame_stack
+      = new unsigned short[frame_stack_length * consts::LENGTH];
+  for (size_t x = 0; x < frame_stack_length * consts::LENGTH; x++) {
+    frame_stack[x] = static_cast<unsigned short>(
+        std::rand() / std::numeric_limits<unsigned short>::max());
+  }
+
+  // write frame to file
+  file_writer_ptr->openFile();
+  file_writer_ptr->writeFrameStack("group", "unsigned_short_frame_stack",
+                                   frame_stack, frame_stack_length);
+  file_writer_ptr->closeFile();
+
+  // read frame from file and compare values
+  H5::H5File file("/tmp/" + folder_name + "/"
+                      + fmt::format("{:%Y%m%d}_run_{:06d}.h5", now,
+                                    file_writer_ptr->file_index),
+                  H5F_ACC_RDONLY);
+  H5::DataSet dataset = file.openDataSet("group/unsigned_short_frame_stack");
+  H5::DataSpace dataspace = dataset.getSpace();
+  hsize_t dims_out[3];
+  dataspace.getSimpleExtentDims(dims_out, NULL);
+  EXPECT_EQ(dims_out[0], frame_stack_length);
+  EXPECT_EQ(dims_out[1], consts::FRAME_HEIGHT);
+  EXPECT_EQ(dims_out[2], consts::FRAME_WIDTH);
+  unsigned short *data
+      = new unsigned short[frame_stack_length * consts::LENGTH];
+  dataset.read(data, H5::PredType::NATIVE_UINT16);
   for (size_t x = 0; x < frame_stack_length * consts::LENGTH; x++) {
     EXPECT_EQ(data[x], frame_stack[x]);
   }
