@@ -76,20 +76,20 @@ jobs:
     - name: Configure CMake our repository
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DTango_USE_PKG_CONFIG=OFF
       
     - name: Build our repository
       # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build -j$CPU_CORES --config ${{env.BUILD_TYPE}}
 
-    # - name: Run tests and generate coverage report
-    #   working-directory: build
-    #   run: make coverage -j$CPU_CORES
+    - name: Run tests and generate coverage report
+      working-directory: build
+      run: make coverage -j$CPU_CORES
     
-    # - name: Upload coverage report
-    #   uses: codecov/codecov-action@v4
-    #   with:
-    #     files: ./build/coverage.info
-    #     fail_ci_if_error: false
-    #     codecov_yml_path: 'codecov.yml'
-    #     token: ${{ secrets.CODECOV_TOKEN }}
+    - name: Upload coverage report
+      uses: codecov/codecov-action@v4
+      with:
+        files: ./build/coverage.info
+        fail_ci_if_error: false
+        codecov_yml_path: 'codecov.yml'
+        token: ${{ secrets.CODECOV_TOKEN }}
