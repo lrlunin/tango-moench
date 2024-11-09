@@ -46,6 +46,7 @@ public:
   */
   FileWriter *file_writer_ptr;
   ZMQListener *zmq_listener_ptr;
+  std::atomic<bool> receiver_is_stopping;
   Tango::DevULong *attr_file_index_read;
   Tango::DevString *attr_file_name_read;
   Tango::DevString *attr_session_directory_read;

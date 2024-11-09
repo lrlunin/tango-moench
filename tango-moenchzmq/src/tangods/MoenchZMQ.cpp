@@ -106,6 +106,7 @@ void MoenchZMQ::init_device() {
   zmq_listener_ptr = new ZMQListener(ZMQ_RX_IP, ZMQ_RX_PORT);
   zmq_listener_ptr->comp_backend_ptr = new CPUComputationBackend(
       file_writer_ptr, PEDESTAL_BUFFER_LENGTH, THREAD_AMOUNT);
+  receiver_is_stopping = false;
 
   attr_file_index_read = new Tango::DevULong[1];
   attr_file_name_read = new Tango::DevString[1];
@@ -754,12 +755,18 @@ void MoenchZMQ::stop_receiver() {
   DEBUG_STREAM << "MoenchZMQ::stop_receiver()  - " << device_name << std::endl;
 
   // wrap blocking function into lambda and then run a separate thread for it
-  std::thread([&] {
-    zmq_listener_ptr->stop_receive();
-    copy_image_buffers();
-    push_images_change();
-    set_state(Tango::ON);
-  }).detach();
+  if (!receiver_is_stopping) {
+    receiver_is_stopping = true;
+    std::thread([&] {
+      zmq_listener_ptr->stop_receive();
+      copy_image_buffers();
+      push_images_change();
+      std::cout << "In lambda before set_state()" << std::endl;
+      set_state(Tango::ON);
+      receiver_is_stopping = false;
+      std::cout << "In lambda after set_state()" << std::endl;
+    }).detach();
+  }
 }
 
 //--------------------------------------------------------
