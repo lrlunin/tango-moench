@@ -761,10 +761,8 @@ void MoenchZMQ::stop_receiver() {
       zmq_listener_ptr->stop_receive();
       copy_image_buffers();
       push_images_change();
-      std::cout << "In lambda before set_state()" << std::endl;
       set_state(Tango::ON);
       receiver_is_stopping = false;
-      std::cout << "In lambda after set_state()" << std::endl;
     }).detach();
   }
 }
