@@ -13,6 +13,6 @@ target_link_libraries(moenchZmqStatic zmq fmt ${HDF5_LIBRARIES} Boost::boost)
 
 add_executable(MoenchZMQ tangods/main.cpp ${MOENCHZMQ_TANGODS_SRC_FILES})
 
-target_link_libraries(MoenchZMQ moenchZmqStatic Tango::Tango zmq fmt ${HDF5_LIBRARIES} Boost::boost)
+target_link_libraries(MoenchZMQ moenchZmqStatic Tango::Tango)
 
 install(TARGETS MoenchZMQ DESTINATION bin)

@@ -145,6 +145,11 @@ void MoenchZMQ::get_device_property() {
   THREAD_AMOUNT = 2;
   PEDESTAL_BUFFER_LENGTH = 5000;
   mandatoryNotDefined = false;
+
+  // if not using database, skip all the property initialization
+  if (!Tango::Util::instance()->_UseDb)
+    return;
+
   Tango::DbData dev_prop{ Tango::DbDatum("ZMQ_RX_IP"),
                           Tango::DbDatum("ZMQ_RX_PORT"),
                           Tango::DbDatum("SAVE_ROOT_PATH"),

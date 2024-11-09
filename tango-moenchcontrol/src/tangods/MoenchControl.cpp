@@ -184,60 +184,31 @@ void MoenchControl::init_device() {
 //--------------------------------------------------------
 void MoenchControl::get_device_property() {
   //	Initialize property data members
-
+  sLS_RECEIVER_PORT = 1954;
+  dETECTOR_CONFIG_PATH = "resources/moench03_virtual.config";
   mandatoryNotDefined = false;
+  // if not using database, skip all the property initialization
+  if (!Tango::Util::instance()->_UseDb)
+    return;
 
-  //	Read device properties from database.
-  Tango::DbData dev_prop;
-  dev_prop.push_back(Tango::DbDatum("SLS_RECEIVER_PORT"));
-  dev_prop.push_back(Tango::DbDatum("DETECTOR_CONFIG_PATH"));
-
-  //	is there at least one property to be read ?
-  if (dev_prop.size() > 0) {
-    //	Call database and extract values
-    if (Tango::Util::instance()->_UseDb == true)
-      get_db_device()->get_property(dev_prop);
-
-    //	get instance on MoenchControlClass to get class property
-    Tango::DbDatum def_prop, cl_prop;
-    MoenchControlClass *ds_class
-        = (static_cast<MoenchControlClass *>(get_device_class()));
-    int i = -1;
-
-    //	Try to initialize SLS_RECEIVER_PORT from class property
-    cl_prop = ds_class->get_class_property(dev_prop[++i].name);
-    if (cl_prop.is_empty() == false)
-      cl_prop >> sLS_RECEIVER_PORT;
-    else {
-      //	Try to initialize SLS_RECEIVER_PORT from default device value
-      def_prop = ds_class->get_default_device_property(dev_prop[i].name);
-      if (def_prop.is_empty() == false)
-        def_prop >> sLS_RECEIVER_PORT;
+  Tango::DbData dev_prop{ Tango::DbDatum("SLS_RECEIVER_PORT"),
+                          Tango::DbDatum("DETECTOR_CONFIG_PATH") };
+  get_db_device()->get_property(dev_prop);
+  for (auto &prop : dev_prop) {
+    if (!prop.is_empty()) {
+      if (prop.name == "SLS_RECEIVER_PORT") {
+        prop >> sLS_RECEIVER_PORT;
+      } else if (prop.name == "DETECTOR_CONFIG_PATH") {
+        prop >> dETECTOR_CONFIG_PATH;
+      } else
+        DEBUG_STREAM << "Not defined, use default value for " << prop.name
+                     << std::endl;
     }
-    //	And try to extract SLS_RECEIVER_PORT value from database
-    if (dev_prop[i].is_empty() == false)
-      dev_prop[i] >> sLS_RECEIVER_PORT;
-    //	Property StartDsPath is mandatory, check if has been defined in
-    // database.
-    check_mandatory_property(cl_prop, dev_prop[i]);
-
-    //	Try to initialize DETECTOR_CONFIG_PATH from class property
-    cl_prop = ds_class->get_class_property(dev_prop[++i].name);
-    if (cl_prop.is_empty() == false)
-      cl_prop >> dETECTOR_CONFIG_PATH;
-    else {
-      //	Try to initialize DETECTOR_CONFIG_PATH from default device
-      // value
-      def_prop = ds_class->get_default_device_property(dev_prop[i].name);
-      if (def_prop.is_empty() == false)
-        def_prop >> dETECTOR_CONFIG_PATH;
-    }
-    //	And try to extract DETECTOR_CONFIG_PATH value from database
-    if (dev_prop[i].is_empty() == false)
-      dev_prop[i] >> dETECTOR_CONFIG_PATH;
   }
 
-  //	Check device property data members init
+  DEBUG_STREAM << "SLS_RECEIVER_PORT: " << sLS_RECEIVER_PORT << std::endl;
+  DEBUG_STREAM << "DETECTOR_CONFIG_PATH: " << dETECTOR_CONFIG_PATH
+               << std::endl;
 }
 
 //--------------------------------------------------------

@@ -11,6 +11,10 @@ find_package(Boost REQUIRED)
 find_package(HDF5 REQUIRED COMPONENTS CXX)
 include_directories(${HDF5_INCLUDE_DIRS})
 
+option(CUDA_ENABLED "Enable CUDA" OFF)
+option(SINGLE_FRAMES_DEBUG "Enable Single Frames Debug" OFF)
+option(OPENMP_ENABLED "Enable OpenMP" OFF)
+
 if (CUDA_ENABLED)
     enable_language(CUDA)
     find_package(CUDAToolkit)
