@@ -142,3 +142,18 @@ void HDFWriter::writeFrameStack(const std::string group_name,
                                               image_stack_dataspace);
   dataset.write(frame_stack_ptr, image_datatype, image_stack_dataspace);
 };
+
+void HDFWriter::write1DArray(const std::string group_name,
+                             const std::string array_name, int *array_ptr,
+                             size_t array_length) {
+  const H5::DataType array_datatype(H5::PredType::NATIVE_INT);
+  const hsize_t array_dimension[1] = { array_length };
+  const H5::DataSpace array_dataspace(1, array_dimension);
+
+  if (!current_file.exists(group_name))
+    current_file.createGroup(group_name);
+  std::string array_path = fmt::format("{}/{}", group_name, array_name);
+  H5::DataSet dataset = current_file.createDataSet(array_path, array_datatype,
+                                                   array_dataspace);
+  dataset.write(array_ptr, array_datatype, array_dataspace);
+};

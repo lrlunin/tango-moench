@@ -54,9 +54,10 @@ void CPUComputationBackend::allocateIndividualStorage() {
    */
   deleteIndividualStorage();
   frameindex_storage_ptr = new int[individual_frame_buffer_capacity];
-  // fill with zeros, because we will take the max value later
+  // fill with -1 to take the max value later
+  // those frames which are not arrived will be -1
   std::fill(frameindex_storage_ptr,
-            frameindex_storage_ptr + individual_frame_buffer_capacity, 0);
+            frameindex_storage_ptr + individual_frame_buffer_capacity, -1);
   individual_analog_storage_ptr
       = new float[individual_frame_buffer_capacity * consts::LENGTH];
   // need to consider the case if after the acquistion the
@@ -110,24 +111,36 @@ void CPUComputationBackend::resetPedestalAndRMS() {
 
 void CPUComputationBackend::dumpAccumulators() {
   fileWriter->openFile();
+  // for the case if none frame was processed there will be empty sum frames
   fileWriter->writeFrame("images_sum", "analog_sum", analog_sum);
   fileWriter->writeFrame("images_sum", "counting_sum", counting_sum);
   if (saveIndividualFrames) {
-    // no need to check if max_frame_index < individual_frame_buffer_capacity
-    // since it was check in the processFrame()
+    /***
+     * no need to check if max_frame_index < individual_frame_buffer_capacity
+     * since it was check in the processFrame()
+     *
+     * if there was none frame -> the max_frame_index will be = -1
+     */
     int max_frame_index = *std::max_element(
         frameindex_storage_ptr,
         frameindex_storage_ptr + individual_frame_buffer_capacity);
-    // for the frameindex of (0, ..., max_frame_index) there are
-    // max_frame_index+1 frames
+    /***
+     * for the frameindex of (0, ..., max_frame_index) there are
+     * max_frame_index+1 frames. if the max_frame_index is -1 (no frames at
+     * all) then the max_stack_length will be 0
+     */
     int max_stack_length = max_frame_index + 1;
-    fileWriter->writeFrameStack("individual_frames", "analog",
-                                individual_analog_storage_ptr,
-                                max_stack_length);
-    if (saveRawFrames) {
-      fileWriter->writeFrameStack("individual_frames", "raw",
-                                  individual_raw_storage_ptr,
+    if (max_stack_length) {
+      fileWriter->write1DArray("individual_frames", "frameindex",
+                               frameindex_storage_ptr, max_stack_length);
+      fileWriter->writeFrameStack("individual_frames", "analog",
+                                  individual_analog_storage_ptr,
                                   max_stack_length);
+      if (saveRawFrames) {
+        fileWriter->writeFrameStack("individual_frames", "raw",
+                                    individual_raw_storage_ptr,
+                                    max_stack_length);
+      }
     }
 #ifdef SINGLE_FRAMES_DEBUG
     fileWriter->writeFrameStack("individual_frames", "pedestal",
