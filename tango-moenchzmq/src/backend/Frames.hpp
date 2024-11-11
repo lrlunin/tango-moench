@@ -70,8 +70,8 @@ template <typename T, unsigned int V> struct OrderedFrame {
 };
 
 struct Metadata {
-  int bitmode;
-  int frameIndex;
+  unsigned int bitmode;
+  unsigned long frameIndex;
 };
 
 struct FullFrame {

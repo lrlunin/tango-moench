@@ -91,7 +91,7 @@ public:
                                size_t frame_stack_length)
       = 0;
   virtual void write1DArray(const std::string group_name,
-                            const std::string array_name, int *array,
+                            const std::string array_name, long *array,
                             size_t array_length)
       = 0;
 };

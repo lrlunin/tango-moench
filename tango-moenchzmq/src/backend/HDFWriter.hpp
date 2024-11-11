@@ -62,5 +62,5 @@ public:
                        unsigned short *frame_stack_ptr,
                        size_t frame_stack_length) override;
   void write1DArray(const std::string group_name, const std::string array_name,
-                    int *array_ptr, size_t array_length) override;
+                    long *array_ptr, size_t array_length) override;
 };

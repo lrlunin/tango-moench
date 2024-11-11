@@ -199,16 +199,16 @@ TEST_F(HDFWriterTest, FileWriteUnsignedShortFrameStack) {
   delete[] data;
 }
 
-TEST_F(HDFWriterTest, FileWrite1DIntArray) {
+TEST_F(HDFWriterTest, FileWrite1DLongArray) {
   const size_t array_length = 256;
-  int *array = new int[array_length];
+  long *array = new long[array_length];
   for (size_t x = 0; x < array_length; x++) {
     array[x] = std::rand();
   }
 
   // write frame to file
   file_writer_ptr->openFile();
-  file_writer_ptr->write1DArray("group", "int_array", array, array_length);
+  file_writer_ptr->write1DArray("group", "long_array", array, array_length);
   file_writer_ptr->closeFile();
 
   // read frame from file and compare values
@@ -216,13 +216,13 @@ TEST_F(HDFWriterTest, FileWrite1DIntArray) {
                       + fmt::format("{:%Y%m%d}_run_{:06d}.h5", now,
                                     file_writer_ptr->file_index),
                   H5F_ACC_RDONLY);
-  H5::DataSet dataset = file.openDataSet("group/int_array");
+  H5::DataSet dataset = file.openDataSet("group/long_array");
   H5::DataSpace dataspace = dataset.getSpace();
   hsize_t dims_out[1];
   dataspace.getSimpleExtentDims(dims_out, NULL);
   EXPECT_EQ(dims_out[0], array_length);
-  int *data = new int[array_length];
-  dataset.read(data, H5::PredType::NATIVE_INT);
+  long *data = new long[array_length];
+  dataset.read(data, H5::PredType::NATIVE_LONG);
   for (size_t x = 0; x < array_length; x++) {
     EXPECT_EQ(data[x], array[x]);
   }

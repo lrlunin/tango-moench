@@ -144,9 +144,9 @@ void HDFWriter::writeFrameStack(const std::string group_name,
 };
 
 void HDFWriter::write1DArray(const std::string group_name,
-                             const std::string array_name, int *array_ptr,
+                             const std::string array_name, long *array_ptr,
                              size_t array_length) {
-  const H5::DataType array_datatype(H5::PredType::NATIVE_INT);
+  const H5::DataType array_datatype(H5::PredType::NATIVE_LONG);
   const hsize_t array_dimension[1] = { array_length };
   const H5::DataSpace array_dataspace(1, array_dimension);
 

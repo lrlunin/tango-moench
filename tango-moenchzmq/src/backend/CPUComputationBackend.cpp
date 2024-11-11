@@ -53,7 +53,19 @@ void CPUComputationBackend::allocateIndividualStorage() {
    *   either nullptr or valid allocation address.
    */
   deleteIndividualStorage();
-  frameindex_storage_ptr = new int[individual_frame_buffer_capacity];
+  /***
+   * The frameindex is actually is the "unsigned long" type
+   * so there migiht be a problem when the frameindex will
+   * exceed the "long" type capacity. I rather doubt that
+   * the frameindex will exceed the max "long" pos. value (2^63-1).
+   * The usage of "signed long" allows us to use the -1 as a
+   * flag for the empty frameindex_storage_ptr. While with the "unsigned long"
+   * it would be more complicated to use the -1 as a flag.
+   *
+   * So if once you face the problem when you would like to have > (2^63-1)
+   * frames - let me know :-)
+   */
+  frameindex_storage_ptr = new long[individual_frame_buffer_capacity];
   // fill with -1 to take the max value later
   // those frames which are not arrived will be -1
   std::fill(frameindex_storage_ptr,
@@ -121,7 +133,7 @@ void CPUComputationBackend::dumpAccumulators() {
      *
      * if there was none frame -> the max_frame_index will be = -1
      */
-    int max_frame_index = *std::max_element(
+    long max_frame_index = *std::max_element(
         frameindex_storage_ptr,
         frameindex_storage_ptr + individual_frame_buffer_capacity);
     /***
@@ -185,7 +197,7 @@ void CPUComputationBackend::processFrame(FullFrame *ff_ptr) {
     frames_sums.unlock();
   }
   if (saveIndividualFrames) {
-    int frameindex = ff_ptr->m.frameIndex;
+    unsigned long frameindex = ff_ptr->m.frameIndex;
     /*
      * safe comparasion of signed int and unsigned size_t would be
      * std::cmp_less(frameindex, individual_frame_buffer_capacity)

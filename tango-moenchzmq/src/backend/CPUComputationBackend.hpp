@@ -74,7 +74,7 @@ public:
   long updatePedestalPeriod = 1;
   std::atomic_bool saveIndividualFrames = true;
   std::atomic_bool saveRawFrames = true;
-  int *frameindex_storage_ptr = nullptr;
+  long *frameindex_storage_ptr = nullptr;
   float *individual_analog_storage_ptr = nullptr;
   unsigned short *individual_raw_storage_ptr = nullptr;
 #ifdef SINGLE_FRAMES_DEBUG
