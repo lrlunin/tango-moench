@@ -32,7 +32,8 @@ if (OPENMP_ENABLED)
     endif()
 endif()
 
-if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+if (TESTS_ENABLED)
+    message(STATUS "Tests for tango-moenchzmq enabled")
     add_subdirectory(test)
     # google test requires C language due to the CTest inside, I guess.
     enable_language(C)

@@ -11,7 +11,8 @@ add_subdirectory(src)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+if (TESTS_ENABLED)
+    message(STATUS "Tests for tango-moenchcontrol enabled")
     add_subdirectory(test)
     # google test requires C language due to the CTest inside, I guess.
     enable_language(C)

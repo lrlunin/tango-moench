@@ -10,7 +10,12 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native")
 
+option(TESTS_ENABLED "Enable tests" OFF)
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(TESTS_ENABLED ON)
+endif()
+
+if (TESTS_ENABLED)
     enable_testing()
     # for code coverage
     include(CodeCoverage)
