@@ -55,11 +55,11 @@ RUN cd /tmp/tango-idl && \
     cmake --install build
 
 # Download cppTango
-RUN git clone --depth 1 --branch ${TANGO_VERSION} ${TANGO_GIT_REF} /tmp/cppTango
+RUN git clone --recurse-submodules --depth 1 --branch ${TANGO_VERSION} ${TANGO_GIT_REF} /tmp/cppTango
 
 # Install Tango
 RUN cd /tmp/cppTango && \
-    cmake -B build -DBUILD_TESTING=OFF -DTANGO_USE_JPEG=OFF -DCMAKE_BUILD_TYPE=Release && \
+    cmake -B build -DBUILD_TESTING=OFF -DTANGO_USE_JPEG=OFF -DTANGO_USE_TELEMETRY=OFF -DCMAKE_BUILD_TYPE=Release && \
     cmake --build build -j && \
     cmake --install build
 
