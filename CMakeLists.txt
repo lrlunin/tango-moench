@@ -20,7 +20,7 @@ if (TESTS_ENABLED)
     # for code coverage
     include(CodeCoverage)
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fprofile-arcs -ftest-coverage -fno-elide-constructors -fno-default-inline")
-    setup_target_for_coverage_lcov(
+    setup_target_for_coverage_gcovr_xml(
         NAME coverage
         EXECUTABLE ctest --output-on-failure
         EXCLUDE "/usr/*" "build/_deps/*" "*/test/*" "*/tangods/*"
