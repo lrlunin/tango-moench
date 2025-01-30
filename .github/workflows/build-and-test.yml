@@ -1,0 +1,49 @@
+name: Build and Test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        tango-version: [9.5.0, 10.0.0]
+        sls-version: [8.0.2, 9.0.0]
+    container:
+      image: ghcr.io/${{ github.repository_owner }}/tango-${{ matrix.tango-version }}-sls-${{ matrix.sls-version }}:latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure CMake our repository
+        # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+        # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Debug -DTango_USE_PKG_CONFIG=OFF
+    
+      - name: Build our repository
+        # Build your program with the given configuration
+        run: cmake --build ${{github.workspace}}/build
+  
+      - name: Run tests and generate coverage report
+        working-directory: build
+        run: make coverage
+      
+      - name: Upload coverage report
+        # target platform
+        if: ${{ matrix.tango-version == '9.5.0' && matrix.sls-version == '8.0.2' }}
+        uses: codecov/codecov-action@v5
+        with:
+          files: ./build/coverage.info
+          fail_ci_if_error: false
+          codecov_yml_path: 'codecov.yml'
+          token: ${{ secrets.CODECOV_TOKEN }}
