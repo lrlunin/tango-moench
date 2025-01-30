@@ -82,7 +82,8 @@ RUN apt-get update && apt-get install -y \
     libhdf5-dev \
     libboost-dev \
     libfmt-dev \
-    lcov
+    lcov \
+    gcovr
 
 # Clean up the package lists to reduce the image size
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
