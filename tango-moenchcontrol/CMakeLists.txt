@@ -4,7 +4,8 @@ project(TangoMoenchControl LANGUAGES CXX)
 find_package(Tango)
 find_package(ZeroMQ REQUIRED)
 find_package(Boost REQUIRED)
-find_package(slsDetectorPackage 8 REQUIRED)
+# version specification is not currently working
+find_package(slsDetectorPackage REQUIRED)
 
 add_subdirectory(src)
 
