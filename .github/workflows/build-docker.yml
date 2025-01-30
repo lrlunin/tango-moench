@@ -39,7 +39,7 @@ jobs:
         with:
           context: ./docker
           file: ./docker/Dockerfile
-          push: push
+          push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/tango-${{ matrix.tango-version }}-sls-${{ matrix.sls-version }}:latest
           build-args: |
