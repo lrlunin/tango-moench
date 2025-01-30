@@ -1,0 +1,47 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+        - docker/**
+        - .github/workflows/build-docker.yml
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    strategy:
+      matrix:
+        tango-version: [9.5.0, 10.0.0]
+        sls-version: [8.0.2, 9.0.0]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3.3.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./docker
+          file: ./docker/Dockerfile
+          push: push
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/tango-${{ matrix.tango-version }}-sls-${{ matrix.sls-version }}:latest
+          build-args: |
+            TANGO_VERSION=${{ matrix.tango-version }}
+            SLS_VERSION=${{ matrix.sls-version }}
