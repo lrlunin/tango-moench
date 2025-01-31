@@ -10,6 +10,17 @@ on:
       - '.pre-commit-config.yaml'
       - 'LICENSE'
       - 'README.md'
+      - 'docker/**'
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'resources/**'
+      - '.clang-format'
+      - '.pre-commit-config.yaml'
+      - 'LICENSE'
+      - 'README.md'
+      - 'docker/**'
   workflow_run:
     workflows: ["Check and Build Docker Images"]
     types:
