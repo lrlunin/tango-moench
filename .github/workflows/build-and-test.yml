@@ -21,6 +21,7 @@ on:
       - 'LICENSE'
       - 'README.md'
       - 'docker/**'
+      - '.github/workflows/check-build-docker.yml'
   workflow_run:
     workflows: ["Check and Build Docker Images"]
     types:
