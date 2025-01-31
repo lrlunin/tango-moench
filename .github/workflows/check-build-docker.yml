@@ -1,12 +1,16 @@
-name: Build and Push Docker Images
+name: Check and Build Docker Images
 
 on:
+  pull_request:
   push:
     branches:
       - main
-    paths:
-        - docker/**
-        - .github/workflows/build-docker.yml
+    paths-ignore:
+      - 'resources/**'
+      - '.clang-format'
+      - '.pre-commit-config.yaml'
+      - 'LICENSE'
+      - 'README.md'
 
 jobs:
   build-and-push:
@@ -24,10 +28,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Check if docker files have been changed
+        id: changed
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            docker:
+              - 'docker/**'
+
       - name: Set up Docker Buildx
+        if: steps.changed.outputs.docker == 'true'
         uses: docker/setup-buildx-action@v3
 
       - name: Log in to GitHub Container Registry
+        if: steps.changed.outputs.docker == 'true'
         uses: docker/login-action@v3.3.0
         with:
           registry: ghcr.io
@@ -35,6 +49,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
+        if: steps.changed.outputs.docker == 'true'
         uses: docker/build-push-action@v6
         with:
           context: ./docker

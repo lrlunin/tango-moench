@@ -1,16 +1,10 @@
-name: Build and test Ubuntu Linux
+name: Build and Test Ubuntu Linux
 
 on:
-  pull_request:
-  push:
-    branches:
-      - main
-    paths-ignore:
-      - 'resources/**'
-      - '.clang-format'
-      - '.pre-commit-config.yaml'
-      - 'LICENSE'
-      - 'README.md'
+  workflow_run:
+    workflows: ["Check and Build Docker Images"]
+    types:
+      - completed
 
 jobs:
   build-and-test:
@@ -24,9 +18,9 @@ jobs:
       fail-fast: false
       matrix:
         tango-version: [9.5.0, 10.0.0]
-        sls-version: [8.0.2] #, 9.0.0]
+        sls-version: [8.0.2, 9.0.0]
     container:
-      image: ghcr.io/${{ github.repository_owner }}/tango-${{ matrix.tango-version }}-sls-${{ matrix.sls-version }}:latest
+      image: ghcr.io/lrlunin/tango-${{ matrix.tango-version }}-sls-${{ matrix.sls-version }}:latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

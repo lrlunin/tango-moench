@@ -2,7 +2,7 @@ name: Upload coverage report
 
 on:
   workflow_run:
-    workflows: ["Build and test Ubuntu Linux"]
+    workflows: ["Build and Test Ubuntu Linux"]
     types:
       - completed
 
