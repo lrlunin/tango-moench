@@ -22,11 +22,16 @@ if (TESTS_ENABLED)
     # for code coverage
     if (COVERAGE_ENABLED)
     include(CodeCoverage)
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fprofile-arcs -ftest-coverage -fno-elide-constructors -fno-default-inline")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O1 -fprofile-arcs -ftest-coverage -fno-elide-constructors -fno-default-inline")
     setup_target_for_coverage_gcovr_xml(
         NAME coverage
         EXECUTABLE ctest --output-on-failure
-        EXCLUDE "/usr/*" "build/_deps/*" "*/test/*" "*/tangods/*"
+        EXCLUDE "/usr/*"
+        "build/*"
+        "tango-moenchzmq/test"
+        "tango-moenchzmq/src/tangods"
+        "tango-moenchcontrol/src/tangods"
+        "tango-moenchcontrol/test"
         )
     endif()
 endif()

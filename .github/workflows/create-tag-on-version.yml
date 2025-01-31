@@ -20,4 +20,4 @@ jobs:
         uses: rickstaa/action-create-tag@v1.7.2
         with:
           tag:  ${{ env.VERSION }}
-          message: "Version bump ${{ env.COMMIT_VERSION }}"
+          message: "Version bump ${{ env.VERSION }}"

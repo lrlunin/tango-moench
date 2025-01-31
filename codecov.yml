@@ -1,5 +1,3 @@
-ignore:
-  - "tango-moenchcontrol/src/tangods/*"
-  - "tango-moenchcontrol/test/*"
-  - "tango-moenchzmq/src/tangods/*"
-  - "tango-moenchzmq/test/*"
+codecov:
+  notify:
+    notify_error: true
