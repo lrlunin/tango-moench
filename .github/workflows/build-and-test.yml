@@ -5,6 +5,12 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'resources/**'
+      - '.clang-format'
+      - '.pre-commit-config.yaml'
+      - 'LICENSE'
+      - 'README.md'
 
 jobs:
   build-and-test:

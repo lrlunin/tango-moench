@@ -11,13 +11,16 @@ set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native")
 
 option(TESTS_ENABLED "Enable tests" OFF)
+option(COVERAGE_ENABLED "Enable coverage" OFF)
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(TESTS_ENABLED ON)
+    set(COVERAGE_ENABLED ON)
 endif()
 
 if (TESTS_ENABLED)
     enable_testing()
     # for code coverage
+    if (COVERAGE_ENABLED)
     include(CodeCoverage)
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fprofile-arcs -ftest-coverage -fno-elide-constructors -fno-default-inline")
     setup_target_for_coverage_gcovr_xml(
@@ -25,6 +28,7 @@ if (TESTS_ENABLED)
         EXECUTABLE ctest --output-on-failure
         EXCLUDE "/usr/*" "build/_deps/*" "*/test/*" "*/tangods/*"
         )
+    endif()
 endif()
 add_subdirectory(tango-moenchzmq)
 add_subdirectory(tango-moenchcontrol)
