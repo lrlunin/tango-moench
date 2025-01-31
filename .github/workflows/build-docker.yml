@@ -19,7 +19,7 @@ jobs:
     strategy:
       matrix:
         tango-version: [9.5.0, 10.0.0]
-        sls-version: [8.0.2] # , 9.0.0]
+        sls-version: [8.0.2, 9.0.0]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
