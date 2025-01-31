@@ -35,6 +35,7 @@ public:
 
   CPUComputationBackend(FileWriter *fileWriter, float PEDESTAL_BUFFER_LENGTH,
                         unsigned long long THREAD_AMOUNT);
+  CPUComputationBackend(FileWriter *fileWriter, unsigned long long THREAD_AMOUNT);
   CPUComputationBackend(FileWriter *fileWriter);
   ~CPUComputationBackend();
   void pause();
