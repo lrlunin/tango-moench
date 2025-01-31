@@ -25,12 +25,14 @@ private:
   std::thread zmq_listener_thread;
   std::atomic_bool receive_data;
   std::atomic_bool abort_wait;
+  std::atomic_bool abort_listen;
   constexpr static size_t FRAME_SIZE = sizeof(FullFrame::f.arr);
 
 public:
   CPUComputationBackend *comp_backend_ptr;
   std::atomic<long> received_frames_amount;
   ZMQListener(std::string socket_addr, unsigned long long socket_port);
+  ~ZMQListener();
   void listen_socket();
   void start_receive();
   void stop_receive();

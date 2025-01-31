@@ -21,10 +21,20 @@ ZMQListener::ZMQListener(std::string socket_addr,
   zmq_listener_thread = std::thread(&ZMQListener::listen_socket, this);
 }
 
+ZMQListener::~ZMQListener() {
+  stop_receive();
+  abort_receive();
+  abort_listen = true;
+  if (zmq_listener_thread.joinable()) {
+    zmq_listener_thread.join();
+  }
+  socket.close();
+}
+
 void ZMQListener::listen_socket() {
   zmq::message_t json_zmq_msg, data_zmq_msg;
   rapidjson::GenericDocument<rapidjson::UTF8<>, rapidjson::CrtAllocator> d;
-  while (true) {
+  while (!abort_listen) {
     if (socket.recv(json_zmq_msg)) {
       if (d.Parse(static_cast<char *>(json_zmq_msg.data()),
                   json_zmq_msg.size())
