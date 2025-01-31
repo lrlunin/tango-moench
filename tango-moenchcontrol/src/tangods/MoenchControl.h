@@ -104,7 +104,9 @@ public:
   Tango::DevLong64 *attr_frames_read;
   Tango::DevLong64 *attr_high_voltage_read;
   Tango::DevFloat *attr_period_read;
+#if SLS_MAJOR_VERSION < 9
   Tango::DevString *attr_zmq_rx_ip_read;
+#endif
   Tango::DevUShort *attr_zmq_rx_port_read;
   rx_discard_policyEnum *attr_rx_discard_policy_read;
   Tango::DevString *attr_rx_hostname_read;
@@ -257,16 +259,18 @@ public:
   virtual void read_period(Tango::Attribute &attr);
   virtual void write_period(Tango::WAttribute &attr);
   virtual bool is_period_allowed(Tango::AttReqType type);
-  /**
-   *	Attribute zmq_rx_ip related methods
-   *
-   *
-   *	Data type:  Tango::DevString
-   *	Attr type:	Scalar
-   */
+/**
+ *	Attribute zmq_rx_ip related methods
+ *
+ *
+ *	Data type:  Tango::DevString
+ *	Attr type:	Scalar
+ */
+#if SLS_MAJOR_VERSION < 9
   virtual void read_zmq_rx_ip(Tango::Attribute &attr);
   virtual void write_zmq_rx_ip(Tango::WAttribute &attr);
   virtual bool is_zmq_rx_ip_allowed(Tango::AttReqType type);
+#endif
   /**
    *	Attribute zmq_rx_port related methods
    *

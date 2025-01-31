@@ -4,8 +4,14 @@ project(TangoMoenchControl LANGUAGES CXX)
 find_package(Tango)
 find_package(ZeroMQ REQUIRED)
 find_package(Boost REQUIRED)
-# version specification is not currently working
 find_package(slsDetectorPackage REQUIRED)
+
+if (slsDetectorPackage_VERSION_MAJOR LESS 8)
+        message(FATAL_ERROR "slsDetectorPacakge version needs to be 8 or greater")
+else()
+    message(STATUS "Found slsDetectorPackage version ${slsDetectorPackage_VERSION_MAJOR}")
+    add_definitions(-DSLS_MAJOR_VERSION=${slsDetectorPackage_VERSION_MAJOR})
+endif()
 
 add_subdirectory(src)
 

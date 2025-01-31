@@ -186,6 +186,7 @@ public:
   }
 };
 
+#if SLS_MAJOR_VERSION < 9
 //	Attribute zmq_rx_ip class definition
 class zmq_rx_ipAttrib : public Tango::Attr {
 public:
@@ -205,6 +206,7 @@ public:
     return (static_cast<MoenchControl *>(dev))->is_zmq_rx_ip_allowed(ty);
   }
 };
+#endif
 
 //	Attribute zmq_rx_port class definition
 class zmq_rx_portAttrib : public Tango::Attr {

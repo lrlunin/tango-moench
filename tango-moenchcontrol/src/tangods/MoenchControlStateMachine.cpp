@@ -139,6 +139,7 @@ bool MoenchControl::is_period_allowed(TANGO_UNUSED(Tango::AttReqType type)) {
   return is_detector_read_write_allowed();
 }
 
+#if SLS_MAJOR_VERSION < 9
 //--------------------------------------------------------
 /**
  *	Method      : MoenchControl::is_zmq_rx_ip_allowed()
@@ -152,6 +153,7 @@ bool MoenchControl::is_zmq_rx_ip_allowed(
   //	Not any excluded states for zmq_rx_ip attribute in read access.
   return is_detector_read_write_allowed();
 }
+#endif
 
 //--------------------------------------------------------
 /**

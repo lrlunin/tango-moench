@@ -525,7 +525,8 @@ void MoenchControlClass::attribute_factory(
   period->set_memorized_init(true);
   att_list.push_back(period);
 
-  //	Attribute : zmq_rx_ip
+//	Attribute : zmq_rx_ip
+#if SLS_MAJOR_VERSION < 9
   zmq_rx_ipAttrib *zmq_rx_ip = new zmq_rx_ipAttrib();
   Tango::UserDefaultAttrProp zmq_rx_ip_prop;
   //	description	not set for zmq_rx_ip
@@ -548,6 +549,7 @@ void MoenchControlClass::attribute_factory(
   zmq_rx_ip->set_memorized();
   zmq_rx_ip->set_memorized_init(true);
   att_list.push_back(zmq_rx_ip);
+#endif
 
   //	Attribute : zmq_rx_port
   zmq_rx_portAttrib *zmq_rx_port = new zmq_rx_portAttrib();

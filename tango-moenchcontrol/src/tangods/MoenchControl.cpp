@@ -123,7 +123,9 @@ void MoenchControl::delete_device() {
   delete[] attr_frames_read;
   delete[] attr_high_voltage_read;
   delete[] attr_period_read;
+#if SLS_MAJOR_VERSION < 9
   delete[] attr_zmq_rx_ip_read;
+#endif
   delete[] attr_zmq_rx_port_read;
   delete[] attr_rx_discard_policy_read;
   delete[] attr_rx_hostname_read;
@@ -154,7 +156,9 @@ void MoenchControl::init_device() {
   attr_frames_read = new Tango::DevLong64[1];
   attr_high_voltage_read = new Tango::DevLong64[1];
   attr_period_read = new Tango::DevFloat[1];
+#if SLS_MAJOR_VERSION < 9
   attr_zmq_rx_ip_read = new Tango::DevString[1];
+#endif
   attr_zmq_rx_port_read = new Tango::DevUShort[1];
   attr_rx_discard_policy_read = new rx_discard_policyEnum[1];
   attr_rx_hostname_read = new Tango::DevString[1];
@@ -565,6 +569,9 @@ void MoenchControl::write_period(Tango::WAttribute &attr) {
  *	Attr type:	Scalar
  */
 //--------------------------------------------------------
+
+// removed in the slsDetectorSoftware version 9+
+#if SLS_MAJOR_VERSION < 9
 void MoenchControl::read_zmq_rx_ip(Tango::Attribute &attr) {
   DEBUG_STREAM
       << "MoenchControl::read_zmq_rx_ip(Tango::Attribute &attr) entering... "
@@ -592,7 +599,7 @@ void MoenchControl::write_zmq_rx_ip(Tango::WAttribute &attr) {
   attr.get_write_value(w_val);
   detector_ptr->setRxZmqIP(sls::IpAddr(w_val));
 }
-
+#endif
 //--------------------------------------------------------
 /**
  *	Read attribute zmq_rx_port related method
