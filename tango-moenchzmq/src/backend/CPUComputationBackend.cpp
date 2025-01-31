@@ -25,6 +25,8 @@ CPUComputationBackend::CPUComputationBackend(FileWriter *fileWriter,
   dispatcher_thread = std::thread(&CPUComputationBackend::dispatchTasks, this);
   resetAccumulators();
 };
+CPUComputationBackend::CPUComputationBackend(FileWriter *fileWriter, unsigned long long THREAD_AMOUNT)
+    : CPUComputationBackend(fileWriter, 100, THREAD_AMOUNT) {};
 
 CPUComputationBackend::CPUComputationBackend(FileWriter *fileWriter)
     : CPUComputationBackend(fileWriter, 5000, 10) {};
