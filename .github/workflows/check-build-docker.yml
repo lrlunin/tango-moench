@@ -1,7 +1,6 @@
 name: Check and Build Docker Images
 
 on:
-  pull_request:
   push:
     branches:
       - main

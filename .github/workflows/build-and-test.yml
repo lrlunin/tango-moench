@@ -1,6 +1,15 @@
 name: Build and Test Ubuntu Linux
 
 on:
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - 'resources/**'
+      - '.clang-format'
+      - '.pre-commit-config.yaml'
+      - 'LICENSE'
+      - 'README.md'
   workflow_run:
     workflows: ["Check and Build Docker Images"]
     types:
