@@ -1,0 +1,23 @@
+name: create version tag
+on:
+  push:
+    branches: main
+    paths:
+        - 'VERSION'
+jobs:
+  upd-tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo content
+        uses: actions/checkout@v4
+
+      - name: Read version file
+        run: |
+          echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
+
+      - name: Create new tag
+        uses: rickstaa/action-create-tag@v1.7.2
+        with:
+          tag:  ${{ env.VERSION }}
+          message: "Version bump ${{ env.COMMIT_VERSION }}"

@@ -60,6 +60,8 @@ jobs:
         run: make coverage
 
       - name: Upload coverage artifact
+        # skip if run locally with act
+        if: ${{ !env.ACT }}
         # Upload the coverage report as an artifact
         uses: actions/upload-artifact@v4
         with:
