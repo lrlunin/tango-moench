@@ -16,11 +16,18 @@ author = 'Leonid Lunin'
 extensions = ['breathe',
               'sphinxcontrib.mermaid',
               'sphinx.ext.mathjax',
-              'sphinx-mathjax-offline'
+              'sphinx-mathjax-offline',
+              'sphinxcontrib.bibtex'
              ]
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+
+bibtex_bibfiles = ['refs.bib']
+
+bibtex_reference_style = 'author_year'
+
+bibtex_default_style = 'plain'
 
 breathe_projects = {
     "tango-moenchzmq": "../doxygen/zmq",
@@ -34,3 +41,9 @@ breathe_default_project = "tango-moenchzmq"
 
 html_theme = 'alabaster'
 html_static_path = ['_static']
+html_theme_options = {
+    'github_type': 'star',
+    'github_user': 'lrlunin',
+    'github_repo': 'tango-moench',
+    'codecov_button': 'true'
+}
