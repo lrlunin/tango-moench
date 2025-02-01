@@ -32,7 +32,7 @@ jobs:
               id: deployment
               uses: actions/upload-pages-artifact@v3
               with:
-                path: build/sphinx-docs
+                path: build/sphinx-docs/
 
     deploy:
       environment:
