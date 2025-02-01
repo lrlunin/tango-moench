@@ -33,7 +33,12 @@ RUN apt-get update && apt-get install -y \
     graphviz
 
 # install sphinx packages and extensions
-RUN python3.12 -m pip install --break-system-packages sphinx breathe sphinxcontrib-mermaid sphinx-mathjax-offline
+RUN python3.12 -m pip install --break-system-packages \
+    sphinx \
+    breathe \
+    sphinxcontrib-mermaid \
+    sphinx-mathjax-offline \
+    sphinxcontrib-bibtex
 
 # Install tango libs
 RUN apt-get update && apt-get install -y \
