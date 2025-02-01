@@ -5,6 +5,7 @@ on:
     branches:
       - main
     paths:
+      - '.github/workflows/build-and-deploy-docs.yml'
       - 'docs/**'
       - 'tango-moenchcontrol/**'
       - 'tango-moenchzmq/**'
