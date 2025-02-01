@@ -1,4 +1,4 @@
-name: create version tag
+name: Сreate version tag
 on:
   push:
     branches: main
