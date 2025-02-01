@@ -85,5 +85,14 @@ RUN apt-get update && apt-get install -y \
     lcov \
     gcovr
 
+# install doxygen libs
+RUN apt-get update && apt-get install -y \
+    doxygen \
+    graphviz
+
+# install sphinx libs
+RUN python3 -m pip install --upgrade pip && \
+    python3 -m pip install sphinx breathe sphinxcontrib-mermaid sphinx-mathjax-offline
+
 # Clean up the package lists to reduce the image size
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
