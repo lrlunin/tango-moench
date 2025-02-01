@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.14)
-project(TangoMoench LANGUAGES CXX)
+file(READ "VERSION" PROJECT_VERSION)
+string(STRIP "${PROJECT_VERSION}" PROJECT_VERSION)  
+project(tango-moench LANGUAGES CXX VERSION ${PROJECT_VERSION})
+message(STATUS "Project Version: ${PROJECT_VERSION}")
 
 set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH};${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -12,6 +15,8 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native")
 
 option(TESTS_ENABLED "Enable tests" OFF)
 option(COVERAGE_ENABLED "Enable coverage" OFF)
+option(BUILD_DOCS "Build documentation" OFF)
+
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(TESTS_ENABLED ON)
     set(COVERAGE_ENABLED ON)
@@ -37,3 +42,47 @@ if (TESTS_ENABLED)
 endif()
 add_subdirectory(tango-moenchzmq)
 add_subdirectory(tango-moenchcontrol)
+
+if (BUILD_DOCS)
+    find_package(Doxygen REQUIRED)
+    find_package(Sphinx REQUIRED breathe sphinxcontrib.mermaid)
+
+    set(DOXYGEN_FILE_PATTERNS "*.hpp;*.cpp;*.h")
+    set(DOXYGEN_RECUVISE YES)
+    set(DOXYGEN_GENERATE_HTML NO)
+    set(DOXYGEN_GENERATE_XML YES)
+    set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/doxygen)
+
+    set(DOXYGEN_XML_OUTPUT ${CMAKE_BINARY_DIR}/doxygen/zmq)
+    
+    doxygen_add_docs(
+        doxygen_moenchzmq  # Target name
+        ${CMAKE_SOURCE_DIR}/tango-moenchzmq/src
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMENT "Generating ZMQ API documentation with Doxygen"
+    )
+    
+    set(DOXYGEN_XML_OUTPUT ${CMAKE_BINARY_DIR}/doxygen/control)
+    
+    doxygen_add_docs(
+        doxygen_moenchcontrol  # Target name
+        ${CMAKE_SOURCE_DIR}/tango-moenchcontrol/src
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMENT "Generating Control API documentation with Doxygen"
+    )
+
+    # Configure Sphinx
+    set(SPHINX_BUILD "${CMAKE_BINARY_DIR}/docs/sphinx")
+    set(SPHINX_INDEX_FILE "${SPHINX_BUILD}/index.html")
+
+    sphinx_add_docs(
+        sphinx_docs   # Target name
+        BREATHE_PROJECTS tango-moenchzmq tango-moenchcontrol
+        SOURCE_DIRECTORY ${CMAKE_SOURCE_DIR}/docs
+        BUILDER html
+        DEPENDS doxygen_moenchzmq doxygen_moenchcontrol
+    )
+
+    add_dependencies(sphinx_docs doxygen_moenchzmq doxygen_moenchcontrol)
+
+endif()

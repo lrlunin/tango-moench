@@ -1,0 +1,45 @@
+name: Build and Deploy Docs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - 'tango-moenchcontrol/**'
+      - 'tango-moenchzmq/**'
+
+jobs:
+    build-docs:
+        runs-on: ubuntu-latest
+        permissions:
+            pages: write
+        container:
+            image: ghcr.io/lrlunin/tango-9.5.0-sls-8.0.2:latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Configure CMake our repository
+              run: cmake -B build -DBUILD_DOCS=ON
+
+            - name: Build the docs
+              run: cmake --build build --target sphinx_docs -j
+
+            - name: Upload pages
+              if: ${{ !env.ACT }}
+              id: deployment
+              uses: actions/upload-pages-artifact@v3
+              with:
+                path: build/spinx-docs
+
+    deploy:
+      environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }}
+      runs-on: ubuntu-latest
+      needs: build-docs
+      steps:
+        - name: Deploy to GitHub Pages
+          id: deployment
+          uses: actions/deploy-pages@v4
