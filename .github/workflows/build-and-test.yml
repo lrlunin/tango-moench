@@ -5,6 +5,7 @@ on:
     branches:
       - main
     paths-ignore:
+      - 'docs/**'
       - 'resources/**'
       - '.clang-format'
       - '.pre-commit-config.yaml'
@@ -15,6 +16,7 @@ on:
     branches:
       - main
     paths-ignore:
+      - 'docs/**'
       - 'resources/**'
       - '.clang-format'
       - '.pre-commit-config.yaml'

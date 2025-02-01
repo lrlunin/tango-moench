@@ -69,12 +69,18 @@ template <typename T, unsigned int V> struct OrderedFrame {
   void zero() { fill(0.0); }
 };
 
+/// @brief Required metadata for the frame
 struct Metadata {
+  /// @brief Bitmode of the frame
   unsigned int bitmode;
+  /// @brief Countinous frame index within the acquisition
   unsigned long frameIndex;
 };
 
+/// @brief FullFrame is a struct that contains the metadata and the frame
 struct FullFrame {
+  /// @brief Metadata of the frame
   Metadata m;
+  /// @brief The frame itself
   OrderedFrame<unsigned short, consts::LENGTH> f;
 };

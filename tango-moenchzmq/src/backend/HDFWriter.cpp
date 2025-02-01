@@ -59,6 +59,14 @@ void HDFWriter::openFile() {
 
 void HDFWriter::closeFile() { current_file.close(); };
 
+/**
+ * @brief Write a single frame to the file.
+ *
+ * @param group_name Group name in the HDF5 file (e.g. ``/data``)
+ * @param frame_name Frame name in the HDF5 file (e.g.
+ * ``/data/averaged_frame``)
+ * @param frame Single frame to write into the file
+ */
 void HDFWriter::writeFrame(const std::string group_name,
                            const std::string frame_name,
                            OrderedFrame<float, consts::LENGTH> &frame) {
@@ -78,6 +86,17 @@ void HDFWriter::writeFrame(const std::string group_name,
   dataset.write(buf_ptr, image_datatype, image_dataspace);
 };
 
+/**
+ * @brief Write a stack of frames to the ``.h5`` file.
+ *
+ * @param group_name Group name in the HDF5 file (e.g. ``/data``)
+ * @param frame_name Frame stack name in the HDF5 file (e.g.
+ * ``/data/individual_frames``)
+ * @param frame_stack_ptr Pointer to the ``T[]`` frame stack of the length
+ * frame_stack_length * #consts::HEIGHT * #consts::WIDTH
+ * @param frame_stack_length Length of the frame stack to write. Should be
+ * less than or equal to the length of the frame stack array.
+ */
 void HDFWriter::writeFrameStack(const std::string group_name,
                                 const std::string frame_stack_name,
                                 float *frame_stack_ptr,
@@ -143,6 +162,15 @@ void HDFWriter::writeFrameStack(const std::string group_name,
   dataset.write(frame_stack_ptr, image_datatype, image_stack_dataspace);
 };
 
+/**
+ * @brief Write a 1D array to the ``.h5`` file.
+ *
+ * @param group_name Group name in the HDF5 file (e.g. ``/data``)
+ * @param array_name 1D array name in the HDF5 file (e.g.
+ * ``/data/frame_indexes``)
+ * @param array_ptr Pointer to the ``long[]`` 1D array (e.g. frame indexes)
+ * @param array_length Length of the 1D array to write
+ */
 void HDFWriter::write1DArray(const std::string group_name,
                              const std::string array_name, long *array_ptr,
                              size_t array_length) {

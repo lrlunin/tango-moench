@@ -44,6 +44,10 @@ void CPUComputationBackend::resume() {
   threads_sleep = false;
 }
 
+/**
+ *
+ *
+ */
 void CPUComputationBackend::allocateIndividualStorage() {
   /*** To be sure that we don't delete the same storage pointer
    *   twice we delete the storage only here and allocate it
@@ -306,6 +310,17 @@ OrderedFrame<char, consts::LENGTH> CPUComputationBackend::classifyFrame(
   return class_mask;
 }
 
+/**
+ * Since the pedestal is the mean value of the pixel values and the RMS is the
+ * square root of the variance
+ * @f[
+ * \begin{split}
+ * \hat{p} &= \frac{p_\Sigma}{N} \\
+ * p_{\sigma} &= \sqrt{\frac{p_{\Sigma}^2}{N} -
+ * \left(\frac{p_\Sigma}{N}\right)^2}
+ * \end{split}
+ * @f]
+ */
 void CPUComputationBackend::loadPedestalAndRMS(
     OrderedFrame<float, consts::LENGTH> &pedestal,
     OrderedFrame<float, consts::LENGTH> &pedestal_rms) {

@@ -53,28 +53,12 @@ public:
   virtual ~FileWriter() = default;
   virtual void openFile() = 0;
   virtual void closeFile() = 0;
-  /**
-   * @brief Write a single frame to the file.
-   *
-   * @param group_name Group name in the HDF5 file (e.g. /data)
-   * @param frame_name Frame name in the HDF5 file (e.g. /data/averaged_frame)
-   * @param frame Frame to write into the file
-   */
+  /// @brief Generic method to write a frame to the file
   virtual void writeFrame(const std::string group_name,
                           const std::string frame_name,
                           OrderedFrame<float, consts::LENGTH> &frame)
       = 0;
-  /**
-   * @brief Write a stack of frames to the file.
-   *
-   * @param group_name Group name in the HDF5 file (e.g. /data)
-   * @param frame_name Frame stack name in the HDF5 file (e.g.
-   * /data/individual_frames)
-   * @param frame_stack_ptr Pointer to the T[] frame stack of the length
-   * frame_stack_length * consts::HEIGHT * consts::WIDTH
-   * @param frame_stack_length Length of the frame stack to write. Should be
-   * less than or equal to the length of the frame stack array.
-   */
+  /// @brief Generic method to write a frame stack to the file
   virtual void writeFrameStack(const std::string group_name,
                                const std::string frame_stack_name,
                                float *frame_stack_ptr,
