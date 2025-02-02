@@ -35,7 +35,7 @@ CentOS/RedHat
 cppTango
 --------
 
-Install prebuilt package 
+Install prebuilt package
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 Follow the `original cppTango manual <https://gitlab.com/tango-controls/cppTango/-/blob/main/INSTALL.md>`_ for Ubuntu. There is only option to build it from source.
@@ -99,14 +99,13 @@ Install the `required dependencies <https://slsdetectorgroup.github.io/devdoc/de
     git clone --depth 1 --branch 8.0.1 \
     https://github.com/slsdetectorgroup/slsDetectorPackage.git
     cd slsDetectorGroup
-    # create build folder
     # maybe you can also set -DSLS_USE_DETECTOR=OFF and
     # -DSLS_USE_RECEIVER=OFF if somehow you have to save space
     cmake -B build -DSLS_DEVEL_HEADERS=ON -DSLS_USE_MOENCH=ON
     # build the library
-    cmake --build build
+    cmake --build build -j
     # install the library (requires write access to /usr/lib etc)
-    sudo cmake --install build -j
+    sudo cmake --install build
 
 CUDA (optional)
 ---------------

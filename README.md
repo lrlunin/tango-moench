@@ -13,21 +13,29 @@ This implementation also allows both separation and simultaneous processing with
 
 # Dependecies installation
 
-## Common libraries
+## Common dependencies
 
 ### Ubuntu
 
-`sudo apt install build-essential cmake libzmq3-dev rapidjson-dev libfmt-dev libhdf5-dev libboost-dev`
+```bash
+sudo apt install build-essential cmake libzmq3-dev \
+rapidjson-dev libfmt-dev libhdf5-dev libboost-dev
+```
 
 ### CentOS/RedHat
 
-`sudo yum install cmake gcc-c++ zeromq-devel rapidjson-devel fmt-devel hdf5-devel boost-devel`
+```bash
+sudo yum install cmake gcc-c++ zeromq-devel rapidjson-devel \
+fmt-devel hdf5-devel boost-devel
+```
 
-## Tango
+## cppTango
 
-### Ubuntu
+### Install prebuilt package
 
-Follow the [original manual](https://gitlab.com/tango-controls/cppTango/-/blob/main/INSTALL.md) for Ubuntu. There is only option to build it from source.
+Follow the [original cppTango manual](https://gitlab.com/tango-controls/cppTango/-/blob/main/INSTALL.md) for Ubuntu. There is only option to build it from source.
+
+### Install from source
 
 #### Install omniORB
 
@@ -66,27 +74,21 @@ cmake --build build -j
 sudo cmake --install build
 ```
 
-### CentOS/RedHat
-
-Follow the [original manual](https://tango-controls.readthedocs.io/en/latest/installation/tango-on-linux.html#centos) for CentOS. You can either install a pre-built package from [MAX-IV repository](http://pubrepo.maxiv.lu.se/rpm/el9/x86_64/) or build it from source as well.
-
 ## slsDetectorPackage
 
 Install the [required dependencies](https://slsdetectorgroup.github.io/devdoc/dependencies.html) of slsDetectorPackage libraries and build the package from [sources](https://github.com/slsdetectorgroup/slsDetectorPackage):
 
 ```bash
 # clone the library
-git clone https://github.com/slsdetectorgroup/slsDetectorPackage.git
+git clone --depth 1 --branch 8.0.1 \
+https://github.com/slsdetectorgroup/slsDetectorPackage.git
 cd slsDetectorGroup
-# checkout the desired library version
-git checkout tags/8.0.1
-# create build folder
 # maybe you can also set -DSLS_USE_DETECTOR=OFF and -DSLS_USE_RECEIVER=OFF if somehow you have to save space
 cmake -B build -DSLS_DEVEL_HEADERS=ON -DSLS_USE_MOENCH=ON
 # build the library
-cmake --build build
+cmake --build build -j
 # install the library (requires write access to /usr/lib etc)
-sudo cmake --install build -j
+sudo cmake --install build
 ```
 
 ## CUDA (optional)
@@ -99,7 +101,7 @@ Follow the [original manual](https://docs.nvidia.com/cuda/cuda-installation-guid
 git clone https://github.com/lrlunin/tango-moench.git
 cd tango-moench
 # configure the build files, enable tests or coverage if you wish
-cmake -B build -DTESTS_ENABLED=OFF -DCOVERAGE_ENABLED=OFF
+cmake -B build -DCMAKE_BUILD_TYPE=Release
 # build the library
 cmake --build build -j
 # install the library (requires write access to /usr/lib etc)
