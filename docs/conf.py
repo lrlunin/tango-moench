@@ -47,3 +47,4 @@ html_theme_options = {
     'github_repo': 'tango-moench',
     'codecov_button': 'true'
 }
+html_favicon = '_static/favicon.svg'
