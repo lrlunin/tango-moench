@@ -33,7 +33,7 @@ CentOS/RedHat
     fmt-devel hdf5-devel boost-devel
 
 cppTango
------
+--------
 
 Install prebuilt package 
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -72,7 +72,7 @@ Checkout the source repository and install:
     sudo cmake --install build
 
 Install cppTango
-"""""""""""""""
+""""""""""""""""
 
 Checkout the source repository and install:
 

@@ -52,13 +52,18 @@ if (BUILD_DOCS)
     set(DOXYGEN_GENERATE_HTML NO)
     set(DOXYGEN_GENERATE_XML YES)
     set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/doxygen)
+    set(DOXYGEN_SHOW_INCLUDE_FILES NO)
+    set(DOXYGEN_SHOW_FILES NO)
+    set(DOXYGEN_SHOW_DIRECTORIES NO)
+    set(DOXYGEN_MACRO_EXPANSION YES)
+    set(DOXYGEN_EXCLUDE_PATTERNS "**/ClassFactory.cpp;**/main.cpp;**/*Class.cpp;**/*Class.h;**/*StateMachine.cpp")
 
     set(DOXYGEN_XML_OUTPUT ${CMAKE_BINARY_DIR}/doxygen/zmq)
     
     doxygen_add_docs(
         doxygen_moenchzmq  # Target name
         ${CMAKE_SOURCE_DIR}/tango-moenchzmq/src
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tango-moenchzmq/src
         COMMENT "Generating ZMQ API documentation with Doxygen"
     )
     
@@ -67,7 +72,7 @@ if (BUILD_DOCS)
     doxygen_add_docs(
         doxygen_moenchcontrol  # Target name
         ${CMAKE_SOURCE_DIR}/tango-moenchcontrol/src
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tango-moenchcontrol/src
         COMMENT "Generating Control API documentation with Doxygen"
     )
 

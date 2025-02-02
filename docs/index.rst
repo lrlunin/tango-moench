@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Welcome to ``tango-moench`` documentation
-==========================
+=========================================
 
 This project provides a set of tools to control the MÖNCH detector via Tango and to process the acquired data in real-time.
 
