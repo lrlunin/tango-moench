@@ -14,9 +14,9 @@ class CPUComputationBackend {
 public:
   typedef boost::singleton_pool<FullFrame, sizeof(FullFrame)> memory_pool;
   boost::lockfree::queue<FullFrame *> frame_ptr_queue;
-  FileWriter *fileWriter;
-  const float PEDESTAL_BUFFER_LENGTH;
-  const unsigned int THREAD_AMOUNT;
+  FileWriter *file_writer_ptr;
+  float PEDESTAL_BUFFER_LENGTH;
+  unsigned int THREAD_AMOUNT;
   std::atomic_bool threads_sleep = true;
   std::atomic_bool destroy_threads = false;
   std::atomic_bool destoy_dispatcher = false;
@@ -33,9 +33,11 @@ public:
   std::mutex frames_sums;
   std::atomic<long> processed_frames_amount{ 0 };
 
-  CPUComputationBackend(FileWriter *fileWriter, float PEDESTAL_BUFFER_LENGTH,
+  CPUComputationBackend(FileWriter *file_writer_ptr,
+                        float PEDESTAL_BUFFER_LENGTH,
                         unsigned long long THREAD_AMOUNT);
-  CPUComputationBackend(FileWriter *fileWriter);
+  CPUComputationBackend(FileWriter *file_writer_ptr);
+  CPUComputationBackend() = default;
   ~CPUComputationBackend();
   void pause();
   void resume();
@@ -83,7 +85,7 @@ public:
   /// @brief Dispatch the tasks to the thread pool
   void dispatchTasks();
   /// @brief  Process the #FullFrame
-  /// @param ptr
+  /// @param ptr pointer to the #FullFrame structure
   void processFrame(FullFrame *ptr);
 
   OrderedFrame<float, consts::LENGTH> pedestal_counter_counting;

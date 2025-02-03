@@ -15,10 +15,10 @@
 
 using namespace std;
 
-CPUComputationBackend::CPUComputationBackend(FileWriter *fileWriter,
+CPUComputationBackend::CPUComputationBackend(FileWriter *file_writer_ptr,
                                              float PEDESTAL_BUFFER_LENGTH,
                                              unsigned long long THREAD_AMOUNT)
-    : frame_ptr_queue(20000), fileWriter(fileWriter),
+    : frame_ptr_queue(20000), file_writer_ptr(file_writer_ptr),
       PEDESTAL_BUFFER_LENGTH(PEDESTAL_BUFFER_LENGTH),
       THREAD_AMOUNT(THREAD_AMOUNT) {
   thread_pool = new boost::asio::thread_pool(THREAD_AMOUNT);
@@ -26,8 +26,8 @@ CPUComputationBackend::CPUComputationBackend(FileWriter *fileWriter,
   resetAccumulators();
 };
 
-CPUComputationBackend::CPUComputationBackend(FileWriter *fileWriter)
-    : CPUComputationBackend(fileWriter, 5000, 10) {};
+CPUComputationBackend::CPUComputationBackend(FileWriter *file_writer_ptr)
+    : CPUComputationBackend(file_writer_ptr, 5000, 10) {};
 
 CPUComputationBackend::~CPUComputationBackend() {
   destoy_dispatcher = true;
@@ -126,10 +126,10 @@ void CPUComputationBackend::resetPedestalAndRMS() {
 }
 
 void CPUComputationBackend::dumpAccumulators() {
-  fileWriter->openFile();
+  file_writer_ptr->openFile();
   // for the case if none frame was processed there will be empty sum frames
-  fileWriter->writeFrame("images_sum", "analog_sum", analog_sum);
-  fileWriter->writeFrame("images_sum", "counting_sum", counting_sum);
+  file_writer_ptr->writeFrame("images_sum", "analog_sum", analog_sum);
+  file_writer_ptr->writeFrame("images_sum", "counting_sum", counting_sum);
   if (saveIndividualFrames) {
     /***
      * no need to check if max_frame_index < individual_frame_buffer_capacity
@@ -147,27 +147,29 @@ void CPUComputationBackend::dumpAccumulators() {
      */
     int max_stack_length = max_frame_index + 1;
     if (max_stack_length) {
-      fileWriter->write1DArray("individual_frames", "frameindex",
-                               frameindex_storage_ptr, max_stack_length);
-      fileWriter->writeFrameStack("individual_frames", "analog",
-                                  individual_analog_storage_ptr,
-                                  max_stack_length);
+      file_writer_ptr->write1DArray("individual_frames", "frameindex",
+                                    frameindex_storage_ptr, max_stack_length);
+      file_writer_ptr->writeFrameStack("individual_frames", "analog",
+                                       individual_analog_storage_ptr,
+                                       max_stack_length);
       if (saveRawFrames) {
-        fileWriter->writeFrameStack("individual_frames", "raw",
-                                    individual_raw_storage_ptr,
-                                    max_stack_length);
+        file_writer_ptr->writeFrameStack("individual_frames", "raw",
+                                         individual_raw_storage_ptr,
+                                         max_stack_length);
       }
     }
 #ifdef SINGLE_FRAMES_DEBUG
-    fileWriter->writeFrameStack("individual_frames", "pedestal",
-                                pedestal_storage_ptr, max_stack_length);
-    fileWriter->writeFrameStack("individual_frames", "pedestal_rms",
-                                pedestal_rms_storage_ptr, max_stack_length);
-    fileWriter->writeFrameStack("individual_frames", "frame_classes",
-                                frame_classes_storage_ptr, max_stack_length);
+    file_writer_ptr->writeFrameStack("individual_frames", "pedestal",
+                                     pedestal_storage_ptr, max_stack_length);
+    file_writer_ptr->writeFrameStack("individual_frames", "pedestal_rms",
+                                     pedestal_rms_storage_ptr,
+                                     max_stack_length);
+    file_writer_ptr->writeFrameStack("individual_frames", "frame_classes",
+                                     frame_classes_storage_ptr,
+                                     max_stack_length);
 #endif
   }
-  fileWriter->closeFile();
+  file_writer_ptr->closeFile();
 };
 
 void CPUComputationBackend::processFrame(FullFrame *ff_ptr) {

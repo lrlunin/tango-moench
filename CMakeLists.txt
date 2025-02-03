@@ -23,21 +23,29 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 if (TESTS_ENABLED)
+    include(FetchContent)
+    FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+    )
+    FetchContent_MakeAvailable(googletest)
     enable_testing()
     # for code coverage
     if (COVERAGE_ENABLED)
-    include(CodeCoverage)
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fprofile-arcs -ftest-coverage -fno-elide-constructors -fno-default-inline")
-    setup_target_for_coverage_gcovr_xml(
-        NAME coverage
-        EXECUTABLE ctest --output-on-failure
-        EXCLUDE "/usr/*"
-        "build/*"
-        "tango-moenchzmq/test"
-        "tango-moenchzmq/src/tangods"
-        "tango-moenchcontrol/src/tangods"
-        "tango-moenchcontrol/test"
-        )
+        # coverage requires C compiler somehow
+        enable_language(C)
+        include(CodeCoverage)
+        set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fprofile-arcs -ftest-coverage -fno-elide-constructors -fno-default-inline")
+        setup_target_for_coverage_gcovr_xml(
+            NAME coverage
+            EXECUTABLE ctest --output-on-failure
+            EXCLUDE "/usr/*"
+            "build/*"
+            "tango-moenchzmq/test"
+            "tango-moenchzmq/src/tangods"
+            "tango-moenchcontrol/src/tangods"
+            "tango-moenchcontrol/test"
+            )
     endif()
 endif()
 add_subdirectory(tango-moenchzmq)
@@ -61,7 +69,7 @@ if (BUILD_DOCS)
     set(DOXYGEN_XML_OUTPUT ${CMAKE_BINARY_DIR}/doxygen/zmq)
     
     doxygen_add_docs(
-        doxygen_moenchzmq  # Target name
+        doxygen_moenchzmq
         ${CMAKE_SOURCE_DIR}/tango-moenchzmq/src
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tango-moenchzmq/src
         COMMENT "Generating ZMQ API documentation with Doxygen"
@@ -70,7 +78,7 @@ if (BUILD_DOCS)
     set(DOXYGEN_XML_OUTPUT ${CMAKE_BINARY_DIR}/doxygen/control)
     
     doxygen_add_docs(
-        doxygen_moenchcontrol  # Target name
+        doxygen_moenchcontrol
         ${CMAKE_SOURCE_DIR}/tango-moenchcontrol/src
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tango-moenchcontrol/src
         COMMENT "Generating Control API documentation with Doxygen"
@@ -81,7 +89,7 @@ if (BUILD_DOCS)
     set(SPHINX_INDEX_FILE "${SPHINX_BUILD}/index.html")
 
     sphinx_add_docs(
-        sphinx_docs   # Target name
+        sphinx_docs
         BREATHE_PROJECTS tango-moenchzmq tango-moenchcontrol
         SOURCE_DIRECTORY ${CMAKE_SOURCE_DIR}/docs
         BUILDER html

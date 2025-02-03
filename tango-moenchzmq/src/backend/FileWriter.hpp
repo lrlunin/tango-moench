@@ -39,7 +39,7 @@ public:
    * @brief Construct a new File Writer object
    *
    */
-  FileWriter();
+  FileWriter() = default;
   /**
    * @brief Construct a new File Writer object
    *
