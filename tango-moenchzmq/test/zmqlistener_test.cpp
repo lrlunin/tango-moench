@@ -102,7 +102,7 @@ protected:
   MockFileWriter mock_file_writer;
 
   void SetUp() {
-    zmq_publisher_ptr = new ZMQPublisher("127.0.0.1");
+    zmq_publisher_ptr = new ZMQPublisher("tcp://127.0.0.1");
     std::this_thread::sleep_for(150ms);
     comp_backend_ptr = new CPUComputationBackend(&mock_file_writer, 100, 1);
     zmq_listener_ptr = new ZMQListener("127.0.0.1", zmq_publisher_ptr->port);
