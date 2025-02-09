@@ -10,7 +10,8 @@ HDFWriter::HDFWriter(std::filesystem::path root_path, int file_index)
   const auto now = std::chrono::system_clock::now();
   file_name = fmt::format("{:%Y%m%d}_run", now);
   session_directory = fmt::format("{:%Y%m%d}_run", now);
-  std::filesystem::path full_directory_path = buildFullDirectoryPath();
+  std::filesystem::path full_directory_path
+      = HDFWriter::buildFullDirectoryPath();
   int init_file_index = -1;
   for (std::filesystem::directory_entry entry :
        std::filesystem::directory_iterator(full_directory_path)) {

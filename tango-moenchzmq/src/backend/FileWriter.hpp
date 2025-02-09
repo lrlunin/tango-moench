@@ -13,10 +13,6 @@
  *
  */
 class FileWriter {
-protected:
-  /// File extension (e.g. h5)
-  std::string file_extension;
-
 public:
   /// Directory path (e.g. /home/user/)
   std::filesystem::path root_path;
@@ -29,12 +25,6 @@ public:
   /// File index like 122
   int file_index;
 
-  /// Format string like {file_name}_{file_index:06d}.h5 with file_name and
-  /// file_index as arguments as constexpr
-  const std::string file_format;
-
-  /// RegEx to match file names like 20230825_run_122.h5
-  const std::regex file_match;
   /**
    * @brief Construct a new File Writer object
    *
