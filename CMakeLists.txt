@@ -36,7 +36,7 @@ if (TESTS_ENABLED)
         enable_language(C)
         include(CodeCoverage)
         set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fprofile-arcs -ftest-coverage -fno-elide-constructors -fno-default-inline")
-        setup_target_for_coverage_gcovr_xml(
+        setup_target_for_coverage_lcov(
             NAME coverage
             EXECUTABLE ctest --output-on-failure
             EXCLUDE "/usr/*"
