@@ -62,7 +62,7 @@ jobs:
         run: make coverage
 
       - name: Move coverage report to root directory
-        run: mv build/coverage.info .
+        run: mv build/coverage.xml .
 
       - name: Upload coverage artifact
         # skip if run locally with act
@@ -72,5 +72,5 @@ jobs:
         with:
           name: coverage-report-${{ matrix.tango-version }}-${{ matrix.sls-version }}
           path: |
-            coverage.info
+            coverage.xml
             codecov.yml
